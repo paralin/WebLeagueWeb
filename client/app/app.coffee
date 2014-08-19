@@ -9,7 +9,7 @@ angular.module 'webleagueApp', [
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
   $urlRouterProvider
-  .otherwise '/'
+  .otherwise '/panel'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
@@ -31,5 +31,6 @@ angular.module 'webleagueApp', [
   $rootScope.$on '$stateChangeStart', (event, next) ->
     Auth.getLoginStatus (user, token) ->
       loggedIn = user?
+      console.log next
       $location.path "/login" if next.authenticate and not loggedIn
-      #$location.path '/panel' if next.
+      $location.path "/panel" if loggedIn and next.name is "login"
