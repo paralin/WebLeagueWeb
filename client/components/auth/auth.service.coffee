@@ -12,6 +12,9 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
           cb(@currentUser, @currentToken)
       else
         cb(@currentUser, @currentToken)
+    logout: ->
+      $http.get '/auth/logout'
+      service.update()
     update: ->
       deferred = $q.defer()
       @currentPromise = deferred.promise

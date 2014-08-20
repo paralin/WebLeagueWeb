@@ -1,8 +1,19 @@
 core-toolbar.medium-tall
   paper-icon-button(icon="menu",role="button",tabindex="0",aria-label="menu")
   div(flex="") Web League
-  paper-icon-button(icon="add-circle",role="button",tabindex="0",aria-label="create game")
-  paper-icon-button(icon="account-circle",role="button",tabindex="0",aria-label="account")
+  div(dropdown="")
+    paper-icon-button.dropdown-toggle(role="button",tabindex="0",label="{{auth.currentUser.profile.name}}")
+    ul.dropdown-menu(role="menu",style="right: 0; left: auto;")
+      //-
+        li
+          a(href="#") Action
+        li
+          a(href="#") Another action
+        li
+          a(href="#") Something else here
+        li.divider
+      li
+        a(href="/auth/logout",ng-click="$event.stopPropagation()") Sign Out
   .bottom.fit(horizontal="",layout="")
     paper-tabs(selected="0",flex="",style="max-width: 600px;",role="tablist")
       paper-tab MAIN CHAT

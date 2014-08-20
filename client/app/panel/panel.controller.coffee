@@ -1,5 +1,5 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'PanelCtrl', ($scope) ->
-  $scope.message = 'Hello'
+.controller 'PanelCtrl', ($scope,Auth) ->
+  $scope.auth = Auth

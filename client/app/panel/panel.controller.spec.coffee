@@ -13,5 +13,5 @@ describe 'Controller: PanelCtrl', ->
     PanelCtrl = $controller 'PanelCtrl',
       $scope: scope
 
-  it 'should ...', ->
+  it 'should sign out when clicking log out', ->
     expect(1).toEqual 1
