@@ -4,17 +4,10 @@ core-toolbar.medium-tall
   div(dropdown="")
     paper-icon-button.dropdown-toggle(role="button",tabindex="0",label="{{auth.currentUser.profile.name}}")
     ul.dropdown-menu(role="menu",style="right: 0; left: auto;")
-      //-
-        li
-          a(href="#") Action
-        li
-          a(href="#") Another action
-        li
-          a(href="#") Something else here
-        li.divider
       li
         a(href="/auth/logout",ng-click="$event.stopPropagation()") Sign Out
   .bottom.fit(horizontal="",layout="")
-    paper-tabs(selected="0",flex="",style="max-width: 600px;",role="tablist")
-      paper-tab MAIN CHAT
-      paper-tab Dendi
+    paper-tabs(ng-model="selected",flex="",style="max-width: 100%;",role="tablist")
+      paper-tab(ng-repeat="chat in chats") {{chat.title}}
+wl-chat(ng-model="chats[selected]")
+paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1)
