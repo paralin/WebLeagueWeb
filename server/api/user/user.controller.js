@@ -22,10 +22,11 @@ exports.status = function(req, res){
     };
     var profile = {
       _id: req.user._id,
-      steamid: req.user.steam.steamid,
-      name: req.user.profile.name
+      steamid: req.user.steam.steamid
     }
-    resp.token = jwt.sign(profile, config.secrets.session, {expiresInMinutes: 5});
+    resp.token = jwt.sign(profile, config.secrets.session, {algorithm:'HS256'});//{expiresInMinutes: 5});
+    console.log(resp.token);
+    resp.server = config.networkServer;
     resp.user = user;
   }
   res.json(resp);

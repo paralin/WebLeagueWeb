@@ -10,4 +10,4 @@ core-toolbar.medium-tall
     paper-tabs(ng-model="selected",flex="",style="max-width: 100%;",role="tablist")
       paper-tab(ng-repeat="chat in chats") {{chat.title}}
 wl-chat(ng-model="chats[selected]")
-paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1)
+paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)

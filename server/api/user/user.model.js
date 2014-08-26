@@ -34,15 +34,6 @@ var UserSchema = mongoose.Schema({
   }
 });
 
-// Non-sensitive info we'll be putting in the token
-UserSchema
-.virtual('token')
-.get(function() {
-  return {
-    '_id': this._id
-  };
-});
-
 /**
  * Validations
  */

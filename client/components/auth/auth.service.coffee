@@ -5,13 +5,14 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
     currentPromise: null
     currentUser: null
     currentToken: null
+    currentServer: null
     user: User
     getLoginStatus: (cb)->
       if @currentPromise?
         @currentPromise.then =>
-          cb(@currentUser, @currentToken)
+          cb(@currentUser, @currentToken, @currentServer)
       else
-        cb(@currentUser, @currentToken)
+        cb(@currentUser, @currentToken, @currentServer)
     logout: ->
       $http.get '/auth/logout'
       service.update()
@@ -19,12 +20,15 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
       deferred = $q.defer()
       @currentPromise = deferred.promise
       data = User.get =>
+        console.log data
         if data.isAuthed
           @currentUser = data.user
           @currentToken = data.token
+          @currentServer = data.server
         else
           @currentUser = null
           @currentToken = null
+          @currentServer = null
         @currentPromise = null
         deferred.resolve()
       @currentPromise

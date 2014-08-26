@@ -64,13 +64,13 @@ the toast will automatically fits at the bottom of the screen.
 <link rel="import" href="/bower_components/core-transition/core-transition-css.html">
 <link rel="import" href="/bower_components/core-media-query/core-media-query.html">
 
-<polymer-element name="paper-toast-fa" attributes="text duration opened responsiveWidth swipeDisabled icon" role="status">
+<polymer-element name="paper-toast-fa" attributes="text duration opened responsiveWidth swipeDisabled icon backdrop autoCloseDisabled layered" role="status">
 
 <template>
   <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="paper-toast-fa.css" >
 
-  <core-overlay opened="{{opened}}" target="{{}}" sizingTarget="{{$.container}}" transition="core-transition-bottom"></core-overlay>
+  <core-overlay opened="{{opened}}" target="{{}}" sizingTarget="{{$.container}}" transition="core-transition-bottom" autoCloseDisabled="{{autoCloseDisabled}}" layered="{{layered}}" backdrop="{{backdrop}}"></core-overlay>
 
   <div class="toast-container" horizontal layout>
 
@@ -163,7 +163,7 @@ the toast will automatically fits at the bottom of the screen.
       narrowModeChanged: function() {
         this.classList.toggle('fit-bottom', this.narrowMode);
       },
-      
+
       openedChanged: function() {
         if (this.opened) {
           if(this.duration != -1)
