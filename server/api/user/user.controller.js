@@ -25,7 +25,6 @@ exports.status = function(req, res){
       steamid: req.user.steam.steamid
     }
     resp.token = jwt.sign(profile, config.secrets.session, {algorithm:'HS256'});//{expiresInMinutes: 5});
-    console.log(resp.token);
     resp.server = config.networkServer;
     resp.user = user;
   }
