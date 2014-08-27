@@ -38,5 +38,3 @@ angular.module 'webleagueApp'
       }
     }
   ]
-  $scope.$watch 'selected', (newVal, oldVal)->
-    console.log oldVal+" => "+newVal
