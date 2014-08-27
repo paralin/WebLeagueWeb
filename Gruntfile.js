@@ -100,7 +100,6 @@ module.exports = function (grunt) {
       coffee: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.{coffee,litcoffee,coffee.md}',
-          '!<%= yeoman.client %>/{app,components}/**/*.poly.{coffee,litcoffee,coffee.md}',
           '!<%= yeoman.client %>/{app,components}/**/*.spec.{coffee,litcoffee,coffee.md}'
         ],
         tasks: ['newer:coffee', 'injector:scripts']

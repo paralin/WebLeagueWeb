@@ -2,7 +2,7 @@ link(rel="import", href="/bower_components/polymer/polymer.html")
 link(rel="import", href="/bower_components/core-splitter/core-splitter.html")
 link(rel="import", href="/bower_components/paper-input/paper-input.html")
 polymer-element(name="wl-chat", attributes="chat")
-  script(src="chat.poly.js")
+  script(src="chat.js")
   template
     .chat-cont(horizontal="", layout="")
       .main-chat
@@ -29,7 +29,7 @@ polymer-element(name="wl-chat", attributes="chat")
         height: calc(100% - 35px);
         max-height: calc(100% - 35px);
         max-width: 100%;
-        overflow-y: scroll;
+        overflow-y: auto;
       }
       .member-list {
         overflow-y: scroll;
@@ -66,4 +66,7 @@ polymer-element(name="wl-chat", attributes="chat")
       }
       paper-input /deep/ #errorContainer {
         display:none;
+      }
+      core-splitter {
+        width: 3px;
       }
