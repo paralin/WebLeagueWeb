@@ -31,6 +31,5 @@ angular.module 'webleagueApp', [
   $rootScope.$on '$stateChangeStart', (event, next) ->
     Auth.getLoginStatus (user, token) ->
       loggedIn = user?
-      console.log next
       $location.path "/login" if next.authenticate and not loggedIn
       $location.path "/panel" if loggedIn and next.name is "login"

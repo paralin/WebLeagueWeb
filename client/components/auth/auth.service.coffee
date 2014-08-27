@@ -20,7 +20,6 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
       deferred = $q.defer()
       @currentPromise = deferred.promise
       data = User.get =>
-        console.log data
         if data.isAuthed
           @currentUser = data.user
           @currentToken = data.token

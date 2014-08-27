@@ -20,7 +20,6 @@ class NetworkService
   reconnect: ->
     if @doReconnect
       if !@reconnTimeout?
-        console.log "Scheduling reconnect"
         @timeout =>
           @disconnected = true
           @status = "Reconnecting in 3 seconds, attempt ##{@attempts}..."
@@ -39,8 +38,9 @@ class NetworkService
     else
       @status = "Connecting to the network..."
       if !@conn?
-        @conn = new XSockets.WebSocket(@server, ['auth', 'chat'], {token: @token})
+        @conn = new XSockets.WebSocket(@server, ['auth', 'chat'])
         @conn.onconnected = =>
+          console.log "Connected to the network!"
           @timeout =>
             @disconnected = false
             @status = "Connected to the network."
@@ -57,7 +57,7 @@ class NetworkService
                   @doReconnect = false
                   @disconnect()
         @conn.ondisconnected = =>
-          console.log "socket disconnected"
+          console.log "Disconnected from the network..."
           @disconnect()
           @reconnect()
       else
