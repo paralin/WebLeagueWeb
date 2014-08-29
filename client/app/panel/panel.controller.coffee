@@ -5,8 +5,11 @@ angular.module 'webleagueApp'
   $scope.auth = Auth
   $scope.network = Network
   $scope.selected = 0
+  $scope.chats = Network.chats
+  ###
   $scope.chats = [
     {
+      id: "35123523--325-23235235"
       title: "Main Chat"
       messages: [{
         member: "quantum"
@@ -14,7 +17,8 @@ angular.module 'webleagueApp'
       }],
       members: {
         quantum: {
-          name: "Quantum"
+          Name: "Quantum"
+          SteamID: "531252835812358"
         }
       }
     }
@@ -38,3 +42,4 @@ angular.module 'webleagueApp'
       }
     }
   ]
+  ###

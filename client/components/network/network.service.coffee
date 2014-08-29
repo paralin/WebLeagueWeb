@@ -6,6 +6,9 @@ class NetworkService
   reconnTimeout: null
   attempts: 0
   status: "Disconnected from the server."
+
+  chats: []
+
   constructor: (@scope, @timeout, @server, @token)->
   disconnect: ->
     if @conn?
@@ -17,6 +20,7 @@ class NetworkService
       @reconnTimeout = null
     #@status = "Disconnected from the server."
     @disconnected = true
+
   reconnect: ->
     if @doReconnect
       if !@reconnTimeout?
@@ -29,6 +33,59 @@ class NetworkService
         , 3000)
     else
       console.log "Not reconnecting."
+
+  methods:
+    chat:
+      sendmessage: (chanid, msg)->
+        @invoke('sendmessage', {Channel: chanid, Text: msg})
+  handlers: 
+    chat:
+      onchatmessage: (upd)->
+        chat = @chatByID upd.Id
+        if !chat?
+          console.log "Message for unknown chat #{upd.Id}"
+        else
+          chat.messages.push
+            member: upd.Member.SteamID
+            msg: upd.Text
+      #add or remove a chat channel
+      chatchannelupd: (upd)->
+        for chan in upd.channels
+          console.log "chat add/update"
+          console.log chan
+          #get idx in array
+          idx = _.findIndex @chats, {Id: chan.Id}
+          if idx is -1
+            chan.messages = []
+            @chats.push chan
+            @chat.sendmessage chan.Id, "Hello I've just joined"
+          else
+            _.merge @chats[idx], chan
+      chatchannelrm: (upd)->
+          console.log "removed chats: #{JSON.stringify upd.ids}"
+          for id in upd.ids
+            idx = _.findIndex @chats, {Id: id}
+            @chats.splice idx, 1 if idx > -1
+            return
+      #add or remove a chat member
+      chatmemberupd: (upd)->
+        chat = @chatByID upd.id
+        if !chat?
+          console.log "WARN -> chat member(s) added to unknown chat"
+          console.log upd
+        else
+          for memb in upd.members
+            chat.Members[memb.SteamID] = memb
+      chatmemberrm: (upd)->
+        chat = @chatByID upd.id
+        if !chat?
+          console.log "WARN -> chat member(s) removed from unknown chat"
+          console.log upd
+        else
+          for memb in upd.members
+            delete chat.Members[memb]
+          return
+
   connect: ->
     @attempts += 1
     @disconnect()
@@ -37,6 +94,7 @@ class NetworkService
       @status = "Waiting for server info..."
     else
       @status = "Connecting to the network..."
+      console.log "Connecting to #{@server}..."
       if !@conn?
         @conn = new XSockets.WebSocket(@server, ['auth', 'chat'])
         @conn.onconnected = =>
@@ -45,23 +103,40 @@ class NetworkService
             @disconnected = false
             @status = "Connected to the network."
             @attempts = 0
-            @chat = @conn.controller 'chat'
-            @auth = @conn.controller 'auth'
-            @auth.onopen = (ci)=>
-              @auth.invoke('authwithtoken', {token:@token}).then (success)=>
-                if success
-                  @chat.invoke('sendmessage', {text: "Testing 123"})
-                else
-                  @status = "Authentication failed. Try signing out and back in."
-                  @disconnected = true
-                  @doReconnect = false
-                  @disconnect()
+          for name, cbs of @handlers
+            @[name] = cont = @conn.controller name
+            serv = @
+            timeout = @timeout
+            for cbn, cb of cbs
+              do (cbn, cb) ->
+                cont[cbn] = (arg)->
+                  console.log cbn
+                  timeout ->
+                    cb.call serv, arg
+          for name, cbs of @methods
+            cont = @conn.controller name
+            for cbn, cb of cbs
+              do (cbn, cb, cont) ->
+                cont[cbn] = ->
+                  cb.apply cont, arguments
+          @auth = @conn.controller 'auth'
+          @auth.onopen = (ci)=>
+            @auth.invoke('authwithtoken', {token:@token}).then (success)=>
+              if success
+                @chat.invoke('joinorcreate', {Name: "Test Chat"})
+              else
+                @status = "Authentication failed. Try signing out and back in."
+                @disconnected = true
+                @doReconnect = false
+                @disconnect()
         @conn.ondisconnected = =>
           console.log "Disconnected from the network..."
           @disconnect()
           @reconnect()
       else
         @conn.reconnect()
+  chatByID: (id)->
+    _.find @chats, {Id: id}
 
 angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth) ->
   service = new NetworkService $rootScope, $timeout

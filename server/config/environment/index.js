@@ -22,6 +22,7 @@ var all = {
   port: process.env.PORT || 3000,
 
   networkServer: 'ws://172.250.79.95:4502',
+  //networkServer: 'ws://192.168.56.100:4502',
 
   // Should we populate the DB with sample data?
   seedDB: false,

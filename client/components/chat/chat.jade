@@ -1,19 +1,19 @@
 link(rel="import", href="/bower_components/polymer/polymer.html")
 link(rel="import", href="/bower_components/core-splitter/core-splitter.html")
 link(rel="import", href="/bower_components/paper-input/paper-input.html")
-polymer-element(name="wl-chat", attributes="chat")
+polymer-element(name="wl-chat", attributes="chat chatMessageInput")
   script(src="chat.js")
   template
     .chat-cont(horizontal="", layout="")
       .main-chat
         .msg-container
           template(repeat="{{message in chat.messages}}")
-            p [{{chat.members[message.member].name}}] {{message.msg}}
-        paper-input#inputcont(horizontal="",layout="",label="Enter a chat message",style="width:100%;")
+            p [{{chat.Members[message.member].Name}}] {{message.msg}}
+        paper-input#inputcont(horizontal="",layout="",label="Enter a chat message",style="width:100%;",ng-model="chatMessageInput")
       core-splitter(direction="left")
       .member-list(flex="")
-        template(repeat="{{member in chat.members | keys}}")
-          p {{chat.members[member].name}}
+        template(repeat="{{member in chat.Members | keys}}")
+          p {{chat.Members[member].Name}}
     style.
       :host {
         display: block;
