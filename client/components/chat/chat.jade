@@ -1,15 +1,14 @@
 link(rel="import", href="/bower_components/polymer/polymer.html")
 link(rel="import", href="/bower_components/core-splitter/core-splitter.html")
 link(rel="import", href="/bower_components/paper-input/paper-input.html")
-polymer-element(name="wl-chat", attributes="chat chatMessageInput")
-  script(src="chat.js")
+polymer-element(name="wl-chat", attributes="chat chatMessageInput chatValue")
   template
     .chat-cont(horizontal="", layout="")
       .main-chat
         .msg-container
           template(repeat="{{message in chat.messages}}")
             p [{{chat.Members[message.member].Name}}] {{message.msg}}
-        paper-input#inputcont(horizontal="",layout="",label="Enter a chat message",style="width:100%;",ng-model="chatMessageInput")
+        paper-input#inputcont(horizontal="",layout="",label="Enter a chat message",style="width:100%;",on-change="{{change}}",value="{{chatValue}}")
       core-splitter(direction="left")
       .member-list(flex="")
         template(repeat="{{member in chat.Members | keys}}")
@@ -70,3 +69,4 @@ polymer-element(name="wl-chat", attributes="chat chatMessageInput")
       core-splitter {
         width: 3px;
       }
+  script(src="chat.js")

@@ -18,7 +18,6 @@ class NetworkService
     if @reconnTimeout?
       @timeout.cancel(@reconnTimeout)
       @reconnTimeout = null
-    #@status = "Disconnected from the server."
     @disconnected = true
 
   reconnect: ->
@@ -58,7 +57,6 @@ class NetworkService
           if idx is -1
             chan.messages = []
             @chats.push chan
-            @chat.sendmessage chan.Id, "Hello I've just joined"
           else
             _.merge @chats[idx], chan
       chatchannelrm: (upd)->
