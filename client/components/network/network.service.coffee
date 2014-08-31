@@ -104,6 +104,7 @@ class NetworkService
             @disconnected = false
             @status = "Connected to the network."
             @attempts = 0
+            @chats.length = 0
           for name, cbs of @handlers
             @[name] = cont = @conn.controller name
             for cbn, cb of cbs
