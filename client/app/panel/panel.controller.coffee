@@ -9,4 +9,4 @@ angular.module 'webleagueApp'
   $scope.sendChat = (event)->
     msg = event.detail.message
     console.log "sending #{msg}"
-    Network.chat.invoke("sendmessage", {Channel: service.chats[0].Id, Text: msg})
+    Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.selected].Id, Text: msg})
