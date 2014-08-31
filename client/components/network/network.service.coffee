@@ -113,7 +113,8 @@ class NetworkService
           @auth.onopen = (ci)=>
             @auth.invoke('authwithtoken', {token:@token}).then (success)=>
               if success
-                @chat.invoke('joinorcreate', {Name: "Test Chat"})
+                @chat.invoke('joinorcreate', {Name: "main"})
+                @chat.invoke('joinorcreate', {Name: "developers"})
               else
                 @status = "Authentication failed. Try signing out and back in."
                 @disconnected = true

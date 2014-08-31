@@ -8,7 +8,9 @@
         li
           a(href="/auth/logout",ng-click="$event.stopPropagation()") Sign Out
     .bottom.fit(horizontal="",layout="")
-      paper-tabs(ng-model="selected",flex="",style="max-width: 100%;",role="tablist")
+      paper-tabs(ng-model="selected",flex="",style="max-width: calc(100% - 45px);",role="tablist")
         paper-tab(ng-repeat="chat in chats") {{chat.Name}}
+      div(style="width: 45px")
+        paper-icon-button.red(icon="add", role="button")
   wl-chat(ng-model="chats[selected]", ng-sendchat="sendChat($event)")
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
