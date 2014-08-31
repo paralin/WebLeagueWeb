@@ -33,10 +33,6 @@ class NetworkService
     else
       console.log "Not reconnecting."
 
-  methods:
-    chat:
-      sendmessage: (chanid, msg)->
-        @invoke('sendmessage', {Channel: chanid, Text: msg})
   handlers: 
     chat:
       onchatmessage: (upd)->
@@ -113,12 +109,6 @@ class NetworkService
                   console.log cbn
                   safeApply scope, -> 
                     cb.call serv, arg
-          for name, cbs of @methods
-            cont = @conn.controller name
-            for cbn, cb of cbs
-              do (cbn, cb, cont) ->
-                cont[cbn] = ->
-                  cb.apply cont, arguments
           @auth = @conn.controller 'auth'
           @auth.onopen = (ci)=>
             @auth.invoke('authwithtoken', {token:@token}).then (success)=>
