@@ -9,7 +9,7 @@ class NetworkService
 
   chats: []
 
-  constructor: (@scope, @timeout, @server, @token)->
+  constructor: (@scope, @timeout, @safeApply)->
   disconnect: ->
     if @conn?
       if @cont
@@ -24,7 +24,7 @@ class NetworkService
   reconnect: ->
     if @doReconnect
       if !@reconnTimeout?
-        @timeout =>
+        @safeApply @scope, =>
           @disconnected = true
           @status = "Reconnecting in 3 seconds, attempt ##{@attempts}..."
         @reconnTimeout = @timeout(=>
@@ -97,21 +97,22 @@ class NetworkService
       console.log "Connecting to #{@server}..."
       if !@conn?
         @conn = new XSockets.WebSocket(@server, ['auth', 'chat'])
+        safeApply = @safeApply
+        scope = @scope
+        serv = @
         @conn.onconnected = =>
           console.log "Connected to the network!"
-          @timeout =>
+          safeApply scope, =>
             @disconnected = false
             @status = "Connected to the network."
             @attempts = 0
           for name, cbs of @handlers
             @[name] = cont = @conn.controller name
-            serv = @
-            timeout = @timeout
             for cbn, cb of cbs
               do (cbn, cb) ->
                 cont[cbn] = (arg)->
                   console.log cbn
-                  timeout ->
+                  safeApply scope, -> 
                     cb.call serv, arg
           for name, cbs of @methods
             cont = @conn.controller name
@@ -138,8 +139,8 @@ class NetworkService
   chatByID: (id)->
     _.find @chats, {Id: id}
 
-angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth) ->
-  service = new NetworkService $rootScope, $timeout
+angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, safeApply) ->
+  service = new NetworkService $rootScope, $timeout, safeApply
   Auth.getLoginStatus (currentUser, currentToken, currentServer)->
     service.token = currentToken
     service.server = currentServer
