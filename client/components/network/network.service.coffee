@@ -41,7 +41,7 @@ class NetworkService
           console.log "Message for unknown chat #{upd.Id}"
         else
           chat.messages.push
-            member: upd.Member.SteamID
+            member: upd.Member.ID
             msg: upd.Text
       #add or remove a chat channel
       chatchannelupd: (upd)->
@@ -69,7 +69,7 @@ class NetworkService
           console.log upd
         else
           for memb in upd.members
-            chat.Members[memb.SteamID] = memb
+            chat.Members[memb.ID] = memb
       chatmemberrm: (upd)->
         chat = @chatByID upd.id
         if !chat?
@@ -91,41 +91,44 @@ class NetworkService
       console.log "Connecting to #{@server}..."
       if !@conn?
         @conn = new XSockets.WebSocket(@server, ['auth', 'chat'])
-        safeApply = @safeApply
-        scope = @scope
-        serv = @
-        @conn.onconnected = =>
-          console.log "Connected to the network!"
-          safeApply scope, =>
-            @disconnected = false
-            @status = "Connected to the network."
-            @attempts = 0
-            @chats.length = 0
-          for name, cbs of @handlers
-            @[name] = cont = @conn.controller name
-            for cbn, cb of cbs
-              do (cbn, cb) ->
-                cont[cbn] = (arg)->
-                  console.log cbn
-                  safeApply scope, -> 
-                    cb.call serv, arg
-          @auth = @conn.controller 'auth'
-          @auth.onopen = (ci)=>
-            @auth.invoke('authwithtoken', {token:@token}).then (success)=>
-              if success
-                @chat.invoke('joinorcreate', {Name: "main"})
-                @chat.invoke('joinorcreate', {Name: "developers"})
-              else
-                @status = "Authentication failed. Try signing out and back in."
-                @disconnected = true
-                @doReconnect = false
-                @disconnect()
-        @conn.ondisconnected = =>
-          console.log "Disconnected from the network..."
-          @disconnect()
-          @reconnect()
       else
         @conn.reconnect()
+      safeApply = @safeApply
+      scope = @scope
+      serv = @
+      @conn.onconnected = =>
+        console.log "Connected to the network!"
+        if @reconnTimeout?
+          @timeout.cancel(@reconnTimeout)
+          @reconnTimeout = null
+        safeApply scope, =>
+          @disconnected = false
+          @status = "Connected to the network."
+          @attempts = 0
+          @chats.length = 0
+        for name, cbs of @handlers
+          @[name] = cont = @conn.controller name
+          for cbn, cb of cbs
+            do (cbn, cb) ->
+              cont[cbn] = (arg)->
+                console.log cbn
+                safeApply scope, -> 
+                  cb.call serv, arg
+        @auth = @conn.controller 'auth'
+        @auth.onopen = (ci)=>
+          @auth.invoke('authwithtoken', {token:@token}).then (success)=>
+            if success
+              @chat.invoke('joinorcreate', {Name: "main"})
+              @chat.invoke('joinorcreate', {Name: "developers"})
+            else
+              @status = "Authentication failed. Try signing out and back in."
+              @disconnected = true
+              @doReconnect = false
+              @disconnect()
+      @conn.ondisconnected = =>
+        console.log "Disconnected from the network..."
+        @disconnect()
+        @reconnect()
   chatByID: (id)->
     _.find @chats, {Id: id}
 
