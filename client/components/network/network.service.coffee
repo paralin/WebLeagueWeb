@@ -112,6 +112,7 @@ class NetworkService
             do (cbn, cb) ->
               cont[cbn] = (arg)->
                 console.log cbn
+                console.log arg
                 safeApply scope, -> 
                   cb.call serv, arg
         @auth = @conn.controller 'auth'
@@ -125,6 +126,7 @@ class NetworkService
               @disconnected = true
               @doReconnect = false
               @disconnect()
+              console.log "Authentication failed."
       @conn.ondisconnected = =>
         console.log "Disconnected from the network..."
         @disconnect()
