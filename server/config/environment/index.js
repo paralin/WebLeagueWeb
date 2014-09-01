@@ -23,6 +23,7 @@ var all = {
 
   networkServer: 'ws://172.250.79.95:4502',
   //networkServer: 'ws://192.168.56.100:4502',
+  //networkServer: 'ws://192.99.201.73:4502',
 
   // Should we populate the DB with sample data?
   seedDB: false,
