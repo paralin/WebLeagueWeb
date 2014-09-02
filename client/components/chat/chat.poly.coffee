@@ -6,13 +6,12 @@ Polymer 'wl-chat',
   stringify: (o)->
     JSON.stringify o
   chatValue: ""
-  change: _.debounce((event)->
-    if document.activeElement is this
+  keypressHandler: (event, detail, sender)->
+    if event.keyCode == 13
       field = @shadowRoot.querySelector('paper-input')
-      msg = @chatValue
+      msg = field.inputValue
       field.inputValue = ""
       field.commit()
-      $("wl-chat").blur()
-      $("body").focus()
+      #$("wl-chat").blur()
+      #$("body").focus()
       this.fire('sendchat', {message:msg})
-  , 500, {leading: true, trailing: false})
