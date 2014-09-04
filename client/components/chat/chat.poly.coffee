@@ -14,4 +14,5 @@ Polymer 'wl-chat',
       field.commit()
       #$("wl-chat").blur()
       #$("body").focus()
-      this.fire('sendchat', {message:msg})
+      if msg isnt ""
+        this.fire('sendchat', {message:msg})
