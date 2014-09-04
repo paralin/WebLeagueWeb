@@ -16,4 +16,86 @@
         paper-icon-button(icon="close", role="button", ng-disabled="!chats[selected].Leavable", ng-click="leaveCurrentChat()")
   wl-chat(ng-model="chats[selected]", ng-sendchat="sendChat($event)")
   #rightcont
+    .mains
+      .header
+        | LIVE MATCHES
+      .tablewrapper
+        table.table.table-striped
+            thead
+                tr
+                  th #
+                  th First Name
+                  th Last Name
+                  th Username
+              tbody
+                tr
+                  td 1
+                  td Mark
+                  td Otto
+                  td @mdo
+                tr
+                  td 2
+                  td Jacob
+                  td Thornton
+                  td @fat
+                tr
+                  td 3
+                  td Larry
+                  td the Bird
+                  td @twitter
+      .header
+        | STARTGAME - AP 8/10
+        paper-checkbox(checked, role="checkbox")
+      .tablewrapper
+        table.table.table-striped
+            thead
+                tr
+                  th #
+                  th First Name
+                  th Last Name
+                  th Username
+              tbody
+                tr
+                  td 1
+                  td Mark
+                  td Otto
+                  td @mdo
+                tr
+                  td 2
+                  td Jacob
+                  td Thornton
+                  td @fat
+                tr
+                  td 3
+                  td Larry
+                  td the Bird
+                  td @twitter
+                tr
+                  td 3
+                  td Larry
+                  td the Bird
+                  td @twitter
+                tr
+                  td 3
+                  td Larry
+                  td the Bird
+                  td @twitter
+                tr
+                  td 3
+                  td Larry
+                  td the Bird
+                  td @twitter
+                tr
+                  td 3
+                  td Larry
+                  td the Bird
+                  td @twitter
+                tr
+                  td 3
+                  td Larry
+                  td the Bird
+                  td @twitter
+    .btns 
+      paper-button.primary-btn(label="START",raisedButton)
+      paper-button.danger-btn(label="CANCEL",raisedButton)
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
