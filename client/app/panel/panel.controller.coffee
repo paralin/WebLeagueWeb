@@ -21,3 +21,6 @@ angular.module 'webleagueApp'
     msg = event.detail.message
     console.log "sending #{msg}"
     Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.selected].Id, Text: msg})
+  $scope.$watch 'chats', (newValue, oldValue)->
+    $scope.selected = newValue.length-1 if $scope.selected > newValue.length
+      
