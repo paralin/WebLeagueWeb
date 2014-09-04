@@ -108,6 +108,10 @@ class NetworkService
           @chats.length = 0
         for name, cbs of @handlers
           @[name] = cont = @conn.controller name
+          cont.isopened = false
+          cont.onopen = (ci)->
+            console.log "#{name} opened."
+            @isopened = true
           for cbn, cb of cbs
             do (cbn, cb) ->
               cont[cbn] = (arg)->
@@ -117,8 +121,11 @@ class NetworkService
                   cb.call serv, arg
         @auth = @conn.controller 'auth'
         @auth.onopen = (ci)=>
+          console.log "Authenticating..."
           @auth.invoke('authwithtoken', {token:@token}).then (success)=>
+            console.log "Auth result: #{success}"
             if success
+              console.log "Joining main and developers..."
               @chat.invoke('joinorcreate', {Name: "main"})
               @chat.invoke('joinorcreate', {Name: "developers"})
             else

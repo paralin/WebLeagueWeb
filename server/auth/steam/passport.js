@@ -51,7 +51,7 @@ exports.setup = function (User, config) {
             newUser._id = buf.toString('hex');
             newUser.steam = profile;
             newUser.profile.name = profile.personaname;
-            newUser.authItems = [];
+            newUser.authItems = ['chat'];
             newUser.save(function(err){
               if(err)
                 throw err;
