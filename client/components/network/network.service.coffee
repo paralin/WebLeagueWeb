@@ -125,7 +125,6 @@ class NetworkService
           @auth.invoke('authwithtoken', {token:@token}).then (success)=>
             console.log "Auth result: #{success}"
             if success
-              console.log "Joining main and developers..."
               @chat.invoke('joinorcreate', {Name: "main"})
               @chat.invoke('joinorcreate', {Name: "developers"})
             else

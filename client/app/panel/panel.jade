@@ -8,10 +8,12 @@
         li
           a(href="/auth/logout",ng-click="$event.stopPropagation()") Sign Out
     .bottom.fit(horizontal="",layout="")
-      paper-tabs(ng-model="selected",flex="",style="max-width: calc(100% - 45px);",role="tablist")
-        paper-tab(ng-repeat="chat in chats") {{chat.Name}}
-      div(style="width: 45px")
-        paper-icon-button.red(icon="add", role="button")
+      paper-tabs(ng-model="selected",flex="",style="max-width: calc(100% - 90px);",role="tablist")
+        paper-tab(ng-repeat="chat in chats") 
+          | {{chat.Name}}
+      div(style="width: 90px")
+        paper-icon-button(icon="add", role="button", ng-click="showJoinDialog()")
+        paper-icon-button(icon="close", role="button", ng-disabled="!chats[selected].Leavable", ng-click="leaveCurrentChat()")
   wl-chat(ng-model="chats[selected]", ng-sendchat="sendChat($event)")
   #rightcont
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
