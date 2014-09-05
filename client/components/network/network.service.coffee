@@ -8,6 +8,28 @@ class NetworkService
   status: "Disconnected from the server."
 
   chats: []
+  liveMatches: [
+    {
+      Name: "Test"
+      Mode: 1
+      Public: true
+    }
+  ]
+  availableGames: [{
+      Info: 
+        Name: "This will be a fun test game."
+        Mode: 1
+        Public: true
+      GameType: 0
+      Players: [
+        {
+          SID: '0305235032'
+          Name: "Quantum"
+          Avatar: "http://media.steampowered.com/steamcommunity/public/images/avatars/5c/5c82337faff6f3e87a3c1434cd0001afa7632c3e_full.jpg"
+          Team: 1
+        }
+      ]
+    }]
 
   constructor: (@scope, @timeout, @safeApply)->
   disconnect: ->

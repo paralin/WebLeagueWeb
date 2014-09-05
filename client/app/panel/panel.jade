@@ -14,88 +14,15 @@
       div(style="width: 90px")
         paper-icon-button(icon="add", role="button", ng-click="showJoinDialog()")
         paper-icon-button(icon="close", role="button", ng-disabled="!chats[selected].Leavable", ng-click="leaveCurrentChat()")
-  wl-chat(ng-model="chats[selected]", ng-sendchat="sendChat($event)")
-  #rightcont
+  wl-chat(ng-model="chats[selected]", ng-sendchat="sendChat($event)", ng-class="{fullPage:!showRightCont()}")
+  #rightcont(ng-if="showRightCont()")
     .mains
-      .header
-        | LIVE MATCHES
-      .tablewrapper
-        table.table.table-striped
-            thead
-                tr
-                  th #
-                  th First Name
-                  th Last Name
-                  th Username
-              tbody
-                tr
-                  td 1
-                  td Mark
-                  td Otto
-                  td @mdo
-                tr
-                  td 2
-                  td Jacob
-                  td Thornton
-                  td @fat
-                tr
-                  td 3
-                  td Larry
-                  td the Bird
-                  td @twitter
-      .header
-        | STARTGAME - AP 8/10
-        paper-checkbox(checked, role="checkbox")
-      .tablewrapper
-        table.table.table-striped
-            thead
-                tr
-                  th #
-                  th First Name
-                  th Last Name
-                  th Username
-              tbody
-                tr
-                  td 1
-                  td Mark
-                  td Otto
-                  td @mdo
-                tr
-                  td 2
-                  td Jacob
-                  td Thornton
-                  td @fat
-                tr
-                  td 3
-                  td Larry
-                  td the Bird
-                  td @twitter
-                tr
-                  td 3
-                  td Larry
-                  td the Bird
-                  td @twitter
-                tr
-                  td 3
-                  td Larry
-                  td the Bird
-                  td @twitter
-                tr
-                  td 3
-                  td Larry
-                  td the Bird
-                  td @twitter
-                tr
-                  td 3
-                  td Larry
-                  td the Bird
-                  td @twitter
-                tr
-                  td 3
-                  td Larry
-                  td the Bird
-                  td @twitter
-    .btns 
+      live-matches(ng-if="liveMatches.length>0",ng-match-types="GameTypeK",ng-model="liveMatches")
+      match-game(ng-repeat="game in games",ng-model="game",ng-game-modes="MatchTypeN",ng-match-types="GameTypeK")
+    .btns(ng-if="isAdminOfGame()")
       paper-button.primary-btn(label="START",raisedButton)
       paper-button.danger-btn(label="CANCEL",raisedButton)
+    .btns(ng-if="canStartGames()&&!isAdminOfGame()")
+      paper-button.primary-btn(label="NEW GAME",raisedButton)
+      paper-button.primary-btn(label="NEW CAPTAINS",raisedButton)
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)

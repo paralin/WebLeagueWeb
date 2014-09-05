@@ -35,4 +35,5 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
     service.update()
   , 30000
   service.update()
+  window.auth = service
   service

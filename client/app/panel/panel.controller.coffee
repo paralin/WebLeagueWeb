@@ -7,6 +7,15 @@ angular.module 'webleagueApp'
   $scope.network = Network
   $scope.selected = 0
   $scope.chats = Network.chats
+  $scope.liveMatches = Network.liveMatches
+  $scope.games = Network.availableGames
+  # Is currently controlling a game
+  $scope.showRightCont = ->
+    Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()
+  $scope.isAdminOfGame = ->
+    false
+  $scope.canStartGames = ->
+    _.contains Auth.currentUser.authItems, 'startGames'
   $scope.showJoinDialog = ->
     bootbox.prompt "What is the chat name?", (cb)->
       return if !cb? || cb is ""
