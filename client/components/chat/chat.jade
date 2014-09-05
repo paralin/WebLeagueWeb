@@ -12,7 +12,9 @@ polymer-element(name="wl-chat", attributes="chat chatMessageInput chatValue", on
       core-splitter(direction="left")
       .member-list(flex="")
         template(repeat="{{member in chat.Members | keys}}")
-          p {{chat.Members[member].Name}}
+          p 
+            img(src="{{chat.Members[member].Avatar}}")
+            | {{chat.Members[member].Name}}
     style.
       :host {
         display: block;
@@ -34,6 +36,12 @@ polymer-element(name="wl-chat", attributes="chat chatMessageInput chatValue", on
         overflow-y: scroll;
         max-height: 100%;
         height: 100%;
+      }
+      .member-list img {
+        width: 13px;
+        height: 13px;
+        margin-right: 3px;
+        margin-top: 2px;
       }
       .member-list p {
         display: block;
