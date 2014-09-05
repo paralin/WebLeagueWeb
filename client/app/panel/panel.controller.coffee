@@ -1,5 +1,6 @@
 'use strict'
 
+PNotify.desktop.permission()
 angular.module 'webleagueApp'
 .controller 'PanelCtrl', ($scope, Auth, Network) ->
   $scope.auth = Auth
@@ -9,7 +10,17 @@ angular.module 'webleagueApp'
   $scope.showJoinDialog = ->
     bootbox.prompt "What is the chat name?", (cb)->
       return if !cb? || cb is ""
-      Network.chat.invoke("joinorcreate", {Name: cb})
+      Network.chat.invoke("joinorcreate", {Name: cb}).then (err)->
+        if err?
+          new PNotify(
+            title: "Join Error"
+            text: err
+            type: "error"
+            desktop:
+              desktop: true
+          )
+          return
+    return
   $scope.leaveCurrentChat = (cb)->
     chat = $scope.chats[$scope.selected]
     return if !chat?
