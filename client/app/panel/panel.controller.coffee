@@ -15,7 +15,10 @@ angular.module 'webleagueApp'
   $scope.isAdminOfGame = ->
     false
   $scope.canStartGames = ->
-    _.contains Auth.currentUser.authItems, 'startGames'
+    if Auth.currentUser?
+      _.contains Auth.currentUser.authItems, 'startGames'
+    else
+      false
   $scope.showJoinDialog = ->
     bootbox.prompt "What is the chat name?", (cb)->
       return if !cb? || cb is ""

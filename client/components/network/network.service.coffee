@@ -8,13 +8,14 @@ class NetworkService
   status: "Disconnected from the server."
 
   chats: []
-  liveMatches: [
+  liveMatches: []
+  ###[
     {
       Name: "Test"
       Mode: 1
       Public: true
     }
-  ]
+  ]###
   availableGames: [{
       Info: 
         Name: "This will be a fun test game."
@@ -56,6 +57,7 @@ class NetworkService
       console.log "Not reconnecting."
 
   handlers: 
+    #games: {}
     chat:
       onchatmessage: (upd)->
         chat = @chatByID upd.Id
@@ -112,7 +114,10 @@ class NetworkService
       @status = "Connecting to the network..."
       console.log "Connecting to #{@server}..."
       if !@conn?
-        @conn = new XSockets.WebSocket(@server, ['auth', 'chat'])
+        conts = _.keys @handlers
+        conts.unshift 'auth'
+        #conts.push "games"
+        @conn = new XSockets.WebSocket @server, conts
       else
         @conn.reconnect()
       safeApply = @safeApply
@@ -131,11 +136,12 @@ class NetworkService
         for name, cbs of @handlers
           @[name] = cont = @conn.controller name
           cont.isopened = false
-          cont.onopen = (ci)->
-            console.log "#{name} opened."
-            @isopened = true
+          do (cont, name)=>
+            cont.onopen = (ci)->
+              console.log "#{name} opened."
+              @isopened = true
           for cbn, cb of cbs
-            do (cbn, cb) ->
+            do (cbn, cb, cont, name) ->
               cont[cbn] = (arg)->
                 console.log cbn
                 console.log arg
@@ -149,18 +155,23 @@ class NetworkService
             if success
               @chat.invoke('joinorcreate', {Name: "main"})
               @chat.invoke('joinorcreate', {Name: "developers"})
+              @fetchMatches()
             else
+              console.log "Authentication failed."
               @status = "Authentication failed. Try signing out and back in."
               @disconnected = true
               @doReconnect = false
               @disconnect()
-              console.log "Authentication failed."
       @conn.ondisconnected = =>
         console.log "Disconnected from the network..."
         @disconnect()
         @reconnect()
+
   chatByID: (id)->
     _.find @chats, {Id: id}
+  fetchMatches: ->
+    @matches.invoke('getpublicgamelist').then (ms)=>
+      @liveMatches = ms
 
 angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, safeApply) ->
   service = new NetworkService $rootScope, $timeout, safeApply
