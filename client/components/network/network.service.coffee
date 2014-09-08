@@ -7,30 +7,10 @@ class NetworkService
   attempts: 0
   status: "Disconnected from the server."
 
+  activeMatch: null
   chats: []
   liveMatches: []
-  ###[
-    {
-      Name: "Test"
-      Mode: 1
-      Public: true
-    }
-  ]###
-  availableGames: [{
-      Info: 
-        Name: "This will be a fun test game."
-        Mode: 1
-        Public: true
-      GameType: 0
-      Players: [
-        {
-          SID: '0305235032'
-          Name: "Quantum"
-          Avatar: "http://media.steampowered.com/steamcommunity/public/images/avatars/5c/5c82337faff6f3e87a3c1434cd0001afa7632c3e_full.jpg"
-          Team: 1
-        }
-      ]
-    }]
+  availableGames: []
 
   constructor: (@scope, @timeout, @safeApply)->
   disconnect: ->
@@ -56,9 +36,88 @@ class NetworkService
     else
       console.log "Not reconnecting."
 
+  methods:
+    matches:
+      leavematch: ->
+        (@invoke "leavematch").then (err)->
+          return if !err?
+          new PNotify
+            title: "Leave Error"
+            text: err
+            type: "error"
+          return
+      creatematch: (options)->
+        @invoke "creatematch", options
+
   handlers: 
-    #games: {}
+    matches:
+      onopen: (ci)->
+        @fetchMatches()
+      matchsnapshot: (match)->
+        console.log "Received active match snapshot #{match}"
+        @activeMatch = match
+      matchplayerupd: (upd)->
+        console.log "Received match player add/update"
+        #find the match
+        mtchs = []
+        match = _.find @availableGames, {Id: upd.Id}
+        mtchs[mtchs.length] = match if match?
+        mtchs[mtchs.length] = @activeMatch if @activeMatch.Id is upd.Id
+        if mtchs.length is 0
+          console.log "Received match player add/update for an unknown match #{upd.Id}"
+        for match in mtchs
+          for plyr in upd.players
+            plyrIdx = _.findIndex match.Players, {SID: plyr.SID}
+            if plyrIdx isnt -1
+              match.Players[plyrIdx] = plyr
+            else
+              match.Players[match.Players.length] = plyr
+      matchplayerrm: (upd)->
+        console.log "Received match player rm"
+        #find the match
+        mtchs = []
+        match = _.find @availableGames, {Id: upd.Id}
+        mtchs[mtchs.length] = match if match?
+        mtchs[mtchs.length] = @activeMatch if @activeMatch.Id is upd.Id
+        if mtchs.length is 0
+          console.log "Received match player remove for an unknown match #{upd.Id}"
+        for match in mtchs
+          for id in upd.ids
+            plyrIdx = _.findIndex match.Players, {SID: id}
+            if plyrIdx isnt -1
+              match.Players.splice plyrIdx, 1
+      publicmatchupd: (upd)->
+        console.log "Received public match add/update"
+        for match in upd.matches
+          idx = _.findIndex @liveMatches, {Id: match.Id}
+          if idx isnt -1
+            @liveMatches[idx] = match
+          else
+            @liveMatches[@liveMatches.length] = match
+      publicmatchrm: (upd)->
+        console.log "Received public match rm"
+        for id in upd.ids
+          idx = _.findIndex @liveMatches, {Id: id}
+          if idx isnt -1
+            @liveMatches.splice idx, 1
+      availablegameupd: (upd)->
+        console.log "Received available game add/update"
+        for match in upd.matches
+          idx = _.findIndex @availableGames, {Id: match.Id}
+          if idx isnt -1
+            @availableGames[idx] = match
+          else
+            @availableGames[@availableGames.length] = match
+      availablegamerm: (upd)->
+        console.log "Received available game rm"
+        for id in upd.ids
+          idx = _.findIndex @availableGames, {Id: id}
+          if idx isnt -1
+            @availableGames.splice idx, 1
     chat:
+      onopen: (ci)->
+        @chat.invoke('joinorcreate', {Name: "main"})
+        @chat.invoke('joinorcreate', {Name: "developers"})
       onchatmessage: (upd)->
         chat = @chatByID upd.Id
         if !chat?
@@ -115,9 +174,7 @@ class NetworkService
       console.log "Connecting to #{@server}..."
       if !@conn?
         conts = _.keys @handlers
-        conts.unshift 'auth'
-        #conts.push "games"
-        @conn = new XSockets.WebSocket @server, conts
+        @conn = new XSockets.WebSocket @server, conts, {token:@token}
       else
         @conn.reconnect()
       safeApply = @safeApply
@@ -135,11 +192,8 @@ class NetworkService
           @chats.length = 0
         for name, cbs of @handlers
           @[name] = cont = @conn.controller name
-          cont.isopened = false
-          do (cont, name)=>
-            cont.onopen = (ci)->
-              console.log "#{name} opened."
-              @isopened = true
+          cont.onopen = (ci)->
+            console.log "#{name} opened."
           for cbn, cb of cbs
             do (cbn, cb, cont, name) ->
               cont[cbn] = (arg)->
@@ -147,21 +201,13 @@ class NetworkService
                 console.log arg
                 safeApply scope, -> 
                   cb.call serv, arg
-        @auth = @conn.controller 'auth'
-        @auth.onopen = (ci)=>
-          console.log "Authenticating..."
-          @auth.invoke('authwithtoken', {token:@token}).then (success)=>
-            console.log "Auth result: #{success}"
-            if success
-              @chat.invoke('joinorcreate', {Name: "main"})
-              @chat.invoke('joinorcreate', {Name: "developers"})
-              @fetchMatches()
-            else
-              console.log "Authentication failed."
-              @status = "Authentication failed. Try signing out and back in."
-              @disconnected = true
-              @doReconnect = false
-              @disconnect()
+        for name, cbs of @methods
+          @[name] = cont = @conn.controller name
+          cont.do = {}
+          for cbn, cb of cbs
+            do (cbn, cb, cont, name) ->
+              cont.do[cbn] = (arg)->
+                cb.call cont, arg
       @conn.ondisconnected = =>
         console.log "Disconnected from the network..."
         @disconnect()
@@ -171,7 +217,14 @@ class NetworkService
     _.find @chats, {Id: id}
   fetchMatches: ->
     @matches.invoke('getpublicgamelist').then (ms)=>
-      @liveMatches = ms
+      @liveMatches.length = 0
+      for game in ms
+        @liveMatches[@liveMatches.length] = game
+    @matches.invoke('getavailablegamelist').then (ms)=>
+      #use the same array
+      @availableGames.length = 0
+      for game in ms
+        @availableGames[@availableGames.length] = game
 
 angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, safeApply) ->
   service = new NetworkService $rootScope, $timeout, safeApply

@@ -409,7 +409,7 @@ XSockets.Communcation = (function () {
         getInstance: function (url, events, subprotocol, force, controllers) {
 
             if (!communicationInstance || force) {
-                communicationInstance = createCommunication(url.toLowerCase(), events, subprotocol, controllers);
+                communicationInstance = createCommunication(url, events, subprotocol, controllers);
             }
             return communicationInstance;
         }

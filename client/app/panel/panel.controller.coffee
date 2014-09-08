@@ -13,9 +13,10 @@ angular.module 'webleagueApp'
   $scope.showRightCont = ->
     Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()
   $scope.isAdminOfGame = ->
-    false
+    return false if !Auth.currentUser? or !Network.activeMatch?
+    Network.activeMatch.Info.Owner is Auth.currentUser.steam.steamid
   $scope.canStartGames = ->
-    if Auth.currentUser?
+    if Auth.currentUser? && !Network.activeMatch?
       _.contains Auth.currentUser.authItems, 'startGames'
     else
       false

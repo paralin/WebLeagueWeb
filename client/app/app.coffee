@@ -80,6 +80,7 @@ angular.module 'webleagueApp', [
     19: "TI4 Event"
     20: "Deathmatch"
     #21: "Solo Mid"
+  $rootScope.MatchTypeNK = _.invert $rootScope.MatchTypeN
   $rootScope.GameType =
     STARTGAME: 0
     CAPTAINS: 1
