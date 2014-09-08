@@ -6,8 +6,7 @@
 'use strict';
 
 var MainPage = function() {
-  //this.imgEl = this.heroEl.element(by.css('img'));
+  this.loginButton = element(by.id("steam-signin-button"));
 };
 
 module.exports = new MainPage();
-

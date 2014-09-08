@@ -24,13 +24,12 @@ angular.module 'webleagueApp'
       return if !cb? || cb is ""
       Network.chat.invoke("joinorcreate", {Name: cb}).then (err)->
         if err?
-          new PNotify(
+          new PNotify
             title: "Join Error"
             text: err
             type: "error"
             desktop:
               desktop: true
-          )
           return
     return
   $scope.leaveCurrentChat = (cb)->
