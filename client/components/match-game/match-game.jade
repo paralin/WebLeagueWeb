@@ -3,7 +3,7 @@ link(rel="import", href="/bower_components/paper-checkbox/paper-checkbox.html")
 polymer-element(name="match-game", attributes="match modes gametypes")
   template
     .header
-      | {{modes[match.GameType]}} - {{gametypes[match.Info.Mode]}}
+      | {{modes[match.Info.Mode]}} - {{gametypes[match.GameType]}}
       paper-checkbox(checked, role="checkbox")
     .tablewrapper
       table.table.table-striped(style="margin-bottom:0")

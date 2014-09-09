@@ -47,7 +47,13 @@ class NetworkService
             type: "error"
           return
       creatematch: (options)->
-        @invoke "creatematch", options
+        @invoke("creatematch", options).then (err)->
+          return if !err?
+          new PNotify
+            title: "Can't Create Match"
+            text: err
+            type: "error"
+          return
 
   handlers: 
     matches:
@@ -164,8 +170,11 @@ class NetworkService
           return
 
   connect: ->
+    if !@disconnected
+      console.log 'Already connected.'
+      return
     @attempts += 1
-    @disconnect()
+    #@disconnect()
     if !@server?
       console.log "No server info yet."
       @status = "Waiting for server info..."

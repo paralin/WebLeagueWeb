@@ -2,7 +2,7 @@
 
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
-.controller 'PanelCtrl', ($scope, Auth, Network) ->
+.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network) ->
   $scope.auth = Auth
   $scope.network = Network
   $scope.selected = 0
@@ -19,6 +19,22 @@ angular.module 'webleagueApp'
         text: "Please enter a match name."
         type: "error"
       return
+    drp = $("#gameModeInput")[0]
+    sel = drp.selectedItem
+    if !sel?
+      $("paper-dialog")[0].opened = true
+      new PNotify
+        title: "Game Mode Needed"
+        text: "Please select a game mode."
+        type: "error"
+      return
+    gm = parseInt $(drp.selectedItem).attr "value"
+    console.log "Selected: #{$rootScope.MatchTypeN[gm]}"
+    Network.matches.do.creatematch
+      MatchType: 0
+      Name: name
+      GameType: gm
+    
   $scope.dismissCreate = ->
     $("paper-dialog")[0].opened = false
   # Is currently controlling a game

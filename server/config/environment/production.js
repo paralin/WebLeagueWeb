@@ -18,6 +18,6 @@ module.exports = {
     uri:    process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
             process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://dev:kapparinokappichino@kahana.mongohq.com:10065/webleague'
+            'mongodb://dev:kappa12345trondheimklappa@kahana.mongohq.com:10015/webleague'
   }
 };
