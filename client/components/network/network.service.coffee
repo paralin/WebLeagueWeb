@@ -14,6 +14,7 @@ class NetworkService
 
   constructor: (@scope, @timeout, @safeApply)->
   disconnect: ->
+    console.log "Disconnect called"
     if @conn?
       if @cont
         @cont.close()
@@ -219,7 +220,7 @@ class NetworkService
                 cb.call cont, arg
       @conn.ondisconnected = =>
         console.log "Disconnected from the network..."
-        @disconnect()
+        #@disconnect()
         @reconnect()
 
   chatByID: (id)->
