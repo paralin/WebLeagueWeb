@@ -19,7 +19,8 @@
     "paper-elements": "Polymer/paper-elements#~0.3.5",
     "ng-polymer-elements": "~0.1.0",
     "bootbox": "~4.3.0",
-    "pnotify": "~2.0.1"
+    "pnotify": "~2.0.1",
+    "paper-dropdown-menu": "Polymer/paper-dropdown-menu#master"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
@@ -27,6 +28,26 @@
   },
   "resolutions": {
     "angular": "~1.3.0",
-    "polymer": ">=0.4.0 <1.0.0"
+    "polymer": "master",
+    "core-collapse": "master",
+    "core-dropdown": "master",
+    "core-icon-button": "master",
+    "core-item": "master",
+    "core-selector": "master",
+    "core-menu": "master",
+    "core-overlay": "master",
+    "core-meta": "master",
+    "core-icons": "master",
+    "core-selection": "master",
+    "font-roboto": "master",
+    "core-transition": "master",
+    "paper-item": "master",
+    "core-component-page": "master",
+    "paper-shadow": "master",
+    "paper-ripple": "master",
+    "core-icon": "master",
+    "platform": "master",
+    "core-iconset-svg": "master",
+    "core-iconset": "master"
   }
 }

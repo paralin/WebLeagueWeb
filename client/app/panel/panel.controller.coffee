@@ -9,7 +9,23 @@ angular.module 'webleagueApp'
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
+  $scope.confirmCreateMatch = ->
+    nameInput = $("#matchNameInput")[0]
+    name = nameInput.inputValue
+    if name is ""
+      $("paper-dialog")[0].opened = true
+      new PNotify
+        title: "Name Needed"
+        text: "Please enter a match name."
+        type: "error"
+      return
+  $scope.dismissCreate = ->
+    $("paper-dialog")[0].opened = false
   # Is currently controlling a game
+  $scope.createStartgame = ->
+    #network.matches.do.creatematch({MatchType: 1, Name: 'test', GameType: 0})
+    $("paper-dialog")[0].toggle()
+    $("#matchNameInput")[0].inputValue = ""
   $scope.showRightCont = ->
     Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()
   $scope.isAdminOfGame = ->
