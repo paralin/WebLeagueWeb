@@ -58,8 +58,6 @@ class NetworkService
 
   handlers: 
     matches:
-      onopen: (ci)->
-        @fetchMatches()
       matchsnapshot: (match)->
         console.log "Received active match snapshot #{match}"
         @activeMatch = match
@@ -123,8 +121,17 @@ class NetworkService
             @availableGames.splice idx, 1
     chat:
       onopen: (ci)->
-        @chat.invoke('joinorcreate', {Name: "main"})
-        @chat.invoke('joinorcreate', {Name: "developers"})
+        @chat.invoke('authenticate').then (auths)=>
+          if auths.length is 0
+            @status = "Authentication failed. Try signing out and back in."
+            @disconnected = true
+            @doReconnect = false
+            @disconnect() 
+          else
+            console.log "Authenticated with auth groups #{auths}"
+            @chat.invoke('joinorcreate', {Name: "main"})
+            @chat.invoke('joinorcreate', {Name: "developers"})
+            @fetchMatches()
       onchatmessage: (upd)->
         chat = @chatByID upd.Id
         if !chat?
@@ -171,6 +178,7 @@ class NetworkService
           return
 
   connect: ->
+    console.log 'connect() called'
     if !@disconnected
       console.log 'Already connected.'
       return
@@ -226,15 +234,18 @@ class NetworkService
   chatByID: (id)->
     _.find @chats, {Id: id}
   fetchMatches: ->
+    #return
     @matches.invoke('getpublicgamelist').then (ms)=>
-      @liveMatches.length = 0
-      for game in ms
-        @liveMatches[@liveMatches.length] = game
-    @matches.invoke('getavailablegamelist').then (ms)=>
-      #use the same array
-      @availableGames.length = 0
-      for game in ms
-        @availableGames[@availableGames.length] = game
+      @safeApply @scope, =>
+        @liveMatches.length = 0
+        for game in ms
+          @liveMatches[@liveMatches.length] = game
+      @matches.invoke('getavailablegamelist').then (ms)=>
+        @safeApply @scope, =>
+          #use the same array
+          @availableGames.length = 0
+          for game in ms
+            @availableGames[@availableGames.length] = game
 
 angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, safeApply) ->
   service = new NetworkService $rootScope, $timeout, safeApply
