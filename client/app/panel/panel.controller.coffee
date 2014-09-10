@@ -3,12 +3,42 @@
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
 .controller 'PanelCtrl', ($rootScope, $scope, Auth, Network) ->
+  clr = []
   $scope.auth = Auth
   $scope.network = Network
   $scope.selected = 0
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
+  $scope.chatMembers = []
+  updChatMembers = (members)->
+    arr = $scope.chatMembers
+    nMembers = _.keys members
+    for mem in nMembers
+      arr[arr.length] = mem if !_.contains(arr, mem)
+    i=0
+    for mem in arr
+      arr.splice i, 1 if !_.contains(nMembers, mem)
+      i+=1
+  clr.push $scope.$watch "selected", (selected)->
+    chat = $scope.chats[selected]
+    if !chat?
+      $scope.chatMembers.length = 0
+    else
+      updChatMembers chat.Members
+  clr.push $rootScope.$on "chatMembersUpd", ->
+    chat = $scope.chats[$scope.selected]
+    if !chat?
+      $scope.chatMembers.length = 0
+    else
+      updChatMembers chat.Members
+  $scope.getMembersArr = (chat)->
+    return [] if !chat?
+    arr = $scope.chatMemberArrs[chat.Id]
+    if !arr?
+      arr = $scope.chatMemberArrs[chat.Id] = _.keys chat.Members
+    else
+    return arr
   $scope.confirmCreateMatch = ->
     nameInput = $("#matchNameInput")[0]
     name = nameInput.inputValue
@@ -76,6 +106,7 @@ angular.module 'webleagueApp'
     msg = event.detail.message
     console.log "sending #{msg}"
     Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.selected].Id, Text: msg})
-  $scope.$watch 'chats', (newValue, oldValue)->
-    $scope.selected = newValue.length-1 if $scope.selected > newValue.length
-      
+  $scope.$on 'destroy', ->
+    for cl in clr
+      cl()
+    clr.length = 0

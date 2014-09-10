@@ -140,6 +140,7 @@ class NetworkService
           chat.messages.push
             member: upd.Member.ID
             msg: upd.Text
+            name: chat.Members[Member.ID].Name
       #add or remove a chat channel
       chatchannelupd: (upd)->
         for chan in upd.channels
@@ -167,6 +168,7 @@ class NetworkService
         else
           for memb in upd.members
             chat.Members[memb.ID] = memb
+        @scope.$broadcast 'chatMembersUpd'
       chatmemberrm: (upd)->
         chat = @chatByID upd.id
         if !chat?
@@ -175,7 +177,7 @@ class NetworkService
         else
           for memb in upd.members
             delete chat.Members[memb]
-          return
+        @scope.$broadcast 'chatMembersUpd'
 
   connect: ->
     console.log 'connect() called'
