@@ -17,8 +17,8 @@
   wl-chat(ng-model="chats[selected]", ng-sendchat="sendChat($event)", ng-class="{fullPage:!showRightCont()}", ng-membersarr="chatMembers")
   #rightcont(ng-if="showRightCont()")
     .mains
-      live-matches(ng-if="liveMatches.length>0",ng-match-types="GameTypeK",ng-model="liveMatches")
-      match-game(ng-repeat="game in games",ng-model="game",ng-game-modes="MatchTypeN",ng-match-types="GameTypeK")
+      live-matches(ng-if="liveMatches.length>0",ng-match-types="MatchTypeK",ng-model="liveMatches")
+      match-game(ng-repeat="game in games",ng-model="game",ng-game-modes="GameModeK",ng-match-types="MatchTypeK")
     .btns(ng-if="isAdminOfGame()")
       paper-button.primary-btn(label="START",raisedButton)
       paper-button.danger-btn(label="CANCEL",raisedButton,ng-click="network.matches.do.leavematch()")
@@ -32,6 +32,6 @@ paper-dialog#createMatch(heading="Create Match", transition="paper-dialog-transi
     div(style="height: 73px")
       paper-input#matchNameInput(floatinglabel="",label="Match Name", required="", error="You must enter a match name.",style="padding: 0")
     paper-dropdown-menu#gameModeInput(label="Game mode",style="position:absolute;padding:0")
-      paper-item(ng-repeat="(id, name) in MatchTypeN", label="{{name}}", value="{{id}}")
+      paper-item(ng-repeat="(id, name) in GameModeN", label="{{name}}", value="{{id}}")
   paper-button(ng-click="dismissCreate()", label="Cancel", affirmative="")
   paper-button.primary-btn(ng-click="confirmCreateMatch()", label="Create", affirmative="", autofocus="")

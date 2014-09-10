@@ -33,7 +33,7 @@ angular.module 'webleagueApp', [
       loggedIn = user?
       $location.path "/login" if next.authenticate and not loggedIn
       $location.path "/panel" if loggedIn and next.name is "login"
-  $rootScope.MatchType =
+  $rootScope.GameMode =
     NONE: 0
     AP: 1
     CM: 2
@@ -56,8 +56,8 @@ angular.module 'webleagueApp', [
     EVENT: 19
     ARDM: 20
     SOLOMID: 21
-  $rootScope.MatchTypeK = _.invert $rootScope.MatchType
-  $rootScope.MatchTypeN =
+  $rootScope.GameModeK = _.invert $rootScope.GameMode
+  $rootScope.GameModeN =
     #0: "None"
     1: "All Pick"
     2: "Captains Mode"
@@ -80,8 +80,8 @@ angular.module 'webleagueApp', [
     19: "TI4 Event"
     20: "Deathmatch"
     #21: "Solo Mid"
-  $rootScope.MatchTypeNK = _.invert $rootScope.MatchTypeN
-  $rootScope.GameType =
+  $rootScope.GameModeNK = _.invert $rootScope.MatchTypeN
+  $rootScope.MatchType =
     STARTGAME: 0
     CAPTAINS: 1
-  $rootScope.GameTypeK = _.invert $rootScope.GameType
+  $rootScope.MatchTypeK = _.invert $rootScope.MatchType

@@ -59,17 +59,17 @@ angular.module 'webleagueApp'
         type: "error"
       return
     gm = parseInt $(drp.selectedItem).attr "value"
-    console.log "Selected: #{$rootScope.MatchTypeN[gm]}"
+    console.log "Selected: #{$rootScope.GameModeN[gm]}"
+    console.log "Mode ID is #{gm}"
     Network.matches.do.creatematch
       MatchType: 0
       Name: name
-      GameType: gm
+      GameMode: gm
     
   $scope.dismissCreate = ->
     $("paper-dialog")[0].opened = false
   # Is currently controlling a game
   $scope.createStartgame = ->
-    #network.matches.do.creatematch({MatchType: 1, Name: 'test', GameType: 0})
     $("paper-dialog")[0].toggle()
     $("#matchNameInput")[0].inputValue = ""
   $scope.showRightCont = ->

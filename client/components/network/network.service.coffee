@@ -237,12 +237,15 @@ class NetworkService
     _.find @chats, {Id: id}
   fetchMatches: ->
     #return
+    console.log "Fetching matches"
     @matches.invoke('getpublicgamelist').then (ms)=>
+      console.log "Received public match list"
       @safeApply @scope, =>
         @liveMatches.length = 0
         for game in ms
           @liveMatches[@liveMatches.length] = game
       @matches.invoke('getavailablegamelist').then (ms)=>
+        console.log "Received available match list"
         @safeApply @scope, =>
           #use the same array
           @availableGames.length = 0
@@ -255,4 +258,6 @@ angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, s
     service.token = currentToken
     service.server = currentServer
     service.connect()
+  $(window).unload ->
+    service.disconnect()
   window.service = service
