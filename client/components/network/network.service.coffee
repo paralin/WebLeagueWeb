@@ -140,7 +140,7 @@ class NetworkService
           chat.messages.push
             member: upd.Member.ID
             msg: upd.Text
-            name: chat.Members[Member.ID].Name
+            name: chat.Members[upd.Member.ID].Name
       #add or remove a chat channel
       chatchannelupd: (upd)->
         for chan in upd.channels
