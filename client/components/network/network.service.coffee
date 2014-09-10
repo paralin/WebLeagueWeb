@@ -67,7 +67,7 @@ class NetworkService
         mtchs = []
         match = _.find @availableGames, {Id: upd.Id}
         mtchs[mtchs.length] = match if match?
-        mtchs[mtchs.length] = @activeMatch if @activeMatch.Id is upd.Id
+        mtchs[mtchs.length] = @activeMatch if @activeMatch? and @activeMatch.Id is upd.Id
         if mtchs.length is 0
           console.log "Received match player add/update for an unknown match #{upd.Id}"
         for match in mtchs
