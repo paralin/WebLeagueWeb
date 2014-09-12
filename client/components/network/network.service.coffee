@@ -121,7 +121,7 @@ class NetworkService
             @availableGames.splice idx, 1
     chat:
       onopen: (ci)->
-        @chat.invoke('authenticate').then (auths)=>
+        @chat.invoke('authinfo').then (auths)=>
           if auths.length is 0
             @status = "Authentication failed. Try signing out and back in."
             @disconnected = true
