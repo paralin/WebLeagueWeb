@@ -1,5 +1,5 @@
 #panel-container
-  core-toolbar.medium-tall
+  core-toolbar.medium-tall(style="height: 90px")
     paper-icon-button(icon="menu",role="button",tabindex="0",aria-label="menu")
     div(flex="") Web League
     div(dropdown="")
@@ -7,11 +7,11 @@
       ul.dropdown-menu(role="menu",style="right: 0; left: auto;")
         li
           a(href="/auth/logout",ng-click="$event.stopPropagation()") Sign Out
-    .bottom.fit(horizontal="",layout="")
-      paper-tabs(ng-model="selected",flex="",style="max-width: calc(100% - 90px);",role="tablist")
+    .bottom.fit(horizontal="",layout="",style="height: 35px")
+      paper-tabs(ng-model="selected",flex="",style="max-width: calc(100% - 90px);height:35px",role="tablist")
         paper-tab(ng-repeat="chat in chats") 
           | {{chat.Name}}
-      div(style="width: 90px")
+      div(style="width: 90px;position:relative;top:-5px")
         paper-icon-button(icon="add", role="button", ng-click="showJoinDialog()")
         paper-icon-button(icon="close", role="button", ng-disabled="!chats[selected].Leavable", ng-click="leaveCurrentChat()")
   wl-chat(ng-model="chats[selected]", ng-sendchat="sendChat($event)", ng-class="{fullPage:!showRightCont()}", ng-membersarr="chatMembers")
