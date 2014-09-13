@@ -33,14 +33,14 @@ var all = {
     session: 'webleague-secret'
   },
 
-  // List of user roles
-  userRoles: ['chat'],
-
   // MongoDB connection options
   mongo: {
     options: {
       db: {
         safe: true
+      },
+      server: {
+        auto_reconnect: true
       }
     }
   }

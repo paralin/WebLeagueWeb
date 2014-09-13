@@ -102,6 +102,14 @@ angular.module 'webleagueApp'
       Network.chat.invoke "leave", {Id: chat.Id}
     else
       bootbox.alert "You can't leave this chat."
+  $scope.isInGame = (game)->
+    if !game?
+      return Network.activeMatch?
+    return false if !Auth.currentUser? or !Network.activeMatch?
+    (_.findIndex game.Players, {SID: Auth.currentUser.steam.steamid}) != -1
+  $scope.joinGame = (game)->
+    Network.matches.do.joinmatch
+      Id: game.Id
   $scope.sendChat = (event)->
     msg = event.detail.message
     console.log "sending #{msg}"

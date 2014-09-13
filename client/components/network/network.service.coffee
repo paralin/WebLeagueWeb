@@ -55,7 +55,22 @@ class NetworkService
             text: err
             type: "error"
           return
-
+      joinmatch: (options)->
+        @invoke("joinmatch", options).then (err)->
+          return if !err?
+          new PNotify
+            title: "Can't Join Match"
+            text: err
+            type: "error"
+          return
+      switchteam: ->
+        @invoke("switchteam").then (err)->
+          return if !err?
+          new PNotify
+            title: "Can't Switch Teams"
+            text: err
+            type: "error"
+          return
   handlers: 
     matches:
       matchsnapshot: (match)->
@@ -83,7 +98,7 @@ class NetworkService
         mtchs = []
         match = _.find @availableGames, {Id: upd.Id}
         mtchs[mtchs.length] = match if match?
-        mtchs[mtchs.length] = @activeMatch if @activeMatch.Id is upd.Id
+        mtchs[mtchs.length] = @activeMatch if @activeMatch? && @activeMatch.Id is upd.Id
         if mtchs.length is 0
           console.log "Received match player remove for an unknown match #{upd.Id}"
         for match in mtchs
