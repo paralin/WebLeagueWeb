@@ -145,7 +145,6 @@ class NetworkService
           else
             console.log "Authenticated with auth groups #{auths}"
             @chat.invoke('joinorcreate', {Name: "main"})
-            @chat.invoke('joinorcreate', {Name: "developers"})
             @fetchMatches()
       onchatmessage: (upd)->
         chat = @chatByID upd.Id
