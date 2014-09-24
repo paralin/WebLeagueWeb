@@ -132,7 +132,7 @@ angular.module('webleagueApp').directive('netAnim', function($interval) {
           //ctx.fillStyle = '#fff';
           ctx.strokeStyle = '#000';
           ctx.fillStyle = '#000';
-          ctx.lineWidth = 0.1;
+          ctx.lineWidth = 0.15;
 
           ctx.fillRect(this.x, this.y, 1, 1);
 
@@ -153,7 +153,7 @@ angular.module('webleagueApp').directive('netAnim', function($interval) {
         this.jumps = 0;
 
         //var tint = (signalCount % 12) * 30;
-        var tint = 57;
+        var tint = 51;
         this.style = 'hsl(' + tint + ',100%,50%)';
 
         for (var i = 0; i < start.connections.length; i++) {
