@@ -85,3 +85,16 @@ angular.module 'webleagueApp', [
     STARTGAME: 0
     CAPTAINS: 1
   $rootScope.MatchTypeK = _.invert $rootScope.MatchType
+  $rootScope.SetupStatus =
+    QUEUE: 0
+    QUEUEHOST: 1
+    INIT: 2
+    WAIT: 3
+    DONE: 4
+  $rootScope.SetupStatusK = _.invert $rootScope.SetupStatus
+  $rootScope.SetupStatusN =
+    0: "Waiting for an available bot..."
+    1: "Waiting for an available host.."
+    2: "Bot is setting up the lobby..."
+    3: "Waiting for players to join..."
+    4: "Game is ready to begin."

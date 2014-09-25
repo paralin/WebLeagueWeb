@@ -107,6 +107,9 @@ angular.module 'webleagueApp'
       return Network.activeMatch?
     return false if !Auth.currentUser? or !Network.activeMatch?
     (_.findIndex game.Players, {SID: Auth.currentUser.steam.steamid}) != -1
+  $scope.gameList = ->
+    return [Network.activeMatch] if Network.activeMatch?
+    return $scope.games
   $scope.joinGame = (game)->
     Network.matches.do.joinmatch
       Id: game.Id

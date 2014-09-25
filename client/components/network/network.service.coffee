@@ -47,6 +47,14 @@ class NetworkService
             text: err
             type: "error"
           return
+      startmatch: ->
+        @invoke("startmatch").then (err)->
+          return if !err?
+          new PNotify
+            title: "Can't Start Match"
+            text: err
+            type: "error"
+          return
       creatematch: (options)->
         @invoke("creatematch", options).then (err)->
           return if !err?
@@ -73,6 +81,8 @@ class NetworkService
           return
   handlers: 
     matches:
+      onopen: ->
+        @activeMatch = null
       matchsnapshot: (match)->
         console.log "Received active match snapshot #{match}"
         @activeMatch = match
@@ -134,6 +144,12 @@ class NetworkService
           idx = _.findIndex @availableGames, {Id: id}
           if idx isnt -1
             @availableGames.splice idx, 1
+      clearsetup: ->
+        if @activeMatch?
+          @activeMatch.Setup = null
+      setupsnapshot: (snap)->
+        if @activeMatch?
+          @activeMatch.Setup = snap
     chat:
       onopen: (ci)->
         @chat.invoke('authinfo').then (auths)=>
