@@ -152,8 +152,7 @@ angular.module('webleagueApp').directive('netAnim', function($interval) {
         this.strength = 4.0;
         this.jumps = 0;
 
-        //var tint = (signalCount % 12) * 30;
-        var tint = 51;
+        var tint = (signalCount % 12) * 30;
         this.style = 'hsl(' + tint + ',100%,50%)';
 
         for (var i = 0; i < start.connections.length; i++) {

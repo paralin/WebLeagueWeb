@@ -15,7 +15,13 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
             td {{match.Info.Name}}
           template(bind="",if="{{match.Setup != null}}")
             tr(style="font-weight:bold;color:black;background:white") 
-              td {{setupstatusn[match.Setup.SetupStatus]}}
+              td {{setupstatusn[match.Setup.Details.Status]}}
+          template(bind="",if="{{match.Setup != null&&match.Setup.Details != null && match.Setup.Details.Status==3}}")
+            tr(style="font-weight:bold;color:black;background:white") 
+              td 
+                | Lobby Password: 
+                b(style="color: red")
+                  {{match.Setup.Details.Password}}
           template(repeat="{{player in match.Players}}")
             tr(class="{{ {success: player.Team==0, danger: player.Team==1, boldText: player.SID==match.Info.Owner} | tokenList }}")
               td
