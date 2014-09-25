@@ -19,10 +19,10 @@
     .mains
       live-matches(ng-if="liveMatches.length>0",ng-match-types="MatchTypeK",ng-model="liveMatches")
       match-game(ng-repeat="game in gameList()",ng-model="game",ng-game-modes="GameModeN",ng-match-types="MatchTypeK",ng-in-game="isInGame(game)",ng-pressed-join="joinGame(game)",ng-setup-statusn="SetupStatusN")
-    .btns(ng-if="isAdminOfGame()&&network.activeGame.Setup==null")
+    .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup==null")
       paper-button.primary-btn(label="START",raisedButton,ng-click="network.matches.do.startmatch()")
       paper-button.danger-btn(label="CANCEL",raisedButton,ng-click="network.matches.do.leavematch()")
-    .btns(ng-if="isAdminOfGame()&&network.activeGame.Setup!=null")
+    .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup!=null")
       paper-button.danger-btn(label="CANCEL MATCH",raisedButton,ng-click="network.matches.do.leavematch()")
     .btns(ng-if="isInGame()&&!isAdminOfGame()")
       paper-button(label="SWITCH TEAM",raisedButton,ng-click="network.matches.do.switchteam()")
