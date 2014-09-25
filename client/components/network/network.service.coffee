@@ -289,6 +289,7 @@ angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, s
   Auth.getLoginStatus (currentUser, currentToken, currentServer)->
     service.token = currentToken
     service.server = currentServer
+    console.log "Server "+currentServer
     service.connect()
   $(window).unload ->
     service.disconnect()
