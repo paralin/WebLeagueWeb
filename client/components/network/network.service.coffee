@@ -86,24 +86,8 @@ class NetworkService
       matchsnapshot: (match)->
         console.log "Received active match snapshot #{match}"
         @activeMatch = match
-      matchplayerupd: (upd)->
-        console.log "Received match player add/update"
-        #find the match
-        mtchs = []
-        match = _.find @availableGames, {Id: upd.Id}
-        mtchs[mtchs.length] = match if match?
-        mtchs[mtchs.length] = @activeMatch if @activeMatch? and @activeMatch.Id is upd.Id
-        if mtchs.length is 0
-          console.log "Received match player add/update for an unknown match #{upd.Id}"
-        for match in mtchs
-          for plyr in upd.players
-            plyrIdx = _.findIndex match.Players, {SID: plyr.SID}
-            if plyrIdx isnt -1
-              match.Players[plyrIdx] = plyr
-            else
-              match.Players[match.Players.length] = plyr
-      matchplayerrm: (upd)->
-        console.log "Received match player rm"
+      matchplayerssnapshot: (upd)->
+        console.log "Received match players snapshot"
         #find the match
         mtchs = []
         match = _.find @availableGames, {Id: upd.Id}
@@ -112,10 +96,7 @@ class NetworkService
         if mtchs.length is 0
           console.log "Received match player remove for an unknown match #{upd.Id}"
         for match in mtchs
-          for id in upd.ids
-            plyrIdx = _.findIndex match.Players, {SID: id}
-            if plyrIdx isnt -1
-              match.Players.splice plyrIdx, 1
+          match.Players = upd.Players
       publicmatchupd: (upd)->
         console.log "Received public match add/update"
         for match in upd.matches
@@ -150,6 +131,9 @@ class NetworkService
       setupsnapshot: (snap)->
         if @activeMatch?
           @activeMatch.Setup = snap
+      infosnapshot: (snap)->
+        if @activeMatch?
+          @activeMatch.Info = snap
     chat:
       onopen: (ci)->
         @chat.invoke('authinfo').then (auths)=>
