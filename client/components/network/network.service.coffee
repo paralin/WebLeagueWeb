@@ -39,6 +39,14 @@ class NetworkService
 
   methods:
     matches:
+      finalizematch: ->
+        @invoke("finalizematch").then (err)->
+          return if !err?
+          new PNotify
+            title: "Can't Start Match"
+            text: err
+            type: "error"
+          return
       leavematch: ->
         (@invoke "leavematch").then (err)->
           return if !err?

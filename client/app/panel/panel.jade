@@ -23,6 +23,7 @@
       paper-button.primary-btn(label="START",raisedButton,ng-click="network.matches.do.startmatch()")
       paper-button.danger-btn(label="CANCEL",raisedButton,ng-click="network.matches.do.leavematch()")
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup!=null")
+      paper-button.primary-btn(label="START MATCH",raisedButton,ng-click="network.matches.do.finalizematch()",ng-if="allAreReady()")
       paper-button.danger-btn(label="CANCEL MATCH",raisedButton,ng-click="network.matches.do.leavematch()")
     .btns(ng-if="isInGame()&&!isAdminOfGame()&&network.activeMatch.Info.Status<2")
       paper-button.danger-btn(label="LEAVE",raisedButton,ng-click="network.matches.do.leavematch()")
