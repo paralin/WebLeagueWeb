@@ -23,7 +23,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 b(style="color: red")
                   {{match.Setup.Details.Password}}
           template(repeat="{{player in match.Players}}")
-            tr(class="{{ {success: player.Team==0, danger: player.Team==1, boldText: player.SID==match.Info.Owner} | tokenList }}")
+            tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner} | tokenList }}")
               td
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
                 | {{player.Name}}
