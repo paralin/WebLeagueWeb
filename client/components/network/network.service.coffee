@@ -127,13 +127,29 @@ class NetworkService
             @availableGames.splice idx, 1
       clearsetup: ->
         if @activeMatch?
-          @activeMatch.Setup = null
+          console.log "Received match setup clear"
+          #find the match
+          mtchs = _.where @availableGames, {Id: @activeMatch.Id}
+          mtchs[mtchs.length] = @activeMatch
+          for match in mtchs
+            match.Setup = null
       setupsnapshot: (snap)->
         if @activeMatch?
-          @activeMatch.Setup = snap
+          console.log "Received match setup snapshot"
+          #find the match
+          mtchs = _.where @availableGames, {Id: @activeMatch.Id}
+          mtchs[mtchs.length] = @activeMatch
+          for match in mtchs
+            match.Setup = snap
       infosnapshot: (snap)->
         if @activeMatch?
           @activeMatch.Info = snap
+          console.log "Received match info snapshot"
+          #find the match
+          mtchs = _.where @availableGames, {Id: @activeMatch.Id}
+          mtchs[mtchs.length] = @activeMatch
+          for match in mtchs
+            match.Info = snap
     chat:
       onopen: (ci)->
         @chat.invoke('authinfo').then (auths)=>

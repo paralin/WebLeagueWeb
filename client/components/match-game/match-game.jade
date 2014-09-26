@@ -2,6 +2,7 @@ link(rel="import", href="/bower_components/polymer/polymer.html")
 link(rel="import", href="/bower_components/paper-button/paper-button.html")
 polymer-element(name="match-game", attributes="match modes gametypes inGame setupstatusn canJoin")
   template
+    link(rel="stylesheet",href="/bower_components/font-awesome/css/font-awesome.css")
     .header(class="{{inGame?'blueHeader':'redHeader'}}")
       | {{modes[match.Info.MatchType]}} - {{gametypes[match.Info.GameMode]}} -
       | ({{match.Players.length}}/10)
@@ -22,10 +23,15 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
               td 
                 | Lobby Password: 
                 b(style="color: red")
-                  {{match.Setup.Details.Password}}
+                  | {{match.Setup.Details.Password}}
           template(repeat="{{player in match.Players}}")
             tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner} | tokenList }}")
               td
+                template(bind="",if="{{match.Info.Status==1&&match.Setup!=null&&match.Setup.Details.Status==3}}")
+                  template(bind="",if="{{player.Ready}}")
+                    i.fa.fa-check(style="margin-right:5px;color:green")
+                  template(bind="",if="{{!player.Ready}}")
+                    i.fa.fa-cog.fa-spin(style="margin-right:5px")
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
                 | {{player.Name}}
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
