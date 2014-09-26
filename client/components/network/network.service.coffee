@@ -150,14 +150,12 @@ class NetworkService
           for match in mtchs
             match.Setup = snap
       infosnapshot: (snap)->
-        if @activeMatch?
-          @activeMatch.Info = snap
-          console.log "Received match info snapshot"
-          #find the match
-          mtchs = _.where @availableGames, {Id: @activeMatch.Id}
-          mtchs[mtchs.length] = @activeMatch
-          for match in mtchs
-            match.Info = snap
+        console.log "Received match info snapshot"
+        #find the match
+        mtchs = _.where @availableGames, {Id: snap.Id}
+        mtchs[mtchs.length] = @activeMatch if @activeMatch? && @activeMatch.Id is snap.Id
+        for match in mtchs
+          match.Info = snap
     chat:
       onopen: (ci)->
         @chat.invoke('authinfo').then (auths)=>

@@ -56,6 +56,7 @@ angular.module 'webleagueApp', [
     EVENT: 19
     ARDM: 20
     SOLOMID: 21
+    ALLDRAFT: 22
   $rootScope.GameModeK = _.invert $rootScope.GameMode
   $rootScope.GameModeN =
     #0: "None"
@@ -77,9 +78,10 @@ angular.module 'webleagueApp', [
     16: "Captains Draft"
     #17: "Balanced Draft"
     18: "Ability Draft"
-    19: "TI4 Event"
+    #19: "TI4 Event"
     20: "Deathmatch"
     #21: "Solo Mid"
+    22: "All Draft"
   $rootScope.GameModeNK = _.invert $rootScope.MatchTypeN
   $rootScope.MatchType =
     STARTGAME: 0

@@ -117,6 +117,8 @@ angular.module 'webleagueApp'
   $scope.joinGame = (game)->
     Network.matches.do.joinmatch
       Id: game.Id
+  $scope.gameFilter = (game)->
+    game.Info.Status==0 || (Network.activeMatch? && Network.activeMatch.Id is game.Id)
   $scope.sendChat = (event)->
     msg = event.detail.message
     console.log "sending #{msg}"
