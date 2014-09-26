@@ -1,13 +1,13 @@
 link(rel="import", href="/bower_components/polymer/polymer.html")
 link(rel="import", href="/bower_components/paper-button/paper-button.html")
-polymer-element(name="match-game", attributes="match modes gametypes inGame setupstatusn")
+polymer-element(name="match-game", attributes="match modes gametypes inGame setupstatusn canJoin")
   template
     .header
       | {{modes[match.Info.MatchType]}} - {{gametypes[match.Info.GameMode]}}
     .tablewrapper
       table.table.table-condensed(style="margin-bottom:0")
         tbody
-          template(bind="",if="{{!inGame&&match.Players.length<10}}")
+          template(bind="",if="{{!inGame&&match.Players.length<10&&canJoin}}")
             tr(style="padding:0")
               td(style="padding:0")
                 paper-button.success-btn(label="Join",style="width:100%;height:100%",on-click="{{joinMatch}}")
