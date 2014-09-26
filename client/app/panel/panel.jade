@@ -17,8 +17,8 @@
   wl-chat(ng-model="chats[selected]", ng-sendchat="sendChat($event)", ng-class="{fullPage:!showRightCont()}", ng-membersarr="chatMembers")
   #rightcont(ng-if="showRightCont()")
     .mains
-      live-matches(ng-if="liveMatches.length>0",ng-match-types="MatchTypeK",ng-model="liveMatches")
-      match-game(ng-repeat="game in games",ng-model="game",ng-game-modes="GameModeN",ng-match-types="MatchTypeK",ng-in-game="isInGame(game)",ng-pressed-join="joinGame(game)",ng-setup-statusn="SetupStatusN")
+      live-matches(ng-if="liveMatches.length>0",ng-match-types="MatchTypeNS",ng-model="liveMatches")
+      match-game(ng-repeat="game in games",ng-model="game",ng-game-modes="GameModeN",ng-match-types="MatchTypeNS",ng-in-game="isInGame(game)",ng-pressed-join="joinGame(game)",ng-setup-statusn="SetupStatusN")
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup==null")
       paper-button.primary-btn(label="START",raisedButton,ng-click="network.matches.do.startmatch()")
       paper-button.danger-btn(label="CANCEL",raisedButton,ng-click="network.matches.do.leavematch()")

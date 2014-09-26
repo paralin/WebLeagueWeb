@@ -85,6 +85,9 @@ angular.module 'webleagueApp', [
     STARTGAME: 0
     CAPTAINS: 1
   $rootScope.MatchTypeK = _.invert $rootScope.MatchType
+  $rootScope.MatchTypeNS =
+    0: "S"
+    1: "C"
   $rootScope.SetupStatus =
     QUEUE: 0
     QUEUEHOST: 1
