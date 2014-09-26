@@ -2,7 +2,7 @@ link(rel="import", href="/bower_components/polymer/polymer.html")
 link(rel="import", href="/bower_components/paper-button/paper-button.html")
 polymer-element(name="match-game", attributes="match modes gametypes inGame setupstatusn canJoin")
   template
-    .header
+    .header(class="{{inGame?'blueHeader':'redHeader'}}")
       | {{modes[match.Info.MatchType]}} - {{gametypes[match.Info.GameMode]}} -
       | ({{match.Players.length}}/10)
     .tablewrapper
@@ -23,7 +23,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 | Lobby Password: 
                 b(style="color: red")
                   {{match.Setup.Details.Password}}
-          template(if="inGame||canJoin",repeat="{{player in match.Players}}")
+          template(repeat="{{player in match.Players}}")
             tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner} | tokenList }}")
               td
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
@@ -36,7 +36,6 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
         text-align: center;
         font-size: 1.5em;
         font-weight: 500;
-        background-color: rgba(255,0,0,0.58);
       }
       .success-btn {
         background: #2FD22E;
@@ -44,7 +43,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
         border-radius: 0;
       }
       .success-btn:hover {
-        background: #298028;
+        background-color: #298028;
       }
       .success-btn::shadow #ripple {
         color: #FD9292;
@@ -55,5 +54,11 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
       }
       .boldText {
         font-weight: bold;
+      }
+      .blueHeader {
+        background-color: rgba(0, 255, 249, 1);
+      }
+      .redHeader {
+        background-color: rgba(255,0,0,0.58);
       }
   script(src="match-game.js")
