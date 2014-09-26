@@ -3,7 +3,8 @@ link(rel="import", href="/bower_components/paper-button/paper-button.html")
 polymer-element(name="match-game", attributes="match modes gametypes inGame setupstatusn canJoin")
   template
     .header
-      | {{modes[match.Info.MatchType]}} - {{gametypes[match.Info.GameMode]}}
+      | {{modes[match.Info.MatchType]}} - {{gametypes[match.Info.GameMode]}} -
+      | ({{match.Players.length}}/10)
     .tablewrapper
       table.table.table-condensed(style="margin-bottom:0")
         tbody
