@@ -103,3 +103,6 @@ angular.module 'webleagueApp', [
     2: "Bot is setting up the lobby..."
     3: "Waiting for players to join..."
     4: "Game is ready to begin."
+  $rootScope.CaptainStatusN =
+    0: "Dire captain picking..."
+    1: "Radiant captain picking..."

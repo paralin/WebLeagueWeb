@@ -2,15 +2,30 @@
 
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
-.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network) ->
+.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply) ->
   clr = []
   $scope.auth = Auth
+  console.log "$scope"
+  window.scope = $scope
   $scope.network = Network
   $scope.selected = 0
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
   $scope.chatMembers = []
+  $scope.allMembers = []
+  $scope.regenMembersList = ->
+    members = []
+    for chat in Network.chats
+      for id, member of chat.Members
+        ex = _.find members, {ID: member.ID}
+        members.push member if !ex?
+    $scope.allMembers = members
+  $scope.notMe = (member)->
+    member.SteamID isnt Auth.currentUser.steam.steamid
+  $scope.pickPlayer = (event)->
+    console.log "Picking player #{event.detail.SID}"
+    Network.matches.do.pickPlayer event.detail.SID
   updChatMembers = (members)->
     arr = $scope.chatMembers
     nMembers = _.keys members
@@ -32,6 +47,34 @@ angular.module 'webleagueApp'
       $scope.chatMembers.length = 0
     else
       updChatMembers chat.Members
+    $scope.regenMembersList()
+  chalDialog = false
+  clr.push $rootScope.$on "challengeSnapshot", ->
+    challenge = Network.activeChallenge
+    if challenge?
+      if challenge.ChallengedSID is Auth.currentUser.steam.steamid
+        chalDialog = true
+        bootbox.dialog
+          message: "You have a challenge from #{challenge.ChallengerName}."
+          title: "Incoming Challenge"
+          buttons:
+            danger:
+              label: "Decline"
+              className: "btn-danger"
+              callback: ->
+                safeApply $scope, ->
+                  Network.matches.do.respondchallenge false
+                return
+            success:
+              label: "Accept"
+              className: "btn-success"
+              callback: ->
+                safeApply $scope, ->
+                  Network.matches.do.respondchallenge true
+                return
+    else if chalDialog
+      bootbox.hideAll()
+      chalDialog = false
   $scope.getMembersArr = (chat)->
     return [] if !chat?
     arr = $scope.chatMemberArrs[chat.Id]
@@ -43,7 +86,7 @@ angular.module 'webleagueApp'
     nameInput = $("#matchNameInput")[0]
     name = nameInput.inputValue
     if name is ""
-      $("paper-dialog")[0].opened = true
+      $("#createMatch")[0].opened = true
       new PNotify
         title: "Name Needed"
         text: "Please enter a match name."
@@ -52,7 +95,7 @@ angular.module 'webleagueApp'
     drp = $("#gameModeInput")[0]
     sel = drp.selectedItem
     if !sel?
-      $("paper-dialog")[0].opened = true
+      $("#createMatch")[0].opened = true
       new PNotify
         title: "Game Mode Needed"
         text: "Please select a game mode."
@@ -65,13 +108,40 @@ angular.module 'webleagueApp'
       MatchType: 0
       Name: name
       GameMode: gm
-    
+  $scope.confirmCreateChallenge = ->
+    drp = $("#cPlayerInput")[0]
+    sel = drp.selectedItem
+    if !sel?
+      $("#createChallenge")[0].opened = true
+      new PNotify
+        title: "Player Needed"
+        text: "Please select a player."
+        type: "error"
+      return
+    sid = $(drp.selectedItem).attr "value"
+    drp = $("#cgameModeInput")[0]
+    sel = drp.selectedItem
+    if !sel?
+      $("#createChallenge")[0].opened = true
+      new PNotify
+        title: "Game Mode Needed"
+        text: "Please select a game mode."
+        type: "error"
+      return
+    gm = parseInt $(drp.selectedItem).attr "value"
+    console.log "Selected: #{sid}"
+    console.log "Selected game mode: #{gm}"
+    Network.matches.do.startchallenge sid, gm
   $scope.dismissCreate = ->
-    $("paper-dialog")[0].opened = false
+    $("#createMatch")[0].opened = false
+  $scope.dismissChallenge = ->
+    $("#createChallenge")[0].opened = false
   # Is currently controlling a game
   $scope.createStartgame = ->
-    $("paper-dialog")[0].toggle()
+    $("#createMatch")[0].toggle()
     $("#matchNameInput")[0].inputValue = ""
+  $scope.createChallenge = ->
+    $("#createChallenge")[0].toggle()
   $scope.showRightCont = ->
     Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()
   $scope.isAdminOfGame = ->

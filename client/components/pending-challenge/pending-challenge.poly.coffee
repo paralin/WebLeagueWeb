@@ -1,0 +1,2 @@
+Polymer 'pending-challenge', {
+}

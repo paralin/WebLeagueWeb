@@ -8,6 +8,8 @@ class NetworkService
   status: "Disconnected from the server."
 
   activeMatch: null
+  activeChallenge: null
+  hasChallenge: false
   chats: []
   liveMatches: []
   availableGames: []
@@ -47,6 +49,8 @@ class NetworkService
             text: err
             type: "error"
           return
+      pickPlayer: (sid)->
+        @invoke "pickPlayer", {SID: sid}
       leavematch: ->
         (@invoke "leavematch").then (err)->
           return if !err?
@@ -71,6 +75,8 @@ class NetworkService
             text: err
             type: "error"
           return
+      respondchallenge: (chal)->
+        @invoke "challengeresponse", {accept: chal}
       joinmatch: (options)->
         @invoke("joinmatch", options).then (err)->
           return if !err?
@@ -87,13 +93,34 @@ class NetworkService
             text: err
             type: "error"
           return
+      startchallenge: (tsid, gid)->
+        console.log gid
+        @invoke("startchallenge", {ChallengedSID: tsid, GameMode: gid}).then (err)->
+          return if !err?
+          new PNotify
+            title: "Challenge Error"
+            text: err
+            type: "error"
+          return
   handlers: 
     matches:
       onopen: ->
         @activeMatch = null
+        bootbox.hideAll()
+        @activeChallenge = null
       matchsnapshot: (match)->
         console.log "Received active match snapshot #{match}"
         @activeMatch = match
+      challengesnapshot: (match)->
+        console.log "Received active challenge snapshot #{match}"
+        @activeChallenge = match
+        @hasChallenge = @activeChallenge?
+        @scope.$broadcast 'challengeSnapshot', @activeChallenge
+      clearchallenge: ->
+        console.log "Received active challenge clear"
+        @activeChallenge = null
+        @hasChallenge = false
+        @scope.$broadcast 'challengeSnapshot', null
       matchplayerssnapshot: (upd)->
         console.log "Received match players snapshot"
         #find the match
@@ -264,8 +291,8 @@ class NetworkService
           cont.do = {}
           for cbn, cb of cbs
             do (cbn, cb, cont, name) ->
-              cont.do[cbn] = (arg)->
-                cb.call cont, arg
+              cont.do[cbn] = ->
+                cb.apply cont, arguments
       @conn.ondisconnected = =>
         console.log "Disconnected from the network..."
         #@disconnect()
