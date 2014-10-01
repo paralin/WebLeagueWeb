@@ -32,7 +32,7 @@
       paper-button(label="START GAME",raisedButton,ng-click="createStartgame()")
       paper-button(label="CHALLENGE PLAYER",raisedButton,ng-click="createChallenge()")
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
-paper-dialog#createMatch(heading="Create Match", transition="paper-dialog-transition-bottom", style="width: 400px;", backdrop=true)
+paper-dialog#createMatch(heading="Create Match", transition="paper-dialog-transition-bottom", style="width: 400px;")
   p(style="margin-bottom:0")
     | Choose your match options:
   div(style="height: 110px")
@@ -42,7 +42,7 @@ paper-dialog#createMatch(heading="Create Match", transition="paper-dialog-transi
       paper-item(ng-repeat="(id, name) in GameModeN", label="{{name}}", value="{{id}}")
   paper-button(ng-click="dismissCreate()", label="Cancel", affirmative="")
   paper-button.primary-btn(ng-click="confirmCreateMatch()", label="Create", affirmative="", autofocus="")
-paper-dialog#createChallenge(heading="Start Challenge", transition="paper-dialog-transition-bottom", style="width: 400px;", backdrop=true)
+paper-dialog#createChallenge(heading="Start Challenge", transition="paper-dialog-transition-bottom", style="width: 400px;")
   p(style="margin-bottom:0")
     | Choose your match options:
   div(style="height: 110px")
