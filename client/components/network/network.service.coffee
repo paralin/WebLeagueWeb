@@ -108,6 +108,19 @@ class NetworkService
         @activeMatch = null
         bootbox.hideAll()
         @activeChallenge = null
+      userped: ->
+        console.log "Connection userped"
+        @status = "You have logged into your account from another location and are disconnected."
+        @disconnected = true
+        @activeMatch = null
+        bootbox.hideAll()
+        @activeChallenge = null
+        @doReconnect = false
+        hasChallenge = false
+        chats.length = 0
+        liveMatches.length = 0
+        availableGames.length = 0
+        @disconnect() 
       matchsnapshot: (match)->
         console.log "Received active match snapshot #{match}"
         @activeMatch = match
