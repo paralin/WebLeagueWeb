@@ -18,8 +18,6 @@ class NetworkService
   disconnect: ->
     console.log "Disconnect called"
     if @conn?
-      if @cont
-        @cont.close()
       @conn.disconnect()
     if @reconnTimeout?
       @timeout.cancel(@reconnTimeout)
@@ -116,10 +114,10 @@ class NetworkService
         bootbox.hideAll()
         @activeChallenge = null
         @doReconnect = false
-        hasChallenge = false
-        chats.length = 0
-        liveMatches.length = 0
-        availableGames.length = 0
+        @hasChallenge = false
+        @chats.length = 0
+        @liveMatches.length = 0
+        @availableGames.length = 0
         @disconnect() 
       matchsnapshot: (match)->
         console.log "Received active match snapshot #{match}"
