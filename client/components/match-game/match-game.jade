@@ -1,6 +1,6 @@
 link(rel="import", href="/bower_components/polymer/polymer.html")
 link(rel="import", href="/bower_components/paper-button/paper-button.html")
-polymer-element(name="match-game", attributes="match modes gametypes inGame setupstatusn canJoin steamid")
+polymer-element(name="match-game", attributes="match modes gametypes inGame setupstatusn canJoin steamid matchstatesn")
   template
     link(rel="stylesheet",href="/bower_components/font-awesome/css/font-awesome.css")
     .header(class="{{inGame?'blueHeader':'redHeader'}}")
@@ -22,7 +22,10 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
             template(bind="",if="{{match.Info.Status==1}}")
               tr(style="font-weight:bold;color:black;background:white") 
                 td {{captainstatusn[match.Info.CaptainStatus]}}
-          template(bind="",if="{{match.Setup != null}}")
+          template(bind="",if="{{match.Info.Status==3}}")
+            tr(style="font-weight:bold;color:black;background:white") 
+              td {{matchstatesn[match.Setup.Details.State]}}
+          template(bind="",if="{{match.Setup != null&&match.Info.Status<3}}")
             tr(style="font-weight:bold;color:black;background:white") 
               td {{setupstatusn[match.Setup.Details.Status]}}
           template(bind="",if="{{match.Setup != null&&match.Setup.Details != null && match.Setup.Details.Status==3}}")

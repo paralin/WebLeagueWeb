@@ -102,10 +102,6 @@ class NetworkService
           return
   handlers: 
     matches:
-      onopen: ->
-        @activeMatch = null
-        bootbox.hideAll()
-        @activeChallenge = null
       userped: ->
         console.log "Connection userped"
         @status = "You have logged into your account from another location and are disconnected."
@@ -286,6 +282,9 @@ class NetworkService
           @status = "Connected to the network."
           @attempts = 0
           @chats.length = 0
+          @activeMatch = null
+          bootbox.hideAll()
+          @activeChallenge = null
         for name, cbs of @handlers
           @[name] = cont = @conn.controller name
           cont.onopen = (ci)->

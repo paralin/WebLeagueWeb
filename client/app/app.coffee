@@ -106,3 +106,14 @@ angular.module 'webleagueApp', [
   $rootScope.CaptainStatusN =
     0: "Dire captain picking..."
     1: "Radiant captain picking..."
+  $rootScope.MatchStateN =
+    0: "Initializing match..."
+    1: "Waiting for players to load..."
+    2: "Players are selecting heros..."
+    3: "Strategy time!"
+    4: "Pre-game in progress."
+    5: "Game in progress."
+    6: "Post-game, waiting for match result..."
+    7: "All players disconnecting..."
+    8: "Showcasing teams ???"
+    9: "Last game state!! IDK"
