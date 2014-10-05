@@ -35,7 +35,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 b(style="color: red")
                   | {{match.Setup.Details.Password}}
           template(repeat="{{player in match.Players}}")
-            tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner||player.SID==match.Info.Opponent} | tokenList }}")
+            tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner||player.SID==match.Info.Opponent}, leaver: plyr.IsLeaver | tokenList }}")
               td
                 template(bind="",if="{{match.Info.Status==2&&match.Setup!=null&&match.Setup.Details.Status==3}}")
                   template(bind="",if="{{player.Ready}}")
@@ -79,6 +79,9 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
       }
       .redHeader {
         background-color: rgba(255,0,0,0.58);
+      }
+      .leaver {
+        background-color: red !important;
       }
   script(src="/bower_components/lodash/dist/lodash.min.js")
   link(rel="import", href="/bower_components/paper-button/paper-button.html")
