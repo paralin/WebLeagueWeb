@@ -15,6 +15,65 @@ polymer-element(name="wl-chat", attributes="chat chatMessageInput chatValue memb
           p 
             img(src="{{chat.Members[member].Avatar}}")
             | {{chat.Members[member].Name}}
-    //style.
-    link(rel="stylesheet", href="chat.css", type="text/css")
+    style.
+      :host {
+        display: block;
+      }
+      .main-chat {
+        width: 80%;
+        height: 100%;
+      }
+      .chat-cont {
+        height: 100%;
+      }
+      .msg-container {
+        height: calc(100% - 35px);
+        max-height: calc(100% - 35px);
+        max-width: 100%;
+        overflow-y: auto;
+      }
+      .member-list {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        max-height: 100%;
+        height: 100%;
+      }
+      .member-list img {
+        width: 13px;
+        height: 13px;
+        margin-right: 3px;
+        margin-top: 2px;
+      }
+      .member-list p {
+        display: block;
+        color: black;
+        text-decoration: none;
+        cursor: default;
+        margin: 0;
+        padding: 0;
+        padding-left: 10px;
+        width: 500px;
+      }
+      .msg-container p {
+        margin: 0; 
+      }
+      #inputcont {
+        height: 35px;
+        padding-left: 10px;
+      }
+      paper-input {
+        width: 500px;
+        width: 100%;
+        padding: 0;
+      }
+      paper-input::shadow #container {
+        width: 500px;
+        width: 100%;
+      }
+      paper-input /deep/ #errorContainer {
+        display:none;
+      }
+      core-splitter {
+        width: 3px;
+      }
   script(src="chat.js")
