@@ -14,6 +14,9 @@ angular.module 'webleagueApp'
   $scope.games = Network.availableGames
   $scope.chatMembers = []
   $scope.allMembers = []
+  $scope.hasVoted = ->
+    return false if !Network.activeResult? || !Network.activeResult.Votes?
+    Network.activeResult.Votes[Auth.currentUser.steam.steamid]?
   $scope.regenMembersList = ->
     members = []
     for chat in Network.chats
@@ -143,7 +146,7 @@ angular.module 'webleagueApp'
   $scope.createChallenge = ->
     $("#createChallenge")[0].toggle()
   $scope.showRightCont = ->
-    Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()
+    Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()||Network.activeResult?||Network.activeMatch?||Network.activeChallenge?
   $scope.isAdminOfGame = ->
     return false if !Auth.currentUser? or !Network.activeMatch?
     Network.activeMatch.Info.Owner is Auth.currentUser.steam.steamid

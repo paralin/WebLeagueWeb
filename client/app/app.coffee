@@ -102,7 +102,8 @@ angular.module 'webleagueApp', [
     1: "Waiting for an available host.."
     2: "Bot is setting up the lobby..."
     3: "Waiting for players to join..."
-    4: "Game is ready to begin."
+    4: "Waiting for match to finalize..."
+    5: "Fetching match results..."
   $rootScope.CaptainStatusN =
     0: "Dire captain picking..."
     1: "Radiant captain picking..."

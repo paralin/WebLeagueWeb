@@ -9,6 +9,7 @@ class NetworkService
 
   activeMatch: null
   activeChallenge: null
+  activeResult: null
   hasChallenge: false
   chats: []
   liveMatches: []
@@ -100,6 +101,10 @@ class NetworkService
             text: err
             type: "error"
           return
+      vote: (vote)->
+        @invoke "voteresult", {Vote: vote}
+      dismissResult: ->
+        @invoke "dismissresult"
   handlers: 
     matches:
       userped: ->
@@ -109,6 +114,7 @@ class NetworkService
         @activeMatch = null
         bootbox.hideAll()
         @activeChallenge = null
+        @activeResult = null
         @doReconnect = false
         @hasChallenge = false
         @chats.length = 0
@@ -128,6 +134,10 @@ class NetworkService
         @activeChallenge = null
         @hasChallenge = false
         @scope.$broadcast 'challengeSnapshot', null
+      resultsnapshot: (snp)->
+        console.log "Received match result snapshot"
+        @activeResult = snp
+        @scope.$broadcast "resultSnapshot", null
       matchplayerssnapshot: (upd)->
         console.log "Received match players snapshot"
         #find the match
@@ -283,6 +293,7 @@ class NetworkService
           @attempts = 0
           @chats.length = 0
           @activeMatch = null
+          @activeResult = null
           bootbox.hideAll()
           @activeChallenge = null
         for name, cbs of @handlers

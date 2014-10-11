@@ -1,0 +1,60 @@
+link(rel="import", href="/bower_components/polymer/polymer.html")
+link(rel="import", href="/bower_components/paper-button/paper-button.html")
+polymer-element(name="match-result", attributes="result")
+  template
+    link(rel="stylesheet",href="/bower_components/font-awesome/css/font-awesome.css")
+    .header.blueHeader
+      template(bind="",if="{{result.VotingOpen}}") Vote 
+      | Match Result
+    .tablewrapper
+      table.table.table-condensed(style="margin-bottom:0")
+        tbody
+          template(bind="",if="{{result.RequiresVote}}")
+            tr(style="font-weight:bold;color:black;background:white") 
+              td Can't fetch result, voting required.
+          tr(class="{{ {success: result.RadiantWon, danger: !result.RadiantWon} | tokenList }}")
+            td
+              template(bind="",if="{{result.RadiantWon}}")
+                | Radiant Won
+              template(bind="",if="{{!result.RadiantWon}}")
+                | Dire Won
+    link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
+    style.
+      .header {
+        width: 100%;
+        color: black;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 500;
+      }
+      .success-btn {
+        background: #2FD22E;
+        color: #fff;
+        border-radius: 0;
+      }
+      .success-btn:hover {
+        background-color: #298028;
+      }
+      .success-btn::shadow #ripple {
+        color: #FD9292;
+      }
+      .tablewrapper {
+         /*max-height: 50%;*/
+         overflow: auto;
+         overflow-x: hidden;
+      }
+      .boldText {
+        font-weight: bold;
+      }
+      .blueHeader {
+        background-color: rgba(0, 255, 249, 1);
+      }
+      .redHeader {
+        background-color: rgba(255,0,0,0.58);
+      }
+      .leaver {
+        background-color: red !important;
+      }
+  script(src="/bower_components/lodash/dist/lodash.min.js")
+  link(rel="import", href="/bower_components/paper-button/paper-button.html")
+  script(src="match-result.js")
