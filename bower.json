@@ -87,6 +87,7 @@
     "paper-button": "^0.4.0",
     "sampler-scaffold": "^0.4.0",
     "paper-dropdown-menu": "~0.4.2",
-    "paper-item": "^0.4.0"
+    "paper-item": "^0.4.0",
+    "angular": ">=1.2.*"
   }
 }
