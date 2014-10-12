@@ -51,33 +51,29 @@ angular.module 'webleagueApp'
     else
       updChatMembers chat.Members
     $scope.regenMembersList()
-  chalDialog = false
   clr.push $rootScope.$on "challengeSnapshot", ->
     challenge = Network.activeChallenge
     if challenge?
       if challenge.ChallengedSID is Auth.currentUser.steam.steamid
-        chalDialog = true
-        bootbox.dialog
-          message: "You have a challenge from #{challenge.ChallengerName}."
-          title: "Incoming Challenge"
-          buttons:
-            danger:
-              label: "Decline"
-              className: "btn-danger"
-              callback: ->
-                safeApply $scope, ->
-                  Network.matches.do.respondchallenge false
-                return
-            success:
-              label: "Accept"
-              className: "btn-success"
-              callback: ->
-                safeApply $scope, ->
-                  Network.matches.do.respondchallenge true
-                return
-    else if chalDialog
-      bootbox.hideAll()
-      chalDialog = false
+        window.aswal = swal(
+          title: "Incoming challenge"
+          text: "You have an incoming challenge from #{challenge.ChallengerName}!"
+          type: "success"
+          showCancelButton: true
+          confirmButtonColor: "#A5DC86"
+          confirmButtonText: "Accept"
+          cancelButtonText: "Decline"
+          cancelButtonColor: "#DD6B55"
+        , ->
+          safeApply $scope, ->
+            Network.matches.do.respondchallenge true
+        , ->
+          safeApply $scope, ->
+            Network.matches.do.respondchallenge false
+        )
+    else if window.aswal?
+      window.aswal()
+      window.aswal = null
   $scope.getMembersArr = (chat)->
     return [] if !chat?
     arr = $scope.chatMemberArrs[chat.Id]
@@ -174,7 +170,7 @@ angular.module 'webleagueApp'
     if chat.Leavable
       Network.chat.invoke "leave", {Id: chat.Id}
     else
-      bootbox.alert "You can't leave this chat."
+      swal("Can't Leave", "You can't leave this chat.", "error")
   $scope.isInGame = (game)->
     if !game?
       return Network.activeMatch?
