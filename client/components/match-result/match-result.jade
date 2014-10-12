@@ -13,6 +13,11 @@ polymer-element(name="match-result", attributes="result")
             tr(style="font-weight:bold;color:black;background:white") 
               td Can't fetch result, voting in progress.
               td
+            tr(style="font-weight:bold;color:black;background:white") 
+              td 
+                | Voting ends:
+                time-ago(datetime="{{result.VotingEnds}}")
+              td
           tr(class="{{ {success: result.RadiantWon, danger: !result.RadiantWon} | tokenList }}")
             td
               template(bind="",if="{{result.RadiantWon}}")
@@ -72,5 +77,7 @@ polymer-element(name="match-result", attributes="result")
         background-color: red !important;
       }
   script(src="/bower_components/lodash/dist/lodash.min.js")
+  script(src="/bower_components/moment/min/moment.min.js")
   link(rel="import", href="/bower_components/paper-button/paper-button.html")
+  link(rel="import", href="/bower_components/time-ago-element/src/time-ago-element.html")
   script(src="match-result.js")
