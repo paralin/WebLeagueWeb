@@ -11,7 +11,7 @@ polymer-element(name="match-result", attributes="result")
         tbody
           template(bind="",if="{{result.RequiresVote}}")
             tr(style="font-weight:bold;color:black;background:white") 
-              td Can't fetch result, voting required.
+              td Can't fetch result, voting in progress.
               td
           tr(class="{{ {success: result.RadiantWon, danger: !result.RadiantWon} | tokenList }}")
             td
@@ -23,13 +23,16 @@ polymer-element(name="match-result", attributes="result")
           template(repeat="{{player in result.Players}}")
             tr(class="{{ {success: player.Team==0, danger: player.Team==1} | tokenList }}")
               td
-                img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
                 | {{player.Name}}
+                template(bind="",if="{{votedRadiant(player)}}")
+                  |  (R)
+                template(bind="",if="{{votedDire(player)}}")
+                  |  (D)
               template(bind="",if="{{player.Team==0}}")
-                td(style="text-align:right")
+                td(style="text-align:right;font-weight:bold")
                   | {{result.RatingRadiant}}
               template(bind="",if="{{player.Team==1}}")
-                td(style="text-align:right")
+                td(style="text-align:right;font-weight:bold")
                   | {{result.RatingDire}}
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
     style.
