@@ -51,6 +51,7 @@ class NetworkService
       pickPlayer: (sid)->
         @invoke "pickPlayer", {SID: sid}
       leavematch: ->
+        quitMatchSound.play()
         (@invoke "leavematch").then (err)->
           return if !err?
           new PNotify
@@ -107,6 +108,8 @@ class NetworkService
         @invoke "dismissresult"
   handlers: 
     matches:
+      onlobbyready: ->
+        lobbyReadySound.play()
       userped: ->
         console.log "Connection userped"
         @status = "You have logged into your account from another location and are disconnected."

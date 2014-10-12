@@ -368,6 +368,7 @@ module.exports = function (grunt) {
             'components/**/*.{html,poly.css,poly.js}',
             'assets/images/{,*/}*.{webp}',
             'assets/fonts/**/*',
+            'assets/sounds/**/*',
             'index.html'
           ]
         }, {

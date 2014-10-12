@@ -1,5 +1,12 @@
 'use strict'
 
+foundSound = new buzz.sound "/assets/sounds/match_ready.wav"
+challengeSound = new buzz.sound "/assets/sounds/ganked_sml_01.mp3"
+uiButtonSound = new buzz.sound "/assets/sounds/ui_button_click_01.wav"
+findMatchSound = new buzz.sound "/assets/sounds/ui_findmatch_join_01.wav"
+window.quitMatchSound = new buzz.sound "/assets/sounds/ui_findmatch_quit_01.wav"
+window.lobbyReadySound = new buzz.sound "/assets/sounds/ui_findmatch_search_01.wav"
+
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
 .controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply) ->
@@ -29,6 +36,7 @@ angular.module 'webleagueApp'
   $scope.pickPlayer = (event)->
     console.log "Picking player #{event.detail.SID}"
     Network.matches.do.pickPlayer event.detail.SID
+    uiButtonSound.play()
   updChatMembers = (members)->
     arr = $scope.chatMembers
     nMembers = _.keys members
@@ -55,6 +63,7 @@ angular.module 'webleagueApp'
     challenge = Network.activeChallenge
     if challenge?
       if challenge.ChallengedSID is Auth.currentUser.steam.steamid
+        challengeSound.play()
         window.aswal = swal(
           title: "Incoming challenge"
           text: "You have an incoming challenge from #{challenge.ChallengerName}!"
@@ -67,9 +76,11 @@ angular.module 'webleagueApp'
         , ->
           safeApply $scope, ->
             Network.matches.do.respondchallenge true
+            uiButtonSound.play()
         , ->
           safeApply $scope, ->
             Network.matches.do.respondchallenge false
+            uiButtonSound.play()
         )
     else if window.aswal?
       window.aswal()
@@ -107,6 +118,7 @@ angular.module 'webleagueApp'
       MatchType: 0
       Name: name
       GameMode: gm
+    findMatchSound.play()
   $scope.confirmCreateChallenge = ->
     drp = $("#cPlayerInput")[0]
     sel = drp.selectedItem
@@ -131,6 +143,7 @@ angular.module 'webleagueApp'
     console.log "Selected: #{sid}"
     console.log "Selected game mode: #{gm}"
     Network.matches.do.startchallenge sid, gm
+    uiButtonSound.play()
   $scope.dismissCreate = ->
     $("#createMatch")[0].opened = false
   $scope.dismissChallenge = ->
@@ -155,6 +168,7 @@ angular.module 'webleagueApp'
     bootbox.prompt "What is the chat name?", (cb)->
       return if !cb? || cb is ""
       Network.chat.invoke("joinorcreate", {Name: cb}).then (err)->
+        uiButtonSound.play()
         if err?
           new PNotify
             title: "Join Error"
@@ -184,6 +198,7 @@ angular.module 'webleagueApp'
       return false if !plyr.Ready
     return true
   $scope.joinGame = (game)->
+    findMatchSound.play()
     Network.matches.do.joinmatch
       Id: game.Id
   $scope.gameFilter = (game)->
