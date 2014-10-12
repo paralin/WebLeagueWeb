@@ -46,6 +46,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                   i.fa.fa-check-square-o(style="margin-right:5px",on-click="{{pickPlayer}}",data-player="{{player.SID}}")
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
                 | {{player.Name}}
+                |  ({{player.Rating}})
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
     style.
       .header {
