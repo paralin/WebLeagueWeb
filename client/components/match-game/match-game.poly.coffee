@@ -7,6 +7,7 @@ Polymer 'match-game', {
   showCaptainButtons: ->
     me = @getMe()
     return false if !me?
+    console.log "I am a captain, captainstatus is "+@match.Info.CaptainStatus+" my team is "+me.Team
     me.IsCaptain && @match.Info.CaptainStatus isnt me.Team
   pickPlayer: (e, d, t)->
     sid = t.attributes["data-player"].value
