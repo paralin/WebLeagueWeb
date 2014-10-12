@@ -1,5 +1,5 @@
 link(rel="import", href="/bower_components/polymer/polymer.html")
-polymer-element(name="live-matches", attributes="matches modes")
+polymer-element(name="live-matches", attributes="matches modes gmodes")
   template
     .header
       | LIVE MATCHES
@@ -8,7 +8,8 @@ polymer-element(name="live-matches", attributes="matches modes")
         tbody
           template(repeat="{{match in matches}}")
             tr
-              td {{modes[match.Mode]}}
+              td(style="width:26px") {{modes[match.MatchType]}}
+              td(style="width:100px") {{gmodes[match.GameMode]}}
               td {{match.Name}}
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
     style.
