@@ -8,7 +8,8 @@ var UserSchema = mongoose.Schema({
   _id: String,
   authItems: [String],
   profile: {
-    name: String
+    name: String,
+    rating: Number
   },
   steam: {
     steamid: String,
