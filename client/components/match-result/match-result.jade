@@ -12,12 +12,14 @@ polymer-element(name="match-result", attributes="result")
           template(bind="",if="{{result.RequiresVote}}")
             tr(style="font-weight:bold;color:black;background:white") 
               td Can't fetch result, voting required.
+              td
           tr(class="{{ {success: result.RadiantWon, danger: !result.RadiantWon} | tokenList }}")
             td
               template(bind="",if="{{result.RadiantWon}}")
                 | Radiant Won
               template(bind="",if="{{!result.RadiantWon}}")
                 | Dire Won
+            td
           template(repeat="{{player in result.Players}}")
             tr(class="{{ {success: player.Team==0, danger: player.Team==1} | tokenList }}")
               td
