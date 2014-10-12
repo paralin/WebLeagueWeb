@@ -30,7 +30,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
               td {{setupstatusn[match.Setup.Details.Status]}}
           template(bind="",if="{{match.Setup != null&&match.Setup.Details != null && match.Setup.Details.Status==3}}")
             tr(style="font-weight:bold;color:black;background:white") 
-              td 
+              td(style="user-select:all;-moz-user-select:all;-webkit-user-select:all")
                 | Lobby Password: 
                 b(style="color: red")
                   | {{match.Setup.Details.Password}}
