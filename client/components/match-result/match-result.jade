@@ -9,7 +9,7 @@ polymer-element(name="match-result", attributes="result")
     .tablewrapper
       table.table.table-condensed(style="margin-bottom:0")
         tbody
-          template(bind="",if="{{result.RequiresVote}}")
+          template(bind="",if="{{result.RequiresVote && result.VotingOpen}}")
             tr(style="font-weight:bold;color:black;background:white") 
               td Can't fetch result, voting in progress.
               td
@@ -19,7 +19,9 @@ polymer-element(name="match-result", attributes="result")
                 time-ago(datetime="{{result.VotingEnds}}")
               td
           tr(class="{{ {success: result.RadiantWon, danger: !result.RadiantWon} | tokenList }}")
-            td
+            td(style="font-weight:bold")
+              template(bind="",if="{{result.VotingOpen}}")
+                | Current vote: 
               template(bind="",if="{{result.RadiantWon}}")
                 | Radiant Won
               template(bind="",if="{{!result.RadiantWon}}")
