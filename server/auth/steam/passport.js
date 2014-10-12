@@ -51,7 +51,7 @@ exports.setup = function (User, config) {
             newUser._id = buf.toString('hex');
             newUser.steam = profile;
             newUser.profile.name = profile.personaname;
-            newUser.profile.rating = 2000;
+            newUser.profile.rating = 1200;
             newUser.authItems = ['chat', 'startGames', 'matches'];
             newUser.save(function(err){
               if(err)
