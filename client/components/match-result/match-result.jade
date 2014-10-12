@@ -18,6 +18,17 @@ polymer-element(name="match-result", attributes="result")
                 | Radiant Won
               template(bind="",if="{{!result.RadiantWon}}")
                 | Dire Won
+          template(repeat="{{player in result.Players}}")
+            tr(class="{{ {success: player.Team==0, danger: player.Team==1} | tokenList }}")
+              td
+                img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
+                | {{player.Name}}
+              template(bind="",if="{{player.Team==0}}")
+                td(style="text-align:right")
+                  | {{result.RatingRadiant}}
+              template(bind="",if="{{player.Team==1}}")
+                td(style="text-align:right")
+                  | {{result.RatingDire}}
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
     style.
       .header {
