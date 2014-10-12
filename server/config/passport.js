@@ -13,7 +13,9 @@ module.exports = function(app){
     },
     store: new MongoStore({
       url: config.mongo.uri
-    })
+    }),
+    saveUninitialized: true,
+    resave: true
   }));
   app.use(passport.initialize());
   app.use(passport.session());
