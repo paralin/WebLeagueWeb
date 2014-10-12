@@ -97,6 +97,7 @@
     "paper-tabs": "master",
     "paper-toast": "master",
     "paper-toggle-button": "master",
-    "polymer": "master"
+    "polymer": "master",
+    "angular": ">=1.2.*"
   }
 }
