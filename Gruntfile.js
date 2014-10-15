@@ -235,7 +235,15 @@ module.exports = function (grunt) {
       target: {
         src: '<%= yeoman.client %>/index.html',
         ignorePath: '<%= yeoman.client %>/',
-        exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/', /font-awesome.css/, /polymer/ ]
+        exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/', /font-awesome.css/, /polymer/, /platform/ ],
+        fileTypes: {
+          html: {
+            replace: {
+              js: '<script src="/{{filePath}}"></script>',
+              css: '<link rel="stylesheet" href="/{{filePath}}" />'
+            }
+          }
+        }
       }
     },
 
@@ -266,20 +274,20 @@ module.exports = function (grunt) {
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/public/{,*/}*.css'],
-      js: ['<%= yeoman.dist %>/public/{,*/}*.js'],
-      options: {
-        assetsDirs: [
-          '<%= yeoman.dist %>/public',
-          '<%= yeoman.dist %>/public/assets/images'
-        ],
-        // This is so we update image references in our ng-templates
-        patterns: {
-          js: [
-            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
-          ]
-        }
-      }
+            css: ['<%= yeoman.dist %>/public/{,*/}*.css'],
+            js: ['<%= yeoman.dist %>/public/{,*/}*.js'],
+            options: {
+              assetsDirs: [
+                '<%= yeoman.dist %>/public',
+                '<%= yeoman.dist %>/public/assets/images'
+              ],
+              // This is so we update image references in our ng-templates
+              patterns: {
+                js: [
+                  [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
+                ]
+              }
+            }
     },
 
     // The following *-min tasks produce minified files in the dist folder
@@ -289,7 +297,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.client %>/assets/images',
           src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/public/assets/images'
+            dest: '<%= yeoman.dist %>/public/assets/images'
         }]
       }
     },
@@ -300,7 +308,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.client %>/assets/images',
           src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/public/assets/images'
+            dest: '<%= yeoman.dist %>/public/assets/images'
         }]
       }
     },
@@ -535,20 +543,20 @@ module.exports = function (grunt) {
           transform: function(filePath) {
             filePath = filePath.replace('/client/', '');
             filePath = filePath.replace('/.tmp/', '');
-            return '<script src="' + filePath + '"></script>';
+            return '<script src="/' + filePath + '"></script>';
           },
           starttag: '<!-- injector:js -->',
           endtag: '<!-- endinjector -->'
         },
         files: {
           '<%= yeoman.client %>/index.html': [
-              ['{.tmp,<%= yeoman.client %>}/app/**/*.js',
-               '!{.tmp,<%= yeoman.client %>}/app/app.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.poly.*',
-               '!{.tmp,<%= yeoman.client %>}/components/xsockets/*',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
-            ]
+            ['{.tmp,<%= yeoman.client %>}/app/**/*.js',
+              '!{.tmp,<%= yeoman.client %>}/app/app.js',
+              '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
+              '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.poly.*',
+              '!{.tmp,<%= yeoman.client %>}/components/xsockets/*',
+              '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
+          ]
         }
       },
 
@@ -577,7 +585,7 @@ module.exports = function (grunt) {
           transform: function(filePath) {
             filePath = filePath.replace('/client/', '');
             filePath = filePath.replace('/.tmp/', '');
-            return '<link rel="stylesheet" href="' + filePath + '">';
+            return '<link rel="stylesheet" href="/' + filePath + '">';
           },
           starttag: '<!-- injector:css -->',
           endtag: '<!-- endinjector -->'
@@ -684,7 +692,7 @@ module.exports = function (grunt) {
 
     else grunt.task.run([
       'test:server',
-      'test:client'
+        'test:client'
     ]);
   });
 
