@@ -1,5 +1,4 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'ChatCtrl', ($scope) ->
-  $scope.message = 'Hello'
+.controller 'ChatCtrl', ($scope, Auth, Network) ->
