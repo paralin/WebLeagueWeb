@@ -25,19 +25,20 @@ paper-tabs, core-toolbar {
 
 core-toolbar paper-tabs {
   box-shadow: none;
-
+  max-width: calc(~'100% - 100px');
+  width: calc(~'100% - 100px');
+  height:35px;
+  float: left;
 }
 
 paper-tabs[noink][nobar] paper-tab.core-selected {
   color: #ffff8d;
-
 }
 
 paper-tabs.transparent-teal {
   background-color: transparent;
   color: #00bcd4;
   box-shadow: none;
-
 }
 
 paper-tabs.transparent-teal::shadow #selectionBar {

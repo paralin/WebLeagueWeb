@@ -236,13 +236,13 @@ class NetworkService
             @chats.push chan
           else
             _.merge @chats[idx], chan
-        @scope.$broadcast 'chatMembersUpd'
+        #@scope.$broadcast 'chatMembersUpd'
+        @scope.$broadcast 'chatChannelAdd'
       chatchannelrm: (upd)->
         console.log "removed chats: #{JSON.stringify upd.ids}"
         for id in upd.ids
           idx = _.findIndex @chats, {Id: id}
           @chats.splice idx, 1 if idx > -1
-          return
         @scope.$broadcast 'chatMembersUpd'
       #add or remove a chat member
       chatmemberupd: (upd)->

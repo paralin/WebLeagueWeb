@@ -9,13 +9,12 @@ window.lobbyReadySound = new buzz.sound "/assets/sounds/ui_findmatch_search_01.w
 
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
-.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply) ->
+.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state) ->
   clr = []
   $scope.auth = Auth
-  console.log "$scope"
-  window.scope = $scope
   $scope.network = Network
-  $scope.selected = 0
+  $scope.state = $state
+  window.state = $state
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
@@ -34,7 +33,6 @@ angular.module 'webleagueApp'
   $scope.notMe = (member)->
     member.SteamID isnt Auth.currentUser.steam.steamid
   $scope.pickPlayer = (event)->
-    console.log "Picking player #{event.detail.SID}"
     Network.matches.do.pickPlayer event.detail.SID
     uiButtonSound.play()
   updChatMembers = (members)->
@@ -46,14 +44,17 @@ angular.module 'webleagueApp'
     for mem in arr
       arr.splice i, 1 if !_.contains(nMembers, mem)
       i+=1
-  clr.push $scope.$watch "selected", (selected)->
+  clr.push $scope.$watch "chatTabs.selected", (selected)->
     chat = $scope.chats[selected]
     if !chat?
       $scope.chatMembers.length = 0
     else
       updChatMembers chat.Members
+  clr.push $rootScope.$on "chatChannelAdd", ->
+    $scope.chatTabs.selected = $scope.chats.length-1
   clr.push $rootScope.$on "chatMembersUpd", ->
-    chat = $scope.chats[$scope.selected]
+    $scope.chatTabs.selected = $scope.chats.length-1 if $scope.chats.length <= $scope.chatTabs.selected
+    chat = $scope.chats[$scope.chatTabs.selected]
     if !chat?
       $scope.chatMembers.length = 0
     else
@@ -112,8 +113,6 @@ angular.module 'webleagueApp'
         type: "error"
       return
     gm = parseInt $(drp.selectedItem).attr "value"
-    console.log "Selected: #{$rootScope.GameModeN[gm]}"
-    console.log "Mode ID is #{gm}"
     Network.matches.do.creatematch
       MatchType: 0
       Name: name
@@ -140,8 +139,6 @@ angular.module 'webleagueApp'
         type: "error"
       return
     gm = parseInt $(drp.selectedItem).attr "value"
-    console.log "Selected: #{sid}"
-    console.log "Selected game mode: #{gm}"
     Network.matches.do.startchallenge sid, gm
     uiButtonSound.play()
   $scope.dismissCreate = ->
@@ -178,8 +175,11 @@ angular.module 'webleagueApp'
               desktop: true
           return
     return
+  $scope.chatTabs = {
+    selected: 0
+  }
   $scope.leaveCurrentChat = (cb)->
-    chat = $scope.chats[$scope.selected]
+    chat = $scope.chats[$scope.chatTabs.selected]
     return if !chat?
     if chat.Leavable
       Network.chat.invoke "leave", {Id: chat.Id}
@@ -205,8 +205,7 @@ angular.module 'webleagueApp'
     game.Info.Status==0 || (Network.activeMatch? && Network.activeMatch.Id is game.Id)
   $scope.sendChat = (event)->
     msg = event.detail.message
-    console.log "sending #{msg}"
-    Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.selected].Id, Text: msg})
+    Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.chatTabs.selected].Id, Text: msg})
   $scope.$on 'destroy', ->
     for cl in clr
       cl()
