@@ -31,9 +31,8 @@
     "angular-scenario": ">=1.2.*"
   },
   "resolutions": {
-    "angular": ">=1.2.*",
-    "polymer": "~0.4.2",
-    "platform": "^0.4.0",
-    "core-component-page": "^0.4.0"
+    "polymer": "^0.4.0",
+    "core-component-page": "^0.4.0",
+    "platform": "^0.4.0"
   }
 }
