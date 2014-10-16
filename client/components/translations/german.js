@@ -23,5 +23,6 @@ window.translations.de = {
   'Name': 'Name',
   'Match Name': 'Spielname',
   'You must enter a match name.': 'Spielname notwendig',
-  'Enter a chat message': 'Enter a chat message'
+  'Enter a chat message': 'Enter a chat message',
+  'Rating': 'Rating'
 };
