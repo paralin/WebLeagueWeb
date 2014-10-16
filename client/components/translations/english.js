@@ -9,6 +9,7 @@ window.translations.en = {
   'Match': 'Match',
   'Leave': 'Leave',
   'Challenge': 'Challenge',
+  'Challenge Player': 'Challenge Player',
   'Player': 'Player',
   'Vote': 'Vote',
   'Dismiss': 'Dismiss',

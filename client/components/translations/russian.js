@@ -10,6 +10,7 @@ window.translations.ru = {
   'Match': 'Матч',
   'Leave': 'Покинуть',
   'Challenge': 'Бросить вызов',
+  'Challenge Player': 'Бросить вызов Игрок',
   'Player': 'Игрок',
   'Vote': 'Голосовать',
   'Dismiss': 'Убрать',

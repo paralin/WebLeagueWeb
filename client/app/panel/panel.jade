@@ -44,7 +44,7 @@
       paper-button.danger-btn(raisedButton,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
     .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null")
       paper-button(raisedButton,ng-click="createStartgame()") {{ 'Start Match' | translate }}
-      paper-button(raisedButton,ng-click="createChallenge()") {{ 'Challenge' | translate }} {{ 'Player' | translate }}
+      paper-button(raisedButton,ng-click="createChallenge()") {{ 'Challenge Player' | translate }}
     .btns(ng-if="network.activeResult != null && !hasVoted()")
       paper-button(raisedButton,ng-click="network.matches.do.vote(true)") {{ 'Vote' | translate }} RADIANT
       paper-button(raisedButton,ng-click="network.matches.do.vote(false)") {{ 'Vote' | translate }} DIRE
