@@ -9,7 +9,7 @@ window.lobbyReadySound = new buzz.sound "/assets/sounds/ui_findmatch_search_01.w
 
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
-.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state) ->
+.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate) ->
   clr = []
   $scope.auth = Auth
   $scope.network = Network
@@ -20,6 +20,8 @@ angular.module 'webleagueApp'
   $scope.games = Network.availableGames
   $scope.chatMembers = []
   $scope.allMembers = []
+  $scope.setLanguage = (ln)->
+    $translate.use ln
   $scope.hasVoted = ->
     return false if !Network.activeResult? || !Network.activeResult.Votes?
     Network.activeResult.Votes[Auth.currentUser.steam.steamid]?
