@@ -4,7 +4,7 @@
     div(auto-font-size="{grow:false,shrink:true}", style="width: 100%;height:50px;font-size:40px")
       | {{profile.profile.name}}
     div(style="width:100%;font-size:25px")
-      | Rating: {{profile.profile.rating}}
+      | {{'Rating'|translate}}: {{profile.profile.rating}}
     paper-button(raised="",ng-click="openLink(profile.steam.profileurl)",style="margin-top:5px") 
       i.fa.fa-steam(style="margin-right:5px")
-      | View Steam Profile
+      | {{'View Steam Profile'|translate}}
