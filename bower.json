@@ -24,7 +24,8 @@
     "time-ago-element": "paralin/time-ago-element",
     "sweetalert": "paralin/sweetalert#master",
     "bootbox": "~4.3.0",
-    "buzz": "~1.1.6"
+    "buzz": "~1.1.6",
+    "auto-font-size": "~0.0.7"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
