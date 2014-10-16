@@ -57,7 +57,7 @@ paper-dialog#createMatch(ng-heading="'Create Match' | translate", transition="pa
   div(style="height: 110px")
     div(style="height: 73px")
       paper-input#matchNameInput(floatinglabel="",label="Match Name", required="", error="You must enter a match name.",style="padding: 0")
-    paper-dropdown-menu#gameModeInput(label="Game mode",style="position:absolute;padding:0")
+    paper-dropdown-menu#gameModeInput(ng-label="'Game mode' | translate",style="position:absolute;padding:0")
       paper-item(ng-repeat="(id, name) in GameModeN", label="{{name}}", value="{{id}}")
   paper-button(ng-click="dismissCreate()", label="Cancel", affirmative="")
   paper-button.primary-btn(ng-click="confirmCreateMatch()", affirmative="", autofocus="") {{'Create' | translate}}
@@ -70,7 +70,7 @@ paper-dialog#createChallenge(ng-heading="'Start Challenge' | translate", transit
       paper-dropdown-menu#cPlayerInput(label="{{'Player'|translate}}",style="position:absolute;padding:0")
         paper-item(ng-repeat="member in allMembers | filter:notMe", label="{{member.Name}}", value="{{member.SteamID}}")
     div(style="width: 100%")
-      paper-dropdown-menu#cgameModeInput(label="{{'Game mode'|translate}}",style="position:absolute;padding:0")
+      paper-dropdown-menu#cgameModeInput(ng-label="'Game mode'|translate",style="position:absolute;padding:0")
         paper-item(ng-repeat="(id, name) in GameModeN", label="{{name}}", value="{{id}}")
-  paper-button(ng-click="dismissChallenge()", label="{{'Cancel' | translate}}", affirmative="")
+  paper-button(ng-click="dismissChallenge()", affirmative="") {{'Cancel' | translate}}
   paper-button.primary-btn(ng-click="confirmCreateChallenge()", label="{{'Start' | translate}}", affirmative="", autofocus="")

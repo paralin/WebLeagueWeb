@@ -61,6 +61,11 @@ window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS = {
       primitive: 'matchstatesn'
     }
   },
+  paperDropdownMenu: {
+    ngLabel: {
+      primitive: 'label'
+    }
+  },
   paperToastFa: {
     ngOpened: {
       primitive: 'opened'

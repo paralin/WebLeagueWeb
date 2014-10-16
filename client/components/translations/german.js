@@ -19,5 +19,7 @@ window.translations.de = {
   'Chose your match options': 'Wähle die Spiel Optionen',
   'Start Challenge': 'Herausforderung starten',
   'Game mode': 'Spielmodus',
-  'Challenge Player': 'Spieler herausfordern'
+  'Challenge Player': 'Spieler herausfordern',
+  'Name': 'Name',
+  'Match Name': 'Spielname'
 };

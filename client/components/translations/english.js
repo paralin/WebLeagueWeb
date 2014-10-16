@@ -19,5 +19,8 @@ window.translations.en = {
   'Chose your match options': 'Chose your match options',
   'Start Challenge': 'Start Challenge',
   'Start Match': 'Start Match',
-  'Game mode': 'Game mode'
+  'Game mode': 'Game mode',
+  'Name': 'Name',
+  'Rating': 'Rating',
+  'Match Name': 'Match Name'
 };
