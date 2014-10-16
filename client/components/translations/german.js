@@ -1,0 +1,21 @@
+window.translations.de = {
+  'TITLE': 'Web League',
+  'Profile': 'Profil',
+  'Sign Out': 'Abmelden',
+  'Chat': 'Chat',
+  'Leaderboards': 'Rangliste',
+  'Start': 'Start',
+  'Cancel': 'Abbrechen',
+  'Match': 'Match',
+  'Leave': 'Verlassen',
+  'Challenge': 'Herausforderung',
+  'Player': 'Spieler',
+  'Vote': 'Abstimmung',
+  'Dismiss': 'Verwerfen',
+  'Result': 'Ergebnis',
+  'Create Match': 'Match erÃ¶ffnen',
+  'Create': 'Anlegen',
+  'Chose your match options': 'WÃ¤hle die Match Optionen',
+  'Start Challenge': 'Herausforderung starten',
+  'Game mode': 'Spielmodus'
+};

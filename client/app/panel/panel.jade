@@ -8,6 +8,7 @@
         li
           a(ng-click="setLanguage('en')") English
           a(ng-click="setLanguage('ru')") Russian
+          a(ng-click="setLanguage('de')") German
     paper-button(role="button",tabindex="0",ng-click="state.go('panel.leaderboard')",style="margin:0") Leaderboards
     div(dropdown="",style="margin:0")
       paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}}
