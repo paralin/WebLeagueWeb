@@ -1,6 +1,6 @@
 #panel-container
   core-toolbar.medium-tall(style="height: 90px")
-    paper-icon-button(icon="menu",role="button",tabindex="0",aria-label="menu")
+    paper-icon-button(icon="menu",role="button",tabindex="0",aria-label="menu",ng-click="state.go('panel.chat')")
     div(flex="") {{ 'TITLE' | translate }}
     div(dropdown="")
       paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") LANGUAGE
