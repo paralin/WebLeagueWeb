@@ -2,7 +2,11 @@
 
 angular.module 'webleagueApp'
 .config ($stateProvider) ->
-  $stateProvider.state 'panel.profile',
+  $stateProvider.state 'panel.profileme',
     url: '/profile'
+    templateUrl: 'app/panel/profile/profile.html'
+    controller: 'ProfileCtrl'
+  $stateProvider.state 'panel.profile',
+    url: '/profile/:id'
     templateUrl: 'app/panel/profile/profile.html'
     controller: 'ProfileCtrl'

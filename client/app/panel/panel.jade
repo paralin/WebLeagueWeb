@@ -6,6 +6,7 @@
       paper-button.dropdown-toggle(role="button",tabindex="0") {{auth.currentUser.profile.name}}
       ul.dropdown-menu(role="menu",style="right: 0; left: auto;")
         li
+          a(ui-sref="panel.profile") Profile
           a(href="/auth/logout",ng-click="$event.stopPropagation()") Sign Out
     .bottom.fit(horizontal="",layout="",style="height: 35px")
       div(style="width: 100%;height:100%;font-size:12px;float:left",ng-if="state.current.name!=='panel.chat'")

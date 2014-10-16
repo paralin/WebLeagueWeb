@@ -5,7 +5,8 @@ angular.module 'webleagueApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'ng-polymer-elements'
+  'ng-polymer-elements',
+  'AutoFontSize'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
   $urlRouterProvider
@@ -33,6 +34,9 @@ angular.module 'webleagueApp', [
       loggedIn = user?
       $location.path "/login" if next.authenticate and not loggedIn
       $location.path "/panel/chat" if (loggedIn and next.name is "login") || next.name is "panel"
+  $rootScope.openLink = (url)->
+    win = window.open(url, '_blank')
+    win.focus()
   $rootScope.GameMode =
     NONE: 0
     AP: 1
