@@ -61,7 +61,7 @@ paper-dialog#createMatch(ng-heading="'Create Match' | translate", transition="pa
       paper-item(ng-repeat="(id, name) in GameModeN", label="{{name}}", value="{{id}}")
   paper-button(ng-click="dismissCreate()", label="Cancel", affirmative="")
   paper-button.primary-btn(ng-click="confirmCreateMatch()", affirmative="", autofocus="") {{'Create' | translate}}
-paper-dialog#createChallenge(heading="'Start Challenge' | translate", transition="paper-dialog-transition-bottom", style="width: 400px;")
+paper-dialog#createChallenge(ng-heading="'Start Challenge' | translate", transition="paper-dialog-transition-bottom", style="width: 400px;")
   p(style="margin-bottom:0")
     | {{ 'Chose your match options' | translate }}:
   div(style="height: 110px")
