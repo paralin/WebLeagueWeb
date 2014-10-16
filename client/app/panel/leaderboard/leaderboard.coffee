@@ -6,3 +6,4 @@ angular.module 'webleagueApp'
     url: '/leaderboard'
     templateUrl: 'app/panel/leaderboard/leaderboard.html'
     controller: 'LeaderboardCtrl'
+    authenticate: true

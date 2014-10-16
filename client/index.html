@@ -33,80 +33,10 @@
     <script src="/bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
-    <script>
-      window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS = {
-        wlChat: {
-          ngModel: {
-            primitive: 'chat'
-          },
-          ngSendchat: {
-            event: 'sendchat'
-          },
-          ngMembersarr: {
-            primitive: 'membersArr'
-          }
-        },
-        liveMatches: {
-          ngMatchTypes: {
-            primitive: 'modes'
-          },
-          ngModel: {
-            primitive: 'matches'
-          },
-          ngGameModes: {
-            primitive: 'gmodes'
-          }
-        },
-        matchResult: {
-          ngModel: {
-            primitive: 'result'
-          }
-        },
-        matchGame: {
-          ngModel: {
-            primitive: 'match'
-          },
-          ngGameModes: {
-            primitive: 'gametypes'
-          },
-          ngMatchTypes: {
-            primitive: 'modes' 
-          },
-          ngInGame: {
-            primitive: 'inGame'
-          },
-          ngPressedJoin: {
-            event: 'pressed-join'
-          },
-          ngPickedPlayer: {
-            event: 'picked-player'
-          },
-          ngSetupStatusn: {
-            primitive: 'setupstatusn'
-          },
-          ngCanJoin: {
-            primitive: 'canJoin'
-          },
-          ngCaptainStatusn: {
-            primitive: 'captainstatusn'
-          },
-          ngSteamid: {
-            primitive: 'steamid'
-          },
-          ngMatchStates: {
-            primitive: 'matchstatesn'
-          }
-        },
-        paperToastFa: {
-          ngOpened: {
-            primitive: 'opened'
-          },
-          ngText: {
-            primitive: 'text'
-          }
-        }
-      };
-    </script>
+    <!-- build:js(client) app/mappings.js -->
+    <script src="/components/mappings/mappings.js"></script>
+    <script src="/components/translations/base.js"></script>
+    <!-- endbuild -->
 
     <link rel="import" href="/bower_components/polymer/polymer.html">
     <link rel="import" href="/bower_components/paper-button/paper-button.html">
@@ -151,8 +81,10 @@
     <script src="/bower_components/bootbox/bootbox.js"></script>
     <script src="/bower_components/buzz/dist/buzz.js"></script>
     <script src="/bower_components/auto-font-size/dist/auto_font_size.js"></script>
+    <script src="/bower_components/angular-translate/angular-translate.js"></script>
     <!-- endbower -->
     <script src="/bower_components/ng-polymer-elements/ng-polymer-elements.js"></script>
+    <script src="/components/translations/english.js"></script>
     <!-- endbuild -->
 
     <!-- build:js({.tmp,client}) app/app.js -->

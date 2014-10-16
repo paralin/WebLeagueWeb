@@ -6,7 +6,9 @@ angular.module 'webleagueApp'
     url: '/profile'
     templateUrl: 'app/panel/profile/profile.html'
     controller: 'ProfileCtrl'
+    authenticate: true
   $stateProvider.state 'panel.profile',
     url: '/profile/:id'
     templateUrl: 'app/panel/profile/profile.html'
     controller: 'ProfileCtrl'
+    authenticate: true

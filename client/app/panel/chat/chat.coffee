@@ -6,3 +6,4 @@ angular.module 'webleagueApp'
     url: '/chat'
     templateUrl: 'app/panel/chat/chat.html'
     controller: 'ChatCtrl'
+    authenticate: true
