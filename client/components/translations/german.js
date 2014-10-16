@@ -5,6 +5,7 @@ window.translations.de = {
   'Chat': 'Chat',
   'Leaderboards': 'Rangliste',
   'Start': 'Start',
+  'Start Match': 'Start Match',
   'Cancel': 'Abbrechen',
   'Match': 'Match',
   'Leave': 'Verlassen',

@@ -38,12 +38,12 @@
       paper-button.primary-btn(raisedButton,ng-click="network.matches.do.startmatch()") {{ 'Start' | translate }}
       paper-button.danger-btn(raisedButton,ng-click="network.matches.do.leavematch()") {{ 'Cancel' | translate }}
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup!=null&&network.activeMatch.Info.Status<3")
-      paper-button.primary-btn(raisedButton,ng-click="network.matches.do.finalizematch()",ng-if="allAreReady()") {{ 'Start' | translate }} {{ 'Match' | translate }}
+      paper-button.primary-btn(raisedButton,ng-click="network.matches.do.finalizematch()",ng-if="allAreReady()") {{ 'Start Match' | translate }}
       paper-button.danger-btn(raisedButton,ng-click="network.matches.do.leavematch()") {{ 'Cancel' | translate }} {{ 'Match' | translate }}
     .btns(ng-if="isInGame()&&!isAdminOfGame()&&network.activeMatch.Info.Status<1")
       paper-button.danger-btn(raisedButton,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
     .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null")
-      paper-button(raisedButton,ng-click="createStartgame()") {{ 'Start' | translate }} {{ 'Match' | translate }}
+      paper-button(raisedButton,ng-click="createStartgame()") {{ 'Start Match' | translate }}
       paper-button(raisedButton,ng-click="createChallenge()") {{ 'Challenge' | translate }} {{ 'Player' | translate }}
     .btns(ng-if="network.activeResult != null && !hasVoted()")
       paper-button(raisedButton,ng-click="network.matches.do.vote(true)") {{ 'Vote' | translate }} RADIANT

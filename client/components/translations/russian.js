@@ -5,6 +5,7 @@ window.translations.ru = {
   'Chat': 'Чат',
   'Leaderboards': 'Список лидеров',
   'Start': 'Начать',
+  'Start Match': 'Начать Матч',
   'Cancel': 'Отменить',
   'Match': 'Матч',
   'Leave': 'Покинуть',
