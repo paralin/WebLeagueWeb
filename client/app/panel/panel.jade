@@ -3,14 +3,14 @@
     paper-icon-button(icon="menu",role="button",tabindex="0",aria-label="menu")
     div(flex="") {{ 'TITLE' | translate }}
     div(dropdown="")
-      paper-button.dropdown-toggle(role="button",tabindex="0") LANGUAGE
+      paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") LANGUAGE
       ul.dropdown-menu(role="menu",style="right:280px;left:auto;")
         li
           a(ng-click="setLanguage('en')") English
           a(ng-click="setLanguage('ru')") Russian
-    paper-button(role="button",tabindex="0",ng-click="state.go('panel.leaderboard')") Leaderboards
-    div(dropdown="")
-      paper-button.dropdown-toggle(role="button",tabindex="0") {{auth.currentUser.profile.name}}
+    paper-button(role="button",tabindex="0",ng-click="state.go('panel.leaderboard')",style="margin:0") Leaderboards
+    div(dropdown="",style="margin:0")
+      paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}}
       ul.dropdown-menu(role="menu",style="right:0;left:auto;")
         li
           a(ui-sref="panel.profile") {{ 'Profile' | translate }}
