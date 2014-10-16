@@ -21,5 +21,7 @@ window.translations.de = {
   'Game mode': 'Spielmodus',
   'Challenge Player': 'Spieler herausfordern',
   'Name': 'Name',
-  'Match Name': 'Spielname'
+  'Match Name': 'Spielname',
+  'You must enter a match name.': 'Spielname notwendig',
+  'Enter a chat message': 'Enter a chat message'
 };

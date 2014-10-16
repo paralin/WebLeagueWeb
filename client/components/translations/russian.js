@@ -22,5 +22,7 @@ window.translations.ru = {
   'Game mode': 'Режим игры',
   'Name': 'Name',
   'Rating': 'Rating',
-  'Match Name': 'Match Name'
+  'Match Name': 'Match Name',
+  'You must enter a match name.': 'You must enter a match name.',
+  'Enter a chat message': 'Enter a chat message'
 };

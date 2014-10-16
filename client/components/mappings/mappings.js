@@ -66,6 +66,14 @@ window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS = {
       primitive: 'label'
     }
   },
+  paperInput: {
+    ngLabel: {
+      primitive: 'label'
+    },
+    ngError: {
+      primitive: 'error'
+    }
+  },
   paperToastFa: {
     ngOpened: {
       primitive: 'opened'

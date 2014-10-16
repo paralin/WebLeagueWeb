@@ -9,7 +9,7 @@
           a(ng-click="setLanguage('en')") English
           a(ng-click="setLanguage('ru')") Russian
           a(ng-click="setLanguage('de')") German
-    paper-button(role="button",tabindex="0",ng-click="state.go('panel.leaderboard')",style="margin:0") Leaderboards
+    paper-button(role="button",tabindex="0",ng-click="state.go('panel.leaderboard')",style="margin:0") {{'Leaderboards' | translate}}
     div(dropdown="",style="margin:0")
       paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}}
       ul.dropdown-menu(role="menu",style="right:0;left:auto;")
@@ -56,10 +56,10 @@ paper-dialog#createMatch(ng-heading="'Create Match' | translate", transition="pa
     | {{ 'Chose your match options' | translate }}:
   div(style="height: 110px")
     div(style="height: 73px")
-      paper-input#matchNameInput(floatinglabel="",label="Match Name", required="", error="You must enter a match name.",style="padding: 0")
+      paper-input#matchNameInput(floatinglabel="",ng-label="'Match Name' | translate", required="", ng-error="'You must enter a match name.' | translate",style="padding: 0")
     paper-dropdown-menu#gameModeInput(ng-label="'Game mode' | translate",style="position:absolute;padding:0")
       paper-item(ng-repeat="(id, name) in GameModeN", label="{{name}}", value="{{id}}")
-  paper-button(ng-click="dismissCreate()", label="Cancel", affirmative="")
+  paper-button(ng-click="dismissCreate()", affirmative="") {{'Cancel'|translate}}
   paper-button.primary-btn(ng-click="confirmCreateMatch()", affirmative="", autofocus="") {{'Create' | translate}}
 paper-dialog#createChallenge(ng-heading="'Start Challenge' | translate", transition="paper-dialog-transition-bottom", style="width: 400px;")
   p(style="margin-bottom:0")
