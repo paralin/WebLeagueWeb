@@ -3,8 +3,8 @@
     thead
       tr
         th(style="width:50px")
-        th Name
-        th Rating
+        th {{'Name'|translate}}
+        th {{'Rating'|translate}}
     tbody
       tr(ng-repeat="profile in profiles | orderBy:'-profile.rating':false",ng-click="goToProfile(profile)")
         td
