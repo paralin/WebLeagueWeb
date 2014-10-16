@@ -206,15 +206,16 @@ class NetworkService
     chat:
       onopen: (ci)->
         @chat.invoke('authinfo').then (auths)=>
-          if auths.length is 0
-            @status = "Authentication failed. Try signing out and back in."
-            @disconnected = true
-            @doReconnect = false
-            @disconnect() 
-          else
-            console.log "Authenticated with auth groups #{auths}"
-            @chat.invoke('joinorcreate', {Name: "main"})
-            @fetchMatches()
+          @safeApply @scope, =>
+            if auths.length is 0
+              @status = "Authentication failed. Try signing out and back in."
+              @disconnected = true
+              @doReconnect = false
+              @disconnect() 
+            else
+              console.log "Authenticated with auth groups #{auths}"
+              @chat.invoke('joinorcreate', {Name: "main"})
+              @fetchMatches()
       onchatmessage: (upd)->
         chat = @chatByID upd.Id
         if !chat?

@@ -6,14 +6,19 @@ angular.module 'webleagueApp', [
   'ui.router',
   'ui.bootstrap',
   'ng-polymer-elements',
-  'AutoFontSize'
+  'AutoFontSize',
+  'pascalprecht.translate'
 ]
-.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
+.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider) ->
   $urlRouterProvider
   .otherwise '/panel/chat'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
+
+  for id, trans of window.translations
+    $translateProvider.translations id, trans
+  $translateProvider.preferredLanguage 'en'
 
 .factory 'authInterceptor', ($rootScope, $q, $location) ->
   # Add authorization token to headers
