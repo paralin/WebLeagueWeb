@@ -1,0 +1,21 @@
+window.translations.ru = {
+  'TITLE': 'Web League',
+  'Profile': 'Профиль',
+  'Sign Out': 'Выйти',
+  'Chat': 'Чат',
+  'Leaderboards': 'Список лидеров',
+  'Start': 'Начать',
+  'Cancel': 'Отменить',
+  'Match': 'Матч',
+  'Leave': 'Покинуть',
+  'Challenge': 'Бросить вызов',
+  'Player': 'Игрок',
+  'Vote': 'Голосовать',
+  'Dismiss': 'Убрать',
+  'Result': 'Результат',
+  'Create Match': 'Создать матч',
+  'Create': 'Создать',
+  'Chose your match options': 'Выберите опции матча',
+  'Start Challenge': 'Начать поединок',
+  'Game mode': 'Режим игры'
+};
