@@ -11,7 +11,7 @@
           a(ng-click="setLanguage('de')") German
     paper-button(role="button",tabindex="0",ng-click="state.go('panel.leaderboard')",style="margin:0") {{'Leaderboards' | translate}}
     div(dropdown="",style="margin:0")
-      paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}}
+      paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}} ({{auth.currentUser.profile.rating}})
       ul.dropdown-menu(role="menu",style="right:0;left:auto;")
         li
           a(ui-sref="panel.profile") {{ 'Profile' | translate }}
