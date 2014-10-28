@@ -1,4 +1,4 @@
-window.translations.en = {
+window.translations.mkd = {
   'TITLE': 'Web League',
   'Profile': 'Profile',
   'Sign Out': 'Sign Out',
