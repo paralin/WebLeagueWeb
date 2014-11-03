@@ -3,8 +3,9 @@
 angular.module 'webleagueApp'
 .controller 'VouchCtrl', ($scope, Profile, $state, $http) ->
   $scope.profiles = Profile.listUnvouched()
+  window.scope = $scope
   $scope.vouch = (profile)->
-    $http.post('/api/profile/vouch/'+profile._id)
+    $http.post('/api/profiles/vouch/'+profile._id)
       .success (data, status, headers)->
         $scope.profiles = Profile.listUnvouched()
         window.aswal = swal
