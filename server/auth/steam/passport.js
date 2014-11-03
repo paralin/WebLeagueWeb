@@ -40,6 +40,7 @@ exports.setup = function (User, config) {
         if(user){
           user.steam = profile;
           user.profile.name = profile.personaname;
+          user.profile.vouched = false;
           user.save(function(error){
             if(error)
               throw error;
@@ -52,6 +53,7 @@ exports.setup = function (User, config) {
             newUser.steam = profile;
             newUser.profile.name = profile.personaname;
             newUser.profile.rating = 1200;
+            newUser.profile.vouched = false;
             newUser.authItems = ['chat', 'startGames', 'matches'];
             newUser.save(function(err){
               if(err)
