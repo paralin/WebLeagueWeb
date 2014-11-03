@@ -10,6 +10,12 @@ angular.module('webleagueApp').factory 'Profile', ($resource) ->
       method: 'GET'
       cache: false
       isArray: true
+    listUnvouched:
+      method: 'GET'
+      cache: false
+      isArray: true
+      params:
+        id: 'unvouched'
     me:
       method: 'GET'
       cache: false

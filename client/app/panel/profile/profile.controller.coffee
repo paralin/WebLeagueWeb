@@ -1,7 +1,8 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'ProfileCtrl', ($scope, Profile, $stateParams, $location, $state) ->
+.controller 'ProfileCtrl', ($scope, Profile, $stateParams, $location, $state, Auth, $http) ->
+  $scope.auth = Auth
   processProfile = (profile)->
     $scope.profile = profile
   processError = (resp)->
@@ -11,3 +12,7 @@ angular.module 'webleagueApp'
     Profile.get {id: $stateParams.id}, processProfile, processError
   else
     Profile.me processProfile
+  $scope.devouch = ->
+    return if !Auth.inRole('vouch')
+    $http.post('/api/profiles/devouch/'+$scope.profile._id)
+    state.go "panel.leaderboard"

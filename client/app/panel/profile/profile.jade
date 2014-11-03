@@ -8,3 +8,6 @@
     paper-button(raised="",ng-click="openLink(profile.steam.profileurl)",style="margin-top:5px") 
       i.fa.fa-steam(style="margin-right:5px")
       | {{'View Steam Profile'|translate}}
+    paper-button(raised="",ng-if="auth.inRole('vouch')",ng-click="devouch()",style="margin-top:5px") 
+      i.fa.fa-ban(style="margin-right:5px")
+      | {{'Devouch Player'|translate}}

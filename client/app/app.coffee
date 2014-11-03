@@ -37,8 +37,13 @@ angular.module 'webleagueApp', [
   $rootScope.$on '$stateChangeStart', (event, next) ->
     Auth.getLoginStatus (user, token) ->
       loggedIn = user?
-      $location.path "/login" if next.authenticate and not loggedIn
-      $location.path "/panel/chat" if (loggedIn and next.name is "login") || next.name is "panel"
+      if next.authenticate
+        if !loggedIn
+          $location.path "/login"
+        else if !user.profile.vouched
+          $location.path "/novouch" if next.name isnt "novouch"
+        else
+          $location.path "/panel/chat" if next.name is "login" || next.name is "panel" || next.name is "novouch"
   $rootScope.openLink = (url)->
     win = window.open(url, '_blank')
     win.focus()

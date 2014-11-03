@@ -3,11 +3,11 @@
 var _ = require('lodash');
 var User = require('../user/user.model');
 
-var selection = {'profile': 1, 'steam.avatarfull': 1, 'steam.steamid': 1, 'steam.profileurl': 1};
+var selection = {'profile': 1, 'steam.avatarfull': 1, 'steam.steamid': 1, 'steam.profileurl': 1, 'profile.vouched': 1};
 
 // Get list of profiles
 exports.index = function(req, res) {
-  User.find().select(selection).exec(function (err, profiles) {
+  User.find({'profile.vouched': true}).select(selection).exec(function (err, profiles) {
     if(err) { return handleError(res, err); }
     return res.json(200, profiles);
   });
@@ -18,6 +18,13 @@ exports.show = function(req, res) {
   var id = req.params.id;
   if(id === "me"){
     id = req.user._id;
+  }else if(id === "unvouched"){
+    console.log("Returning unvouched ids");
+    User.find({'profile.vouched': false}).select(selection).exec(function (err, profiles) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, profiles);
+    });
+    return;
   }
   User.findOne({_id: id}, selection, function (err, profile) {
     if(err) { return handleError(res, err); }
@@ -40,18 +47,38 @@ exports.update = function(req, res) {
   });
 };
 
+exports.devouch = function(req, res){
+    User.findOne({_id: req.params.id}, function(err, profile){
+        if(!profile){ return res.send(404); }
+        profile.profile.vouched = false;
+        profile.save(function(){
+            res.send(200);
+        });
+    });
+};
+
+exports.vouch = function(req, res){
+    User.findOne({_id: req.params.id}, function(err, profile){
+        if(!profile){ return res.send(404); }
+        profile.profile.vouched = true;
+        profile.save(function(){
+            res.send(200);
+        });
+    });
+};
+
 // Deletes a profile from the DB.
 exports.destroy = function(req, res) {
-  User.findOne({_id: req.params.id}, selection, function (err, profile) {
-    if(err) { return handleError(res, err); }
-    if(!profile) { return res.send(404); }
-    profile.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
+    User.findOne({_id: req.params.id}, selection, function (err, profile) {
+        if(err) { return handleError(res, err); }
+        if(!profile) { return res.send(404); }
+        profile.remove(function(err) {
+            if(err) { return handleError(res, err); }
+            return res.send(204);
+        });
     });
-  });
 };
 
 function handleError(res, err) {
-  return res.send(500, err);
+    return res.send(500, err);
 }

@@ -2,6 +2,7 @@
   core-toolbar.medium-tall(style="height: 90px")
     paper-icon-button(icon="menu",role="button",tabindex="0",aria-label="menu",ng-click="state.go('panel.chat')")
     div(flex="") {{ 'TITLE' | translate }}
+    paper-button(ng-if="auth.inRole('vouch')",role="button",tabindex="0",ng-click="state.go('panel.vouch')",style="margin:0") {{'Vouch' | translate}}
     div(dropdown="")
       paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") LANGUAGE
       ul.dropdown-menu(role="menu",style="right:280px;left:auto;")
@@ -20,6 +21,7 @@
       div(style="width: 100%;height:100%;font-size:12px;float:left",ng-if="state.current.name!=='panel.chat'")
         paper-button(role="button",style="height:100%",ng-click="state.go('panel.chat')") {{ 'Chat' | translate }}
         paper-button(role="button",style="height:100%",ng-click="state.go('panel.leaderboard')") {{ 'Leaderboards' | translate }}
+        paper-button(role="button",style="height:100%",ng-if="auth.inRole('vouch')",ng-click="state.go('panel.vouch')") {{ 'Vouch' | translate }}
       div(style="width:100%;height:100%;float:left",ng-if="state.current.name==='panel.chat'")
         paper-tabs(ng-model="chatTabs.selected",flex="",style="",role="tablist")
           paper-tab(ng-repeat="chat in chats") 

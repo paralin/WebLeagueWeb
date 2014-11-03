@@ -6,6 +6,8 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
     currentUser: null
     currentToken: null
     currentServer: null
+    inRole: (name)->
+      _.contains @currentUser.authItems, name
     user: User
     getLoginStatus: (cb)->
       if @currentPromise?
