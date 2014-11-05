@@ -7,7 +7,9 @@ polymer-element(name="wl-chat", attributes="chat chatMessageInput chatValue memb
       .main-chat
         .msg-container
           template(repeat="{{message in chat.messages}}")
-            p [{{message.name}}] {{message.msg}}
+              p
+                b {{message.name}}: 
+                | {{message.msg}}
         paper-input#inputcont(horizontal="",layout="",label="Enter a chat message",style="width:100%;",value="{{chatValue}}")
       core-splitter(direction="left")
       .member-list(flex="")
