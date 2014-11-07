@@ -1,9 +1,11 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'VouchCtrl', ($scope, Profile, $state, $http) ->
+.controller 'VouchCtrl', ($scope, Profile, $state, $http, $filter) ->
   $scope.profiles = Profile.listUnvouched()
-  window.scope = $scope
+  $scope.searchText = ""
+  $scope.searchFilter = (value) ->
+    value.profile.name.indexOf($scope.searchText) isnt -1
   $scope.vouch = (profile)->
     $http.post('/api/profiles/vouch/'+profile._id)
       .success (data, status, headers)->

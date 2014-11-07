@@ -18,50 +18,18 @@ angular.module 'webleagueApp'
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
-  $scope.chatMembers = []
-  $scope.allMembers = []
   $scope.setLanguage = (ln)->
     $translate.use ln
   $scope.hasVoted = ->
     return false if !Network.activeResult? || !Network.activeResult.Votes?
     Network.activeResult.Votes[Auth.currentUser.steam.steamid]?
-  $scope.regenMembersList = ->
-    members = []
-    for chat in Network.chats
-      for id, member of chat.Members
-        ex = _.find members, {ID: member.ID}
-        members.push member if !ex?
-    $scope.allMembers = members
   $scope.notMe = (member)->
     member.SteamID isnt Auth.currentUser.steam.steamid
   $scope.pickPlayer = (event)->
     Network.matches.do.pickPlayer event.detail.SID
     uiButtonSound.play()
-  updChatMembers = (members)->
-    arr = $scope.chatMembers
-    nMembers = _.keys members
-    for mem in nMembers
-      arr[arr.length] = mem if !_.contains(arr, mem)
-    i=0
-    for mem in arr
-      arr.splice i, 1 if !_.contains(nMembers, mem)
-      i+=1
-  clr.push $scope.$watch "chatTabs.selected", (selected)->
-    chat = $scope.chats[selected]
-    if !chat?
-      $scope.chatMembers.length = 0
-    else
-      updChatMembers chat.Members
   clr.push $rootScope.$on "chatChannelAdd", ->
     $scope.chatTabs.selected = $scope.chats.length-1
-  clr.push $rootScope.$on "chatMembersUpd", ->
-    $scope.chatTabs.selected = $scope.chats.length-1 if $scope.chats.length <= $scope.chatTabs.selected
-    chat = $scope.chats[$scope.chatTabs.selected]
-    if !chat?
-      $scope.chatMembers.length = 0
-    else
-      updChatMembers chat.Members
-    $scope.regenMembersList()
   clr.push $rootScope.$on "challengeSnapshot", ->
     challenge = Network.activeChallenge
     if challenge?
@@ -88,13 +56,6 @@ angular.module 'webleagueApp'
     else if window.aswal?
       window.aswal()
       window.aswal = null
-  $scope.getMembersArr = (chat)->
-    return [] if !chat?
-    arr = $scope.chatMemberArrs[chat.Id]
-    if !arr?
-      arr = $scope.chatMemberArrs[chat.Id] = _.keys chat.Members
-    else
-    return arr
   $scope.confirmCreateMatch = ->
     nameInput = $("#matchNameInput")[0]
     name = nameInput.inputValue
@@ -205,8 +166,7 @@ angular.module 'webleagueApp'
       Id: game.Id
   $scope.gameFilter = (game)->
     game.Info.Status==0 || (Network.activeMatch? && Network.activeMatch.Id is game.Id)
-  $scope.sendChat = (event)->
-    msg = event.detail.message
+  $scope.sendChat = (msg)->
     Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.chatTabs.selected].Id, Text: msg})
   $scope.$on 'destroy', ->
     for cl in clr

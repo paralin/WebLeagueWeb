@@ -1,6 +1,7 @@
 .row(style="padding: 15px")
     .col-md-12
-      h2 Unvouched Players
+      //h2 Unvouched Players
+      paper-input(label="Search for players...", ng-model="searchText")
       table.table.table-hover.table-condensed
         thead
           tr
@@ -8,7 +9,7 @@
             th {{'Name'|translate}}
             th(style="width: 150px") {{'Actions'|translate}}
         tbody
-          tr(ng-repeat="profile in profiles | orderBy:'-profile.rating':false",ng-click="goToProfile(profile)")
+          tr(ng-repeat="profile in profiles | filter:searchFilter | orderBy:'-profile.rating':false",ng-click="goToProfile(profile)")
             td
               img(style="width:20px;height:20px",ng-src="{{profile.steam.avatarfull}}")
             td {{profile.profile.name}}
