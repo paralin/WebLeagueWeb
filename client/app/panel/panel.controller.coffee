@@ -83,7 +83,7 @@ angular.module 'webleagueApp'
       GameMode: gm
     findMatchSound.play()
   $scope.confirmCreateChallenge = ->
-    sid = challenge.challenged
+    sid = challenge.challenged.SteamID
     drp = $("#cgameModeInput")[0]
     sel = drp.selectedItem
     if !sel?
@@ -94,6 +94,7 @@ angular.module 'webleagueApp'
         type: "error"
       return
     gm = parseInt $(drp.selectedItem).attr "value"
+    console.log "Sending challenge to #{sid}"
     Network.matches.do.startchallenge sid, gm
     uiButtonSound.play()
   $scope.dismissCreate = ->
