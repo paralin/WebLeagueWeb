@@ -46,7 +46,6 @@
       paper-button.danger-btn(raisedButton,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
     .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null")
       paper-button(raisedButton,ng-click="createStartgame()") {{ 'Start Match' | translate }}
-      paper-button(raisedButton,ng-click="createChallenge()") {{ 'Challenge Player' | translate }}
     .btns(ng-if="network.activeResult != null && !hasVoted()")
       paper-button(raisedButton,ng-click="network.matches.do.vote(true)") {{ 'Vote' | translate }} RADIANT
       paper-button(raisedButton,ng-click="network.matches.do.vote(false)") {{ 'Vote' | translate }} DIRE
@@ -69,8 +68,7 @@ paper-dialog#createChallenge(ng-heading="'Start Challenge' | translate", transit
   div(style="height: 110px")
     div(style="height: 10px")
     div(style="width: 100%;height:40px")
-      paper-dropdown-menu#cPlayerInput(label="{{'Player'|translate}}",style="position:absolute;padding:0")
-        paper-item(ng-repeat="member in allMembers | filter:notMe", label="{{member.Name}}", value="{{member.SteamID}}")
+      span(style="font-weight: bold") Challenge with {{challenge.challenged.Name}}
     div(style="width: 100%")
       paper-dropdown-menu#cgameModeInput(ng-label="'Game mode'|translate",style="position:absolute;padding:0")
         paper-item(ng-repeat="(id, name) in GameModeN", label="{{name}}", value="{{id}}")

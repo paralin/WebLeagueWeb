@@ -10,8 +10,8 @@
     "angular-resource": ">=1.2.*",
     "angular-cookies": ">=1.2.*",
     "angular-sanitize": ">=1.2.*",
-    "angular-bootstrap": "~0.11.0", 
-    "font-awesome": ">=4.1.0", 
+    "angular-bootstrap": "~0.11.0",
+    "font-awesome": ">=4.1.0",
     "lodash": "~2.4.1",
     "angular-ui-router": "~0.2.10",
     "ng-polymer-elements": "~0.1.0",
@@ -26,7 +26,8 @@
     "bootbox": "~4.3.0",
     "buzz": "~1.1.6",
     "auto-font-size": "rschmukler/auto-font-size",
-    "angular-translate": "~2.4.1"
+    "angular-translate": "~2.4.1",
+    "ng-context-menu": "https://github.com/paralin/ng-context-menu.git#development"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

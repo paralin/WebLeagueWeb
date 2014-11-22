@@ -7,6 +7,20 @@
     paper-input#inputcont(horizontal="",layout="",label="Enter a chat message",style="width:100%;")
   core-splitter(direction="left")
   .member-list(flex="")
-    p(ng-repeat="(id, member) in chat.Members")
+    p(ng-repeat="(id, member) in chat.Members", context-menu="setSelectedMember(member)", data-target="menu-chatrightclick")
         img(ng-src="{{member.Avatar}}")
         | {{member.Name}}
+#menu-chatrightclick.dropdown.position-fixed
+  ul.dropdown-menu(role="menu")
+    li
+      a.pointer(role="menuitem", tabindex="1", style="font-weight: bold")
+        | Rating: {{selectedMember.Rating}}
+    li
+      a.pointer(role="menuitem", tabindex="2", ng-click="viewProfile(selectedMember)")
+        | View Profile
+    li
+      a.pointer(role="menuitem", tabindex="3", ng-click="sendChallenge(selectedMember)", ng-if="canChallenge(selectedMember)")
+        | Send Challenge
+    li
+      a.pointer(role="menuitem", tabindex="4", ng-click="steamProfile(selectedMember)")
+        | View Steam Profile

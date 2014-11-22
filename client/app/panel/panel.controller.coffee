@@ -9,11 +9,12 @@ window.lobbyReadySound = new buzz.sound "/assets/sounds/ui_findmatch_search_01.w
 
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
-.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate) ->
+.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate, challenge) ->
   clr = []
   $scope.auth = Auth
   $scope.network = Network
   $scope.state = $state
+  $scope.challenge = challenge
   window.state = $state
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
@@ -82,16 +83,7 @@ angular.module 'webleagueApp'
       GameMode: gm
     findMatchSound.play()
   $scope.confirmCreateChallenge = ->
-    drp = $("#cPlayerInput")[0]
-    sel = drp.selectedItem
-    if !sel?
-      $("#createChallenge")[0].opened = true
-      new PNotify
-        title: "Player Needed"
-        text: "Please select a player."
-        type: "error"
-      return
-    sid = $(drp.selectedItem).attr "value"
+    sid = challenge.challenged
     drp = $("#cgameModeInput")[0]
     sel = drp.selectedItem
     if !sel?

@@ -7,7 +7,8 @@ angular.module 'webleagueApp', [
   'ui.bootstrap',
   'ng-polymer-elements',
   'AutoFontSize',
-  'pascalprecht.translate'
+  'pascalprecht.translate',
+  'ng-context-menu'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider) ->
   $urlRouterProvider
