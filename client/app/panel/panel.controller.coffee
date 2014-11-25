@@ -9,12 +9,11 @@ window.lobbyReadySound = new buzz.sound "/assets/sounds/ui_findmatch_search_01.w
 
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
-.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate, challenge) ->
+.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate) ->
   clr = []
   $scope.auth = Auth
   $scope.network = Network
   $scope.state = $state
-  $scope.challenge = challenge
   window.state = $state
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
@@ -82,31 +81,12 @@ angular.module 'webleagueApp'
       Name: name
       GameMode: gm
     findMatchSound.play()
-  $scope.confirmCreateChallenge = ->
-    sid = challenge.challenged.SteamID
-    drp = $("#cgameModeInput")[0]
-    sel = drp.selectedItem
-    if !sel?
-      $("#createChallenge")[0].opened = true
-      new PNotify
-        title: "Game Mode Needed"
-        text: "Please select a game mode."
-        type: "error"
-      return
-    gm = parseInt $(drp.selectedItem).attr "value"
-    console.log "Sending challenge to #{sid}"
-    Network.matches.do.startchallenge sid, gm
-    uiButtonSound.play()
   $scope.dismissCreate = ->
     $("#createMatch")[0].opened = false
-  $scope.dismissChallenge = ->
-    $("#createChallenge")[0].opened = false
   # Is currently controlling a game
   $scope.createStartgame = ->
     $("#createMatch")[0].toggle()
     $("#matchNameInput")[0].inputValue = ""
-  $scope.createChallenge = ->
-    $("#createChallenge")[0].toggle()
   $scope.showRightCont = ->
     Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()||Network.activeResult?||Network.activeMatch?||Network.activeChallenge?
   $scope.isAdminOfGame = ->

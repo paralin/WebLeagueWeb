@@ -1,8 +1,6 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'ChatCtrl', ($scope, challenge) ->
+.controller 'ChatCtrl', ($scope, Network, $rootScope) ->
   $scope.sendChallenge = (member)->
-    challenge.challenged = member
-    console.log challenge
-    $("#createChallenge")[0].toggle()
+    Network.matches.startchallenge member.SteamID, $rootScope.GameMode.CM
