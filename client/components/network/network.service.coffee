@@ -225,6 +225,7 @@ class NetworkService
             member: upd.Member.ID
             msg: upd.Text
             name: chat.Members[upd.Member.ID].Name
+            Auto: upd.Auto
       #add or remove a chat channel
       chatchannelupd: (upd)->
         for chan in upd.channels

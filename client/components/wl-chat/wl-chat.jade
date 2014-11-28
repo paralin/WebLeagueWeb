@@ -1,9 +1,12 @@
 .chat-cont(horizontal="", layout="")
   .main-chat
     .msg-container
-      p(ng-repeat="message in chat.messages")
-        b {{message.name}}: 
-        | {{message.msg}}
+      p(ng-repeat="message in chat.messages" ng-class="{systemMsg: message.Auto}")
+        span(ng-if="!message.Auto")
+          b {{message.name}}: 
+          | {{message.msg}}
+        span(ng-if="message.Auto")
+          b {{message.name}} {{message.msg}}
     paper-input#inputcont(horizontal="",layout="",label="Enter a chat message",style="width:100%;")
   core-splitter(direction="left")
   .member-list(flex="")
