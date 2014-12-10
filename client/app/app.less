@@ -45,44 +45,48 @@ paper-toast-fa {
   width: 100%;
 }
 
-.primary-btn {
+body /deep/ paper-button {
+    border-radius: 0;
+}
+
+body /deep/ .primary-btn {
   background: #4285f4;
   color: #fff;
 }
 
-.primary-btn:hover {
+body /deep/ .primary-btn:hover {
   background: #2a56c6;
 
 }
 
-.primary-btn::shadow #ripple {
+body /deep/ .primary-btn::shadow #ripple {
   color: #00B8FF;
 }
 
-.danger-btn {
+body /deep/ .danger-btn {
   background: #CF3838;
   color: #fff;
 }
 
-.danger-btn:hover {
+body /deep/ .danger-btn:hover {
   background: #E91313;
 
 }
 
-.danger-btn::shadow #ripple {
+body /deep/ .danger-btn::shadow #ripple {
   color: #FD9292;
 }
 
-.success-btn {
+body /deep/ .success-btn {
   background: #2FD22E;
   color: #fff;
 }
 
-.success-btn:hover {
+body /deep/ .success-btn:hover {
   background: #298028;
 }
 
-.success-btn::shadow #ripple {
+body /deep/ .success-btn::shadow #ripple {
   color: #FD9292;
 }
 
@@ -97,8 +101,34 @@ p, td {
     border-radius: 0 !important;
 }
 
-button, paper-button {
+button{
     border-radius: 0 !important;
+}
+
+html /deep/ paper-dropdown-menu {
+    box-sizing: border-box;
+    width: 170px;
+}
+
+html /deep/ core-menu {
+    box-sizing: border-box;
+    width: 170px;
+}
+
+html /deep/ paper-item {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+html /deep/ core-collapse {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+html /deep/ #scroller {
+    max-height: 100% !important;
+    height: 100% !important;
 }
 
 // injector

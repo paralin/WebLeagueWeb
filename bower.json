@@ -16,10 +16,6 @@
     "angular-ui-router": "~0.2.10",
     "ng-polymer-elements": "~0.1.0",
     "pnotify": "~2.0.1",
-    "polymer": "Polymer/polymer#~0.4.2",
-    "core-elements": "Polymer/core-elements#~0.4.2",
-    "paper-elements": "Polymer/paper-elements#~0.4.2",
-    "paper-dropdown-menu": "Polymer/paper-dropdown-menu#~0.4.2",
     "moment": "~2.8.3",
     "time-ago-element": "paralin/time-ago-element",
     "sweetalert": "paralin/sweetalert#master",
@@ -27,16 +23,26 @@
     "buzz": "~1.1.6",
     "auto-font-size": "rschmukler/auto-font-size",
     "angular-translate": "~2.4.1",
-    "ng-context-menu": "https://github.com/paralin/ng-context-menu.git#development"
-  },
-  "devDependencies": {
-    "angular-mocks": ">=1.2.*",
-    "angular-scenario": ">=1.2.*"
+    "ng-context-menu": "~1.0.1",
+    "polymer": "Polymer/polymer#~0.5.1",
+    "paper-button": "Polymer/paper-button#~0.5.1",
+    "paper-tabs": "Polymer/paper-tabs#~0.5.1",
+    "paper-fab": "Polymer/paper-fab#~0.5.1",
+    "paper-input": "Polymer/paper-input#~0.5.1",
+    "core-toolbar": "Polymer/core-toolbar#~0.5.1",
+    "core-icons": "Polymer/core-icons#~0.5.1",
+    "core-splitter": "Polymer/core-splitter#~0.5.1",
+    "paper-icon-button": "Polymer/paper-icon-button#~0.5.1",
+    "paper-checkbox": "Polymer/paper-checkbox#~0.5.1",
+    "paper-dialog": "Polymer/paper-dialog#~0.5.1",
+    "paper-dropdown": "Polymer/paper-dropdown#~0.5.1",
+    "paper-dropdown-menu": "Polymer/paper-dropdown-menu#~0.5.1",
+    "paper-item": "Polymer/paper-item#~0.5.1",
+    "core-menu": "Polymer/core-menu#~0.5.1"
   },
   "resolutions": {
-    "polymer": "^0.4.0",
-    "core-component-page": "^0.4.0",
-    "platform": "^0.4.0",
-    "jquery": ">= 1.9.0"
+    "polymer": "~0.5.1",
+    "core-component-page": "^0.5.1",
+    "jquery": "~2.0.3"
   }
 }

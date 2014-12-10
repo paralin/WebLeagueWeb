@@ -16,7 +16,7 @@ window.translations.mkd = {
   'Result': 'Result',
   'Create Match': 'Create Match',
   'Create': 'Create',
-  'Chose your match options': 'Chose your match options',
+  'Choose your match options': 'Choose your match options',
   'Start Challenge': 'Start Challenge',
   'Start Match': 'Start Match',
   'Game mode': 'Game mode',

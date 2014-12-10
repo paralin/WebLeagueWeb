@@ -57,36 +57,33 @@ angular.module 'webleagueApp'
       window.aswal()
       window.aswal = null
   $scope.confirmCreateMatch = ->
-    nameInput = $("#matchNameInput")[0]
-    name = nameInput.inputValue
+    console.log $scope.matchName
+    name = $scope.matchName
     if name is ""
-      $("#createMatch")[0].opened = true
+      $scope.showCreateMatch = true
       new PNotify
         title: "Name Needed"
         text: "Please enter a match name."
         type: "error"
       return
-    drp = $("#gameModeInput")[0]
-    sel = drp.selectedItem
+    sel = $scope.selectedGameMode
     if !sel?
-      $("#createMatch")[0].opened = true
+      $scope.showCreateMatch = true
       new PNotify
         title: "Game Mode Needed"
         text: "Please select a game mode."
         type: "error"
       return
-    gm = parseInt $(drp.selectedItem).attr "value"
+    gm = parseInt sel
     Network.matches.do.creatematch
-      MatchType: 0
       Name: name
       GameMode: gm
     findMatchSound.play()
   $scope.dismissCreate = ->
-    $("#createMatch")[0].opened = false
+    $scope.showCreateMatch = false
   # Is currently controlling a game
   $scope.createStartgame = ->
-    $("#createMatch")[0].toggle()
-    $("#matchNameInput")[0].inputValue = ""
+    $scope.showCreateMatch = true
   $scope.showRightCont = ->
     Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()||Network.activeResult?||Network.activeMatch?||Network.activeChallenge?
   $scope.isAdminOfGame = ->

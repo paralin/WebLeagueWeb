@@ -16,7 +16,7 @@ window.translations.de = {
   'Result': 'Ergebnis',
   'Create Match': 'Spiel eröffnen',
   'Create': 'Anlegen',
-  'Chose your match options': 'Wähle die Spiel Optionen',
+  'Choose your match options': 'Wähle die Spiel Optionen',
   'Start Challenge': 'Herausforderung starten',
   'Game mode': 'Spielmodus',
   'Challenge Player': 'Spieler herausfordern',

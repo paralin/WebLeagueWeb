@@ -26,9 +26,8 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth) {
             };
             element.bind("keypress", function(event) {
                 if(event.which === 13) {
-                    var chatbox = element.find("#inputcont")[0];
-                    var msg = chatbox.inputValue;
-                    chatbox.inputValue = "";
+                    var msg = scope.chatInput;
+                    scope.chatInput = "";
                     if(msg.length > 0){
                         scope.$apply(function() {
                             console.log(msg);

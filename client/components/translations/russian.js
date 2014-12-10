@@ -17,7 +17,7 @@ window.translations.ru = {
   'Result': 'Результат',
   'Create Match': 'Создать матч',
   'Create': 'Создать',
-  'Chose your match options': 'Выберите опции матча',
+  'Choose your match options': 'Выберите опции матча',
   'Start Challenge': 'Начать поединок',
   'Game mode': 'Режим игры',
   'Name': 'Name',

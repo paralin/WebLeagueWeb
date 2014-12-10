@@ -37,28 +37,30 @@
       pending-challenge(ng-if="network.activeChallenge!=null")
       match-result(ng-if="network.activeResult!=null",ng-model="network.activeResult")
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup==null&&network.activeMatch.Info.Status==0")
-      paper-button.primary-btn(raisedButton,ng-click="network.matches.do.startmatch()") {{ 'Start' | translate }}
-      paper-button.danger-btn(raisedButton,ng-click="network.matches.do.leavematch()") {{ 'Cancel' | translate }}
+      paper-button.primary-btn(raised,ng-click="network.matches.do.startmatch()") {{ 'Start' | translate }}
+      paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Cancel' | translate }}
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup!=null&&network.activeMatch.Info.Status<3")
-      paper-button.primary-btn(raisedButton,ng-click="network.matches.do.finalizematch()",ng-if="allAreReady()") {{ 'Start Match' | translate }}
-      paper-button.danger-btn(raisedButton,ng-click="network.matches.do.leavematch()") {{ 'Cancel' | translate }} {{ 'Match' | translate }}
+      paper-button.primary-btn(raised,ng-click="network.matches.do.finalizematch()",ng-if="allAreReady()") {{ 'Start Match' | translate }}
+      paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Cancel' | translate }} {{ 'Match' | translate }}
     .btns(ng-if="isInGame()&&!isAdminOfGame()&&network.activeMatch.Info.Status<1")
-      paper-button.danger-btn(raisedButton,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
+      paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
     .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null")
-      paper-button(raisedButton,ng-click="createStartgame()") {{ 'Start Match' | translate }}
+      paper-button(raised,ng-click="createStartgame()") {{ 'Start Match' | translate }}
     .btns(ng-if="network.activeResult != null && !hasVoted()")
-      paper-button(raisedButton,ng-click="network.matches.do.vote(true)") {{ 'Vote' | translate }} RADIANT
-      paper-button(raisedButton,ng-click="network.matches.do.vote(false)") {{ 'Vote' | translate }} DIRE
+      paper-button(raised,ng-click="network.matches.do.vote(true)") {{ 'Vote' | translate }} RADIANT
+      paper-button(raised,ng-click="network.matches.do.vote(false)") {{ 'Vote' | translate }} DIRE
     .btns(ng-if="network.activeResult != null && hasVoted()")
-      paper-button(raisedButton,ng-click="network.matches.do.dismissResult()") {{ 'Dismiss' | translate }} {{ 'Result' | translate }}
+      paper-button(raised,ng-click="network.matches.do.dismissResult()") {{ 'Dismiss' | translate }} {{ 'Result' | translate }}
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
-paper-dialog#createMatch(ng-heading="'Create Match' | translate", transition="paper-dialog-transition-bottom", style="width: 400px;")
+paper-action-dialog#createMatch(ng-heading="'Create Match' | translate", transition="core-transition-bottom", style="width: 600px", ng-opened="showCreateMatch")
   p(style="margin-bottom:0")
-    | {{ 'Chose your match options' | translate }}:
-  div(style="height: 110px")
-    div(style="height: 73px")
-      paper-input#matchNameInput(floatinglabel="",ng-label="'Match Name' | translate", required="", ng-error="'You must enter a match name.' | translate",style="padding: 0")
-    paper-dropdown-menu#gameModeInput(ng-label="'Game mode' | translate",style="position:absolute;padding:0")
-      paper-item(ng-repeat="(id, name) in GameModeN", label="{{name}}", value="{{id}}")
-  paper-button(ng-click="dismissCreate()", affirmative="") {{'Cancel'|translate}}
-  paper-button.primary-btn(ng-click="confirmCreateMatch()", affirmative="", autofocus="") {{'Create' | translate}}
+    | {{"Choose your match options" | translate}}
+  p(style="margin:0")
+    paper-input#matchNameInput(floatinglabel="",ng-label="'Match Name' | translate", required="", ng-error="'You must enter a match name.' | translate",style="padding: 0", ng-model="matchName")
+  p(style="margin-top:0")
+    paper-dropdown-menu#gameModeInput(ng-label="'Game mode' | translate")
+      paper-dropdown.dropdown(layered="true", style="height: 35%")
+        core-menu.menu(ng-model="selectedGameMode")
+          paper-item(ng-repeat="(id, name) in GameModeN" value="{{id}}") {{name}}
+  paper-button(affirmative="") {{"Cancel" | translate}}
+  paper-button.primary-btn(affirmative="", autofocus="", ng-click="confirmCreateMatch()", ng-model="matchName") {{"Create" | translate}}

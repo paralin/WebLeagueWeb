@@ -46,15 +46,19 @@
     margin: 0; 
 }
 #inputcont {
-    height: 35px;
     width: 100%;
     padding: 0;
 }
-#inputCont::shadow #container {
+
+#inputcont /deep/ #decorator {
+    width: 100%;
+}
+
+#inputcont /deep/ #container {
     width: 500px;
     width: 100%;
 }
-#inputCont /deep/ #errorContainer {
+#inputcont /deep/ #errorContainer {
     display:none;
 }
 core-splitter {
