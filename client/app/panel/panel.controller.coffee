@@ -74,7 +74,9 @@ angular.module 'webleagueApp'
         text: "Please select a game mode."
         type: "error"
       return
+    console.log sel
     gm = parseInt sel
+    gm += 1
     Network.matches.do.creatematch
       Name: name
       GameMode: gm
