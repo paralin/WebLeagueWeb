@@ -46,7 +46,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
           template(bind="",if="{{!inGame&&(match.Players.length<10||match.Info.MatchType==1)&&canJoin}}")
             tr(style="padding:0")
               td(style="padding:0")
-                paper-button.success-btn(style="width:100%",on-click="{{joinMatch}}") Join Match
+                paper-button(style="width:100%",on-click="{{joinMatch}}") Join Match
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
     style.
       .header {
@@ -71,6 +71,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
          /*max-height: 50%;*/
          overflow: auto;
          overflow-x: hidden;
+         padding-bottom:5px;
       }
       .boldText {
         font-weight: bold;
