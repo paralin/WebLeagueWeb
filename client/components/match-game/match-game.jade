@@ -9,10 +9,6 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
     .tablewrapper
       table.table.table-condensed(style="margin-bottom:0")
         tbody
-          template(bind="",if="{{!inGame&&(match.Players.length<10||match.Info.MatchType==1)&&canJoin}}")
-            tr(style="padding:0")
-              td(style="padding:0")
-                paper-button.success-btn(label="Join",style="width:100%",on-click="{{joinMatch}}")
           tr(style="font-weight:bold;color:black;background:white") 
             td {{match.Info.Name}}
           template(bind="",if="{{match.Info.MatchType==1}}")
@@ -47,6 +43,10 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
                 | {{player.Name}}
                 |  ({{player.Rating}})
+          template(bind="",if="{{!inGame&&(match.Players.length<10||match.Info.MatchType==1)&&canJoin}}")
+            tr(style="padding:0")
+              td(style="padding:0")
+                paper-button.success-btn(style="width:100%",on-click="{{joinMatch}}") Join Match
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
     style.
       .header {
