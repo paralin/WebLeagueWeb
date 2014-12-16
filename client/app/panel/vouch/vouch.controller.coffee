@@ -3,12 +3,14 @@
 angular.module 'webleagueApp'
 .controller 'VouchCtrl', ($scope, Profile, $state, $http, $filter, SteamID) ->
   clr = [] 
-  $scope.profiles = Profile.listUnvouched() 
-  $scope.searchText = ""
+  $scope.profiles = Profile.list()
   $scope.steamIdValid = false
-  $scope.searchFilter = (value) ->
-    value.profile.name.indexOf($scope.searchText) isnt -1
   currentId = ""
+  $scope.loadVouch = (id)->
+    console.log id
+    currentId = ""
+    $scope.steamID = id
+    $scope.steamIDC = id
   $scope.deleteVouch = ->
     $scope.vouch = null
     $scope.vouchEmpty = false
@@ -20,6 +22,9 @@ angular.module 'webleagueApp'
         $scope.loadingVouch = false
         $scope.steamID = ""
         $scope.steamIDC = ""
+        Profile.list (data)->
+          if data?
+            $scope.profiles = data
       .error (err, stat)->
         swal
           title: "Can't Delete Vouch"
@@ -32,6 +37,9 @@ angular.module 'webleagueApp'
           title: "Vouch Updated"
           text: "Your changes will take effect when they refresh/sign in."
           type: "success"
+        Profile.list (data)->
+          if data?
+            $scope.profiles = data
       .error (err, stat)->
         swal
           title: "Can't Update"
@@ -45,6 +53,9 @@ angular.module 'webleagueApp'
       .success (data)->
         $scope.loadingVouch = false
         $scope.vouch = data
+        Profile.list (data)->
+          if data?
+            $scope.profiles = data
       .error (err, stat)->
         swal
           title: "Can't Create Vouch"
@@ -78,7 +89,11 @@ angular.module 'webleagueApp'
       .success (data)->
         console.log data
         $scope.loadingVouch = false
-        $scope.vouch = data
+        if !data?
+          $scope.vouchEmpty = true
+          $scope.vouch = null
+        else
+          $scope.vouch = data
       .error (err, stat)->
         if stat is 404
           $scope.loadingVouch = false

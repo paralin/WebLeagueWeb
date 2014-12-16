@@ -7,7 +7,7 @@ var selection = {'profile': 1, 'steam.avatarfull': 1, 'steam.steamid': 1, 'steam
 
 // Get list of profiles
 exports.index = function(req, res) {
-  User.find({$exists: {'vouch': true}}).select(selection).exec(function (err, profiles) {
+  User.find({}).select(selection).exec(function (err, profiles) {
     if(err) { return handleError(res, err); }
     return res.json(200, profiles);
   });
@@ -20,7 +20,7 @@ exports.show = function(req, res) {
     id = req.user._id;
   }
   User.findOne({_id: id}, selection, function (err, profile) {
-    if(err) { return handleError(res, err); }
+    if(err) { console.log(err); return handleError(res, err); }
     if(!profile) { return res.send(404); }
     return res.json(profile);
   });

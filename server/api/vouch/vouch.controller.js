@@ -32,7 +32,6 @@ exports.update = function(req, res) {
           }
           user.save(function(err){
               if(err) { return handleError(res, err); }
-              console.log(user.vouch);
               return res.send(200);
           });
       }
@@ -123,7 +122,6 @@ exports.create = function(req, res) {
                     else { return res.json(user.vouch); }
                 });
             }
-            return res.json(user.vouch);
         }
     });
 };
