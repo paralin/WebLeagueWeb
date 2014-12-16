@@ -28,7 +28,7 @@ exports.update = function(req, res) {
           if(user.vouch && user.vouch.name && user.vouch.name.length){
             user.profile.name = user.vouch.name;
           }else{
-              user.profile.name = profile.personaname;
+              user.profile.name = user.steam.personaname;
           }
           user.save(function(err){
               if(err) { return handleError(res, err); }

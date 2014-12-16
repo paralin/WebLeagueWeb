@@ -14,5 +14,15 @@ angular.module 'webleagueApp'
     Profile.me processProfile
   $scope.devouch = ->
     return if !Auth.inRole('vouch')
-    $http.post('/api/profiles/devouch/'+$scope.profile._id)
-    state.go "panel.leaderboard"
+    $http.post('/api/vouches/delete/'+$scope.profile._id)
+      .success ->
+        state.go "panel.leaderboard"
+        swal
+          title: "Player Unvouched"
+          text: "The player has been unvouched!"
+          type: "success"
+      .error ->
+        swal
+          title: "Can't Unvouch Player"
+          text: "There was a problem unvouching the player."
+          type: "error"
