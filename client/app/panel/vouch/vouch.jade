@@ -36,3 +36,4 @@
           td {{profile.profile.rating}}
           td 
             paper-button.pull-right(raised="" role="button" ng-click="loadVouch(profile.steam.steamid)") Edit
+    paper-spinner.blue.center-block(active="", style="margin-top:25px", ng-if="profiles.length == 0")

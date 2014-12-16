@@ -3,7 +3,9 @@
 angular.module 'webleagueApp'
 .controller 'VouchCtrl', ($scope, Profile, $state, $http, $filter, SteamID) ->
   clr = [] 
-  $scope.profiles = Profile.list()
+  $scope.profiles = []
+  Profile.list (data)->
+    $scope.profiles = data
   $scope.steamIdValid = false
   currentId = ""
   $scope.loadVouch = (id)->
