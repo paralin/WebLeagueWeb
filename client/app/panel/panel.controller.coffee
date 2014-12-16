@@ -76,7 +76,7 @@ angular.module 'webleagueApp'
       return
     console.log sel
     gm = parseInt sel
-    gm += 1
+    gm = _.keys($rootScope.GameModeN)[gm]
     Network.matches.do.creatematch
       Name: name
       GameMode: gm
