@@ -22,7 +22,7 @@ exports.show = function(req, res) {
     console.log("Returning unvouched ids");
     User.find({'profile.vouched': false}).select(selection).exec(function (err, profiles) {
       if(err) { return handleError(res, err); }
-      return res.json(200, profiles);
+      return res.status(200).json(profiles);
     });
     return;
   }

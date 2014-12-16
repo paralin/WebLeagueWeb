@@ -39,7 +39,11 @@ exports.setup = function (User, config) {
           return done(err);
         if(user){
           user.steam = profile;
-          user.profile.name = profile.personaname;
+          if(user.vouch && user.vouch.name && user.vouch.name.length){
+              user.profile.name = user.vouch.name;
+          }else{
+              user.profile.name = profile.personaname;
+          }
           user.save(function(error){
             if(error)
               throw error;

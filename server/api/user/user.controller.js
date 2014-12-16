@@ -9,7 +9,7 @@ var validationError = function(res, err) {
   return res.json(422, err);
 };
 
-exports.status = function(req, res){  
+exports.status = function(req, res){
   var resp = {};
   resp.isAuthed = req.user != null;
   if(req.user){
@@ -18,7 +18,8 @@ exports.status = function(req, res){
       _id: req.user._id,
       steam: req.user.steam,
       profile: req.user.profile,
-      authItems: req.user.authItems
+      authItems: req.user.authItems,
+      vouch: req.user.vouch
     };
     var profile = {
       _id: req.user._id,

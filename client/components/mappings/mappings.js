@@ -80,6 +80,9 @@ window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS = {
         },
         ngModel: {
             primitive: "value"
+        },
+        ngCommittedModel: {
+            primitive: "committedValue"
         }
     },
     paperToastFa: {

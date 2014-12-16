@@ -41,7 +41,7 @@ angular.module 'webleagueApp', [
       if next.authenticate
         if !loggedIn
           $location.path "/login"
-        else if !user.profile.vouched
+        else if !user.vouch?
           $location.path "/novouch" if next.name isnt "novouch"
         else
           $location.path "/panel/chat" if next.name is "login" || next.name is "panel" || next.name is "novouch"
