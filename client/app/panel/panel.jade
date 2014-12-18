@@ -46,10 +46,7 @@
       paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
     .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null")
       paper-button(raised,ng-click="createStartgame()") {{ 'Start Match' | translate }}
-    .btns(ng-if="network.activeResult != null && !hasVoted()")
-      paper-button(raised,ng-click="network.matches.do.vote(true)") {{ 'Vote' | translate }} RADIANT
-      paper-button(raised,ng-click="network.matches.do.vote(false)") {{ 'Vote' | translate }} DIRE
-    .btns(ng-if="network.activeResult != null && hasVoted()")
+    .btns(ng-if="network.activeResult != null")
       paper-button(raised,ng-click="network.matches.do.dismissResult()") {{ 'Dismiss' | translate }} {{ 'Result' | translate }}
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
 paper-action-dialog#createMatch(ng-heading="'Create Match' | translate", transition="core-transition-bottom", style="width: 600px", ng-opened="showCreateMatch")

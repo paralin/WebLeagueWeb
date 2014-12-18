@@ -102,8 +102,6 @@ class NetworkService
             text: err
             type: "error"
           return
-      vote: (vote)->
-        @invoke "voteresult", {Vote: vote}
       dismissResult: ->
         @invoke "dismissresult"
   handlers: 

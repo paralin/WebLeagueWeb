@@ -20,9 +20,6 @@ angular.module 'webleagueApp'
   $scope.games = Network.availableGames
   $scope.setLanguage = (ln)->
     $translate.use ln
-  $scope.hasVoted = ->
-    return false if !Network.activeResult? || !Network.activeResult.Votes?
-    Network.activeResult.Votes[Auth.currentUser.steam.steamid]?
   $scope.notMe = (member)->
     member.SteamID isnt Auth.currentUser.steam.steamid
   $scope.pickPlayer = (event)->

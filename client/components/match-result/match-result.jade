@@ -4,37 +4,25 @@ polymer-element(name="match-result", attributes="result")
   template
     link(rel="stylesheet",href="/bower_components/font-awesome/css/font-awesome.css")
     .header.blueHeader
-      template(bind="",if="{{result.VotingOpen}}") Vote 
       | Match Result
     .tablewrapper
       table.table.table-condensed(style="margin-bottom:0")
         tbody
-          template(bind="",if="{{result.RequiresVote && result.VotingOpen}}")
-            tr(style="font-weight:bold;color:black;background:white") 
-              td Can't fetch result, voting in progress.
-              td
-            tr(style="font-weight:bold;color:black;background:white") 
-              td 
-                | Voting ends:
-                time-ago(datetime="{{result.VotingEnds}}")
-              td
-          tr(class="{{ {success: result.RadiantWon, danger: !result.RadiantWon} | tokenList }}")
+          tr(class="{{ {success: result.Result>=2&&result.Result<=3, leaver: result.Result>3} | tokenList }}")
             td(style="font-weight:bold")
-              template(bind="",if="{{result.VotingOpen}}")
-                | Current vote: 
-              template(bind="",if="{{result.RadiantWon}}")
-                | Radiant Won
-              template(bind="",if="{{!result.RadiantWon}}")
-                | Dire Won
+              template(bind="",if="{{result.Result==2}}")
+                | Radiant Victory
+              template(bind="",if="{{result.Result==3}}")
+                | Dire Victory
+              template(bind="",if="{{result.Result==64}}")
+                | Poor Network Conditions, Result Discarded
+              template(bind="",if="{{result.Result==65}}")
+                | Leaver, Result Discarded
             td
           template(repeat="{{player in result.Players}}")
-            tr(class="{{ {success: player.Team==0, danger: player.Team==1} | tokenList }}")
+            tr(class="{{ {success: player.Team==0, danger: player.Team==1, leaver: player.IsLeaver} | tokenList }}")
               td
                 | {{player.Name}}
-                template(bind="",if="{{votedRadiant(player)}}")
-                  |  (R)
-                template(bind="",if="{{votedDire(player)}}")
-                  |  (D)
               template(bind="",if="{{player.Team==0}}")
                 td(style="text-align:right;font-weight:bold")
                   | {{result.RatingRadiant}}
