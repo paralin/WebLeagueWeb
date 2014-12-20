@@ -15,8 +15,9 @@ function isAuthenticated(req, res, next){
 }
 
 router.get('/get/:id', isAuthenticated, controller.show);
+router.get('/list/', isAuthenticated, controller.list);
 router.post('/delete/:id', isAuthenticated, controller.remove);
 router.post('/update/:id', isAuthenticated, controller.update);
-router.post('/:id', isAuthenticated, controller.create);
+router.post('/create/:id', isAuthenticated, controller.create);
 
 module.exports = router;

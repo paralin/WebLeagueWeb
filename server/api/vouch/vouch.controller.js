@@ -83,6 +83,13 @@ exports.remove = function(req, res){
     });
 };
 
+exports.list = function(req, res){
+    Vouch.find({}, function(err, vouches){
+        if(err) { return handleError(res, err); }
+        res.json(vouches);
+    });
+};
+
 exports.create = function(req, res) {
     //See if the user exists
     User.findOne({'steam.steamid': req.params.id}, 'vouch', function(err, user){

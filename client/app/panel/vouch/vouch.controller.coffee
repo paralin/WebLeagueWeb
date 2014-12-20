@@ -1,11 +1,20 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'VouchCtrl', ($scope, Profile, $state, $http, $filter, SteamID) ->
+.controller 'VouchCtrl', ($scope, Profile, $state, $http, $filter, SteamID, Vouch) ->
   clr = [] 
   $scope.profiles = []
-  Profile.list (data)->
-    $scope.profiles = data
+  $scope.vouches = []
+  loadProfiles = ->
+    Profile.list (data)->
+      $scope.profiles = data
+  loadVouches = ->
+    $scope.loadingVouches = true
+    Vouch.list (data)->
+      $scope.vouches = data
+      $scope.loadingVouches = false
+  loadVouches()
+  loadProfiles()
   $scope.steamIdValid = false
   currentId = ""
   $scope.loadVouch = (id)->
@@ -14,19 +23,19 @@ angular.module 'webleagueApp'
     $scope.steamID = id
     $scope.steamIDC = id
   $scope.deleteVouch = ->
+    id = currentId
     $scope.vouch = null
     $scope.vouchEmpty = false
     $scope.loadingVouch = true
-    $http.post "/api/vouches/delete/#{currentId}"
+    $http.post "/api/vouches/delete/#{id}"
       .success (data)->
         $scope.vouch = null
         $scope.vouchEmpty = false
         $scope.loadingVouch = false
         $scope.steamID = ""
         $scope.steamIDC = ""
-        Profile.list (data)->
-          if data?
-            $scope.profiles = data
+        loadVouches()
+        loadProfiles()
       .error (err, stat)->
         swal
           title: "Can't Delete Vouch"
@@ -39,9 +48,8 @@ angular.module 'webleagueApp'
           title: "Vouch Updated"
           text: "Your changes will take effect when they refresh/sign in."
           type: "success"
-        Profile.list (data)->
-          if data?
-            $scope.profiles = data
+        loadProfiles()
+        loadVouches()
       .error (err, stat)->
         swal
           title: "Can't Update"
@@ -51,13 +59,12 @@ angular.module 'webleagueApp'
     $scope.loadingVouch = true
     $scope.vouch = null
     $scope.vouchEmpty = false
-    $http.post "/api/vouches/#{currentId}"
+    $http.post "/api/vouches/create/#{currentId}"
       .success (data)->
         $scope.loadingVouch = false
         $scope.vouch = data
-        Profile.list (data)->
-          if data?
-            $scope.profiles = data
+        loadVouches()
+        loadProfiles()
       .error (err, stat)->
         swal
           title: "Can't Create Vouch"
