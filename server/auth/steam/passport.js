@@ -4,7 +4,7 @@ var Steam = require('steam-webapi');
 var request = require('request');
 
 var steam;
-exports.setup = function (User, config) {
+exports.setup = function (User, Vouch, config) {
   Steam.key = process.env.STEAM_API;
   Steam.ready(function(err){
     console.log("Steam web api ready.");
@@ -40,9 +40,9 @@ exports.setup = function (User, config) {
         if(user){
           user.steam = profile;
           if(user.vouch && user.vouch.name && user.vouch.name.length){
-              user.profile.name = user.vouch.name;
+            user.profile.name = user.vouch.name;
           }else{
-              user.profile.name = profile.personaname;
+            user.profile.name = profile.personaname;
           }
           user.save(function(error){
             if(error)
@@ -56,12 +56,25 @@ exports.setup = function (User, config) {
             newUser.steam = profile;
             newUser.profile.name = profile.personaname;
             newUser.profile.rating = 1200;
-            newUser.profile.vouched = false;
             newUser.authItems = ['chat', 'startGames', 'matches'];
-            newUser.save(function(err){
+            newUser.vouch = null;
+            //Find if they have a active vouch
+            Vouch.findOne({"_id": profile.steamid}, function(err, vou){
               if(err)
                 throw err;
-              return done(null, newUser);
+              if (vou){
+                delete vou["__v"];
+                newUser.vouch = vou;
+                Vouch.remove({_id: vou._id}, function(err, res){
+                  if(err)
+                    throw err;
+                });
+              }
+              newUser.save(function(err){
+                if(err)
+                  throw err;
+                return done(null, newUser);
+              });
             });
           });
         }
