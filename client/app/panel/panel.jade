@@ -2,6 +2,7 @@
   core-toolbar.medium-tall(style="height: 90px")
     paper-icon-button(icon="menu",role="button",tabindex="0",aria-label="menu",ng-click="state.go('panel.chat')")
     div(flex="") {{ 'TITLE' | translate }}
+    paper-button(ng-if="auth.inRole('admin')",role="button",tabindex="0",ng-click="state.go('panel.admin')",style="margin:0") {{'Admin' | translate}}
     paper-button(ng-if="auth.inRole('vouch')",role="button",tabindex="0",ng-click="state.go('panel.vouch')",style="margin:0") {{'Vouch' | translate}}
     div(dropdown="")
       paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") LANGUAGE
@@ -22,9 +23,10 @@
         paper-button(role="button",style="height:100%",ng-click="state.go('panel.chat')") {{ 'Chat' | translate }}
         paper-button(role="button",style="height:100%",ng-click="state.go('panel.leaderboard')") {{ 'Leaderboards' | translate }}
         paper-button(role="button",style="height:100%",ng-if="auth.inRole('vouch')",ng-click="state.go('panel.vouch')") {{ 'Vouch' | translate }}
+        paper-button(role="button",style="height:100%",ng-if="auth.inRole('admin')",ng-click="state.go('panel.admin')") {{ 'Admin' | translate }}
       div(style="width:100%;height:100%;float:left",ng-if="state.current.name==='panel.chat'")
         paper-tabs(ng-model="chatTabs.selected",flex="",style="",role="tablist")
-          paper-tab(ng-repeat="chat in chats") 
+          paper-tab(ng-repeat="chat in chats")
             | {{chat.Name}}
         div(style="width: 100px;position:relative;top:-5px;float:left")
           paper-icon-button(icon="add", role="button", ng-click="showJoinDialog()")
@@ -58,6 +60,6 @@ paper-action-dialog#createMatch(ng-heading="'Create Match' | translate", transit
     paper-dropdown-menu#gameModeInput(ng-label="'Game mode' | translate")
       paper-dropdown.dropdown(layered="true", style="height: 35%")
         core-menu.menu(ng-model="selectedGameMode")
-          paper-item(ng-repeat="(id, name) in GameModeN" value="{{id}}") {{name}}
+          paper-item(ng-repeat="id in sortedGameModes()" value="{{id}}") {{GameModeN[id]}}
   paper-button(affirmative="") {{"Cancel" | translate}}
   paper-button.primary-btn(affirmative="", autofocus="", ng-click="confirmCreateMatch()", ng-model="matchName") {{"Create" | translate}}

@@ -53,6 +53,8 @@ angular.module 'webleagueApp'
     else if window.aswal?
       window.aswal()
       window.aswal = null
+  $scope.sortedGameModes = ->
+    _.sortBy(_.keys($rootScope.GameModeN))
   $scope.confirmCreateMatch = ->
     console.log $scope.matchName
     name = $scope.matchName
@@ -71,9 +73,10 @@ angular.module 'webleagueApp'
         text: "Please select a game mode."
         type: "error"
       return
-    console.log sel
     gm = parseInt sel
-    gm = _.keys($rootScope.GameModeN)[gm]
+    sorted = _.sortBy(_.keys($rootScope.GameModeN))
+    gm = sorted[gm]
+    console.log gm
     Network.matches.do.creatematch
       Name: name
       GameMode: gm
