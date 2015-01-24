@@ -11,10 +11,10 @@ PNotify.desktop.permission()
 angular.module 'webleagueApp'
 .controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate) ->
   clr = []
+  window.scope = $scope
   $scope.auth = Auth
   $scope.network = Network
   $scope.state = $state
-  window.state = $state
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
@@ -54,7 +54,7 @@ angular.module 'webleagueApp'
       window.aswal()
       window.aswal = null
   $scope.sortedGameModes = ->
-    _.sortBy(_.keys($rootScope.GameModeN))
+    _.keys($rootScope.GameModeN).map(Number)
   $scope.confirmCreateMatch = ->
     console.log $scope.matchName
     name = $scope.matchName
@@ -74,9 +74,8 @@ angular.module 'webleagueApp'
         type: "error"
       return
     gm = parseInt sel
-    sorted = _.sortBy(_.keys($rootScope.GameModeN))
+    sorted = _.sortBy(_.keys($rootScope.GameModeN).map(Number))
     gm = sorted[gm]
-    console.log gm
     Network.matches.do.creatematch
       Name: name
       GameMode: gm

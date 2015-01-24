@@ -60,6 +60,6 @@ paper-action-dialog#createMatch(ng-heading="'Create Match' | translate", transit
     paper-dropdown-menu#gameModeInput(ng-label="'Game mode' | translate")
       paper-dropdown.dropdown(layered="true", style="height: 35%")
         core-menu.menu(ng-model="selectedGameMode")
-          paper-item(ng-repeat="id in sortedGameModes()" value="{{id}}") {{GameModeN[id]}}
+          paper-item(ng-repeat="id in sortedGameModes() | orderBy" value="{{id}}") {{GameModeN[id]}}
   paper-button(affirmative="") {{"Cancel" | translate}}
   paper-button.primary-btn(affirmative="", autofocus="", ng-click="confirmCreateMatch()", ng-model="matchName") {{"Create" | translate}}
