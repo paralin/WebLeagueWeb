@@ -13,7 +13,6 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
         element = $(".msg-container")[0];
         if (element.scrollTop > element.scrollHeight - 400)
           $timeout(function(){ element.scrollTop = element.scrollHeight+500; }, 100, false);
-        console.log("scrollTop: "+element.scrollTop+" scrollHeight: "+element.scrollHeight);
       }, true);
       scope.setSelectedMember = function(member){
         scope.selectedMember = member;

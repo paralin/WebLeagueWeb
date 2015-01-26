@@ -94,7 +94,6 @@ class NetworkService
             type: "error"
           return
       startchallenge: (tsid, gid)->
-        console.log gid
         @invoke("startchallenge", {ChallengedSID: tsid, GameMode: gid}).then (err)->
           return if !err?
           new PNotify
@@ -123,24 +122,19 @@ class NetworkService
         @availableGames.length = 0
         @disconnect() 
       matchsnapshot: (match)->
-        console.log "Received active match snapshot #{match}"
         @activeMatch = match
       challengesnapshot: (match)->
-        console.log "Received active challenge snapshot #{match}"
         @activeChallenge = match
         @hasChallenge = @activeChallenge?
         @scope.$broadcast 'challengeSnapshot', @activeChallenge
       clearchallenge: ->
-        console.log "Received active challenge clear"
         @activeChallenge = null
         @hasChallenge = false
         @scope.$broadcast 'challengeSnapshot', null
       resultsnapshot: (snp)->
-        console.log "Received match result snapshot"
         @activeResult = snp
         @scope.$broadcast "resultSnapshot", null
       matchplayerssnapshot: (upd)->
-        console.log "Received match players snapshot"
         #find the match
         mtchs = []
         match = _.find @availableGames, {Id: upd.Id}
@@ -151,7 +145,6 @@ class NetworkService
         for match in mtchs
           match.Players = upd.Players
       publicmatchupd: (upd)->
-        console.log "Received public match add/update"
         for match in upd.matches
           idx = _.findIndex @liveMatches, {Id: match.Id}
           if idx isnt -1
@@ -159,13 +152,11 @@ class NetworkService
           else
             @liveMatches[@liveMatches.length] = match
       publicmatchrm: (upd)->
-        console.log "Received public match rm"
         for id in upd.ids
           idx = _.findIndex @liveMatches, {Id: id}
           if idx isnt -1
             @liveMatches.splice idx, 1
       availablegameupd: (upd)->
-        console.log "Received available game add/update"
         for match in upd.matches
           idx = _.findIndex @availableGames, {Id: match.Id}
           if idx isnt -1
@@ -173,14 +164,12 @@ class NetworkService
           else
             @availableGames[@availableGames.length] = match
       availablegamerm: (upd)->
-        console.log "Received available game rm"
         for id in upd.ids
           idx = _.findIndex @availableGames, {Id: id}
           if idx isnt -1
             @availableGames.splice idx, 1
       clearsetup: ->
         if @activeMatch?
-          console.log "Received match setup clear"
           #find the match
           mtchs = _.where @availableGames, {Id: @activeMatch.Id}
           mtchs[mtchs.length] = @activeMatch
@@ -188,14 +177,12 @@ class NetworkService
             match.Setup = null
       setupsnapshot: (snap)->
         if @activeMatch?
-          console.log "Received match setup snapshot"
           #find the match
           mtchs = _.where @availableGames, {Id: @activeMatch.Id}
           mtchs[mtchs.length] = @activeMatch
           for match in mtchs
             match.Setup = snap
       infosnapshot: (snap)->
-        console.log "Received match info snapshot"
         #find the match
         mtchs = _.where @availableGames, {Id: snap.Id}
         mtchs[mtchs.length] = @activeMatch if @activeMatch? && @activeMatch.Id is snap.Id
@@ -227,7 +214,6 @@ class NetworkService
       #add or remove a chat channel
       chatchannelupd: (upd)->
         for chan in upd.channels
-          console.log "chat add/update"
           console.log chan
           #get idx in array
           idx = _.findIndex @chats, {Id: chan.Id}
@@ -239,7 +225,6 @@ class NetworkService
         #@scope.$broadcast 'chatMembersUpd'
         @scope.$broadcast 'chatChannelAdd'
       chatchannelrm: (upd)->
-        console.log "removed chats: #{JSON.stringify upd.ids}"
         for id in upd.ids
           idx = _.findIndex @chats, {Id: id}
           @chats.splice idx, 1 if idx > -1
@@ -265,9 +250,7 @@ class NetworkService
         @scope.$broadcast 'chatMembersUpd'
 
   connect: ->
-    console.log 'connect() called'
     if !@disconnected
-      console.log 'Already connected.'
       return
     @attempts += 1
     #@disconnect()
@@ -302,12 +285,9 @@ class NetworkService
         for name, cbs of @handlers
           @[name] = cont = @conn.controller name
           cont.onopen = (ci)->
-            console.log "#{name} opened."
           for cbn, cb of cbs
             do (cbn, cb, cont, name) ->
               cont[cbn] = (arg)->
-                console.log cbn
-                console.log arg
                 safeApply scope, -> 
                   cb.call serv, arg
         for name, cbs of @methods
@@ -326,15 +306,12 @@ class NetworkService
     _.find @chats, {Id: id}
   fetchMatches: ->
     #return
-    console.log "Fetching matches"
     @matches.invoke('getpublicgamelist').then (ms)=>
-      console.log "Received public match list"
       @safeApply @scope, =>
         @liveMatches.length = 0
         for game in ms
           @liveMatches[@liveMatches.length] = game
       @matches.invoke('getavailablegamelist').then (ms)=>
-        console.log "Received available match list"
         @safeApply @scope, =>
           #use the same array
           @availableGames.length = 0
@@ -346,7 +323,6 @@ angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, s
   Auth.getLoginStatus (currentUser, currentToken, currentServer)->
     service.token = currentToken
     service.server = currentServer
-    console.log "Server "+currentServer
     service.connect()
   $(window).unload ->
     service.disconnect()
