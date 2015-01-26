@@ -1,6 +1,6 @@
 .chat-cont(horizontal="", layout="")
   .main-chat
-    .msg-container
+    .msg-container(vs-repeat="", vs-autoresize="")
       p(ng-repeat="message in chat.messages" ng-class="{systemMsg: message.Auto}")
         span(ng-if="!message.Auto")
           b {{message.name}}: 

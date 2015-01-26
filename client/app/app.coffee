@@ -1,14 +1,15 @@
 'use strict'
 
 angular.module 'webleagueApp', [
-  'ngResource',
-  'ngSanitize',
-  'ui.router',
-  'ui.bootstrap',
-  'ng-polymer-elements',
-  'AutoFontSize',
-  'pascalprecht.translate',
+  'ngResource'
+  'ngSanitize'
+  'ui.router'
+  'ui.bootstrap'
+  'ng-polymer-elements'
+  'AutoFontSize'
+  'pascalprecht.translate'
   'ng-context-menu'
+  'vs-repeat'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider) ->
   $urlRouterProvider
