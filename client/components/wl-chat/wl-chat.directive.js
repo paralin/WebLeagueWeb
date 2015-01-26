@@ -13,7 +13,7 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth) {
                 console.log(member);
             };
             scope.viewProfile = function(member){
-                state.go("panel.profile", {id: member.UID});
+                $state.go("panel.profile", {id: member.UID});
             };
             scope.canChallenge = function(member){
                 return member != null && member.SteamID !== Auth.currentUser.steam.steamid && _.contains(Auth.currentUser.authItems, "startGames");

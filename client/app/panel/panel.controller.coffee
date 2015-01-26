@@ -11,7 +11,6 @@ PNotify.desktop.permission()
 angular.module 'webleagueApp'
 .controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate) ->
   clr = []
-  window.scope = $scope
   $scope.auth = Auth
   $scope.network = Network
   $scope.state = $state
