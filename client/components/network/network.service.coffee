@@ -15,6 +15,8 @@ class NetworkService
   liveMatches: []
   availableGames: []
 
+  adminMatches: []
+
   constructor: (@scope, @timeout, @safeApply)->
   disconnect: ->
     console.log "Disconnect called"
@@ -39,6 +41,10 @@ class NetworkService
       console.log "Not reconnecting."
 
   methods:
+    admin:
+      killmatch: (mid)->
+        console.log "kill match #{mid}"
+        @invoke("killmatch", {Id: mid})
     matches:
       finalizematch: ->
         @invoke("finalizematch").then (err)->
@@ -103,7 +109,42 @@ class NetworkService
           return
       dismissResult: ->
         @invoke "dismissresult"
-  handlers: 
+  handlers:
+    admin:
+      onopen: ->
+        @admin.invoke('getgamelist').then (ms)=>
+          @safeApply @scope, =>
+            @adminMatches.length = 0
+            for game in ms
+              @adminMatches[@adminMatches.length] = game
+      availablegameupd: (upd)->
+        for match in upd.matches
+          idx = _.findIndex @adminMatches, {Id: match.Id}
+          if idx isnt -1
+            @adminMatches[idx] = match
+          else
+            @adminMatches[@adminMatches.length] = match
+      availablegamerm: (upd)->
+        for id in upd.ids
+          idx = _.findIndex @adminMatches, {Id: id}
+          if idx isnt -1
+            @adminMatches.splice idx, 1
+      clearsetupmatch: (upd)->
+        idx = _.findIndex @adminMatches, {Id: upd.Id}
+        if idx isnt -1
+          @adminMatches[idx].Setup = null
+      setupsnapshot: (upd)->
+        idx = _.findIndex @adminMatches, {Id: upd.Id}
+        if idx isnt -1
+          @adminMatches[idx].Setup = upd
+      infosnapshot: (upd)->
+        idx = _.findIndex @adminMatches, {Id: upd.Id}
+        if idx isnt -1
+          @adminMatches[idx].Info = upd
+      matchplayerssnapshot: (upd)->
+        match = _.find @adminMatches, {Id: upd.Id}
+        if match?
+          match.Players = upd.Players
     matches:
       onlobbyready: ->
         lobbyReadySound.play()
@@ -120,7 +161,8 @@ class NetworkService
         @chats.length = 0
         @liveMatches.length = 0
         @availableGames.length = 0
-        @disconnect() 
+        @adminMatches.length = 0
+        @disconnect()
       matchsnapshot: (match)->
         @activeMatch = match
       challengesnapshot: (match)->
@@ -131,6 +173,12 @@ class NetworkService
         @activeChallenge = null
         @hasChallenge = false
         @scope.$broadcast 'challengeSnapshot', null
+      sysnot: (nt)->
+        console.log "System notification: #{JSON.stringify nt}"
+        swal
+          title: nt.Title
+          text: nt.Message
+          type: "info"
       resultsnapshot: (snp)->
         @activeResult = snp
         @scope.$broadcast "resultSnapshot", null
@@ -196,7 +244,7 @@ class NetworkService
               @status = "Authentication failed. Try signing out and back in."
               @disconnected = true
               @doReconnect = false
-              @disconnect() 
+              @disconnect()
             else
               console.log "Authenticated with auth groups #{auths}"
               @chat.invoke('joinorcreate', {Name: "main"})
@@ -254,6 +302,7 @@ class NetworkService
       return
     @attempts += 1
     #@disconnect()
+    #
     if !@server?
       console.log "No server info yet."
       @status = "Waiting for server info..."
@@ -262,6 +311,9 @@ class NetworkService
       console.log "Connecting to #{@server}..."
       if !@conn?
         conts = _.keys @handlers
+        if !_.contains(@user.authItems, "admin")
+          conts = _.without conts, "admin"
+        console.log conts
         @conn = new XSockets.WebSocket @server, conts, {token:@token}
       else
         @conn.reconnect()
@@ -280,23 +332,23 @@ class NetworkService
           @chats.length = 0
           @activeMatch = null
           @activeResult = null
+          @adminMatches.length = 0
           bootbox.hideAll()
           @activeChallenge = null
-        for name, cbs of @handlers
-          @[name] = cont = @conn.controller name
-          cont.onopen = (ci)->
-          for cbn, cb of cbs
-            do (cbn, cb, cont, name) ->
-              cont[cbn] = (arg)->
-                safeApply scope, -> 
-                  cb.call serv, arg
-        for name, cbs of @methods
-          @[name] = cont = @conn.controller name
-          cont.do = {}
-          for cbn, cb of cbs
-            do (cbn, cb, cont, name) ->
-              cont.do[cbn] = ->
-                cb.apply cont, arguments
+      for name, cbs of @handlers
+        @[name] = cont = @conn.controller name
+        for cbn, cb of cbs
+          do (cbn, cb, cont, name) ->
+            cont[cbn] = (arg)->
+              safeApply scope, ->
+                cb.call serv, arg
+      for name, cbs of @methods
+        @[name] = cont = @conn.controller name
+        cont.do = {}
+        for cbn, cb of cbs
+          do (cbn, cb, cont, name) ->
+            cont.do[cbn] = ->
+              cb.apply cont, arguments
       @conn.ondisconnected = =>
         console.log "Disconnected from the network..."
         #@disconnect()
@@ -323,6 +375,7 @@ angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, s
   Auth.getLoginStatus (currentUser, currentToken, currentServer)->
     service.token = currentToken
     service.server = currentServer
+    service.user = currentUser
     service.connect()
   $(window).unload ->
     service.disconnect()
