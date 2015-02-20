@@ -309,8 +309,8 @@ class NetworkService
     else
       @status = "Connecting to the network..."
       console.log "Connecting to #{@server}..."
+      conts = _.keys @handlers
       if !@conn?
-        conts = _.keys @handlers
         if !_.contains(@user.authItems, "admin")
           conts = _.without conts, "admin"
         console.log conts
@@ -336,6 +336,7 @@ class NetworkService
           bootbox.hideAll()
           @activeChallenge = null
       for name, cbs of @handlers
+        continue unless _.contains conts, name
         @[name] = cont = @conn.controller name
         for cbn, cb of cbs
           do (cbn, cb, cont, name) ->
