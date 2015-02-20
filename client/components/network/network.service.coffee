@@ -344,6 +344,7 @@ class NetworkService
               safeApply scope, ->
                 cb.call serv, arg
       for name, cbs of @methods
+        continue unless _.contains conts, name
         @[name] = cont = @conn.controller name
         cont.do = {}
         for cbn, cb of cbs
