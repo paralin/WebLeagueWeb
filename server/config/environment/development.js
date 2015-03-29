@@ -5,9 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri:
-      // 'mongodb://localhost/webleague-dev'
-      'mongodb://sg:putamadrecyka@wln.paral.in/webleague'
+    uri: 'mongodb://localhost/webleague-dev'
   },
 
   seedDB: false
