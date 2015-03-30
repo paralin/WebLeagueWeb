@@ -247,7 +247,7 @@ class NetworkService
               @disconnect()
             else
               console.log "Authenticated with auth groups #{auths}"
-              @chat.invoke('joinorcreate', {Name: "main"})
+              #@chat.invoke('joinorcreate', {Name: "main"})
               @fetchMatches()
       onchatmessage: (upd)->
         chat = @chatByID upd.Id
@@ -301,8 +301,6 @@ class NetworkService
     if !@disconnected
       return
     @attempts += 1
-    #@disconnect()
-    #
     if !@server?
       console.log "No server info yet."
       @status = "Waiting for server info..."

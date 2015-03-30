@@ -9,28 +9,29 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
     .tablewrapper
       table.table.table-condensed(style="margin-bottom:0")
         tbody
-          tr(style="font-weight:bold;color:black;background:white") 
+          tr(style="font-weight:bold;color:black;background:white")
             td {{match.Info.Name}}
           template(bind="",if="{{match.Info.MatchType==1}}")
             template(bind="",if="{{match.Info.Status==0}}")
-              tr(style="font-weight:bold;color:black;background:white") 
+              tr(style="font-weight:bold;color:black;background:white")
                 td Waiting for players to join the pool...
             template(bind="",if="{{match.Info.Status==1}}")
-              tr(style="font-weight:bold;color:black;background:white") 
+              tr(style="font-weight:bold;color:black;background:white")
                 td {{captainstatusn[match.Info.CaptainStatus]}}
           template(bind="",if="{{match.Info.Status==3}}")
-            tr(style="font-weight:bold;color:black;background:white") 
+            tr(style="font-weight:bold;color:black;background:white")
               td {{matchstatesn[match.Setup.Details.State]}}
           template(bind="",if="{{match.Setup != null&&match.Info.Status!=3}}")
-            tr(style="font-weight:bold;color:black;background:white") 
+            tr(style="font-weight:bold;color:black;background:white")
               td {{setupstatusn[match.Setup.Details.Status]}}
           template(bind="",if="{{match.Setup != null&&match.Setup.Details != null && match.Setup.Details.Status==3}}")
-            tr(style="font-weight:bold;color:black;background:white") 
+            tr(style="font-weight:bold;color:black;background:white")
               td(style="user-select:all;-moz-user-select:all;-webkit-user-select:all")
-                | Lobby Password: 
+                | Lobby Password:
                 b(style="color: red")
                   | {{match.Setup.Details.Password}}
-          template(repeat="{{player in match.Players}}")
+          // Bullshit captain status if just to make sure it refreshes
+          template(repeat="{{player in match.Players}}", if="{{match.Info.CaptainStatus>-40}}")
             tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner||player.SID==match.Info.Opponent, leaver: plyr.IsLeaver} | tokenList }}")
               td
                 template(bind="",if="{{match.Info.Status==2&&match.Setup!=null&&match.Setup.Details.Status==3}}")
@@ -38,7 +39,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                     i.fa.fa-check(style="margin-right:5px;color:green")
                   template(bind="",if="{{!player.Ready}}")
                     i.fa.fa-cog.fa-spin(style="margin-right:5px")
-                template(bind="",if="{{match.Info.Status==1&&showCaptainButtons()&&player.Team>1}}")
+                template(bind="",if="{{match.Info.Status==1&&showCaptainButtons()&&player.Team==3}}")
                   i.fa.fa-check-square-o(style="margin-right:5px",on-click="{{pickPlayer}}",data-player="{{player.SID}}")
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
                 | {{player.Name}}
