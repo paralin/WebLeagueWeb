@@ -65,6 +65,8 @@ exports.setup = function (User, Vouch, config) {
               if (vou){
                 delete vou["__v"];
                 newUser.vouch = vou;
+                if(newUser.vouch && newUser.vouch.name && newUser.vouch.name.length)
+                  newUser.profile.name = newUser.vouch.name;
                 Vouch.remove({_id: vou._id}, function(err, res){
                   if(err)
                     throw err;
