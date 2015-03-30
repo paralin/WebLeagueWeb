@@ -11,8 +11,12 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
       scope.$watch('chat', function(newChat, oldChat){
         //Check if we need to scroll down
         element = $(".msg-container")[0];
-        if (element.scrollTop > element.scrollHeight - 400)
-          $timeout(function(){ element.scrollTop = element.scrollHeight+500; }, 100, false);
+        if (element.scrollTop > element.scrollHeight - (element.offsetHeight+30)){
+          $timeout(function(){
+            element = $(".msg-container")[0];
+            element.scrollTop = element.scrollHeight+element.offsetHeight+50;
+          }, 10, false);
+        }
       }, true);
       scope.setSelectedMember = function(member){
         scope.selectedMember = member;
