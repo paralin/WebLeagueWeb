@@ -13,7 +13,7 @@ angular.module 'webleagueApp'
   clr = []
   $scope.auth = Auth
   $scope.network = Network
-  $scope.state = $state
+  window.state = $scope.state = state = $state
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
@@ -24,8 +24,10 @@ angular.module 'webleagueApp'
   $scope.pickPlayer = (event)->
     Network.matches.do.pickPlayer event.detail.SID
     uiButtonSound.play()
+  $scope.selectChat = (name)->
+    $state.go("panel.chat", {name: name})
   clr.push $rootScope.$on "chatChannelAdd", ->
-    $scope.chatTabs.selected = $scope.chats.length-1
+    $scope.selectChat Network.chats[Network.chats.length-1].Name
   clr.push $rootScope.$on "challengeSnapshot", ->
     challenge = Network.activeChallenge
     if challenge?
@@ -108,11 +110,13 @@ angular.module 'webleagueApp'
               desktop: true
           return
     return
-  $scope.chatTabs = {
+  $scope.panelTabs = {
     selected: 0
   }
+  $scope.humanizeChatName = (name)->
+    Humanize.capitalize name
   $scope.leaveCurrentChat = (cb)->
-    chat = $scope.chats[$scope.chatTabs.selected]
+    chat = $scope.chats[$scope.panelTabs.selected]
     return if !chat?
     if chat.Leavable
       Network.chat.invoke "leave", {Id: chat.Id}
@@ -137,7 +141,23 @@ angular.module 'webleagueApp'
   $scope.gameFilter = (game)->
     game.Info.Status==0 || (Network.activeMatch? && Network.activeMatch.Id is game.Id)
   $scope.sendChat = (msg)->
-    Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.chatTabs.selected].Id, Text: msg})
+    Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.panelTabs.selected].Id, Text: msg})
+  $scope.checkPanelTab = ->
+    staticTabCount = 0
+    staticTabCount++ if Auth.inRole "vouch"
+    staticTabCount++ if Auth.inRole "admin"
+    idx = 0
+    if state.is "panel.chat"
+      return
+    else if state.is "panel.leaderboard"
+      idx = $scope.chats.length
+    else if state.is "panel.vouch"
+      idx = $scope.chats.length+1
+    else if state.is "panel.admin"
+      idx = $scope.chats.length+staticTabCount
+    $scope.panelTabs.selected = idx
+  clr.push $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
+    $scope.checkPanelTab()
   $scope.$on 'destroy', ->
     for cl in clr
       cl()

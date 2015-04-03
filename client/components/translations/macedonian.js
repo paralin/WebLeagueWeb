@@ -1,5 +1,5 @@
 window.translations.mkd = {
-  'TITLE': 'Web League',
+  'TITLE': 'IDEC League',
   'Profile': 'Profile',
   'Sign Out': 'Sign Out',
   'Chat': 'Chat',

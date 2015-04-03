@@ -1,5 +1,5 @@
 window.translations.ru = {
-  'TITLE': 'Web League',
+  'TITLE': 'IDEC League',
   'Profile': 'Профиль',
   'Sign Out': 'Выйти',
   'Chat': 'Чат',

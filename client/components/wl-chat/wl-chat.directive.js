@@ -10,7 +10,9 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
     link: function(scope, element, attrs){
       scope.$watch('chat', function(newChat, oldChat){
         //Check if we need to scroll down
-        element = $(".msg-container")[0];
+        element = $(".msg-container");
+        if(element.length == 0) return;
+        element = element[0];
         if (element.scrollTop > element.scrollHeight - (element.offsetHeight+30)){
           $timeout(function(){
             element = $(".msg-container")[0];

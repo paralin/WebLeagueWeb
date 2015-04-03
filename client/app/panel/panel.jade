@@ -2,8 +2,6 @@
   core-toolbar.medium-tall(style="height: 90px")
     paper-icon-button(icon="menu",role="button",tabindex="0",aria-label="menu",ng-click="state.go('panel.chat')")
     div(flex="") {{ 'TITLE' | translate }}
-    paper-button(ng-if="auth.inRole('admin')",role="button",tabindex="0",ng-click="state.go('panel.admin')",style="margin:0") {{'Admin' | translate}}
-    paper-button(ng-if="auth.inRole('vouch')",role="button",tabindex="0",ng-click="state.go('panel.vouch')",style="margin:0") {{'Vouch' | translate}}
     div(dropdown="")
       paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") LANGUAGE
       ul.dropdown-menu(role="menu",style="right:280px;left:auto;")
@@ -11,7 +9,6 @@
           a(ng-click="setLanguage('en')") English
           a(ng-click="setLanguage('ru')") Russian
           a(ng-click="setLanguage('de')") German
-    paper-button(role="button",tabindex="0",ng-click="state.go('panel.leaderboard')",style="margin:0") {{'Leaderboards' | translate}}
     div(dropdown="",style="margin:0")
       paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}} ({{auth.currentUser.profile.rating}})
       ul.dropdown-menu(role="menu",style="right:0;left:auto;")
@@ -19,18 +16,16 @@
           a(ui-sref="panel.profile") {{ 'Profile' | translate }}
           a(href="/auth/logout",ng-click="$event.stopPropagation()") {{ 'Sign Out' | translate }}
     .bottom.fit(horizontal="",layout="",style="height: 35px")
-      div(style="width: 100%;height:100%;font-size:12px;float:left",ng-if="state.current.name!=='panel.chat'")
-        paper-button(role="button",style="height:100%",ng-click="state.go('panel.chat')") {{ 'Chat' | translate }}
-        paper-button(role="button",style="height:100%",ng-click="state.go('panel.leaderboard')") {{ 'Leaderboards' | translate }}
-        paper-button(role="button",style="height:100%",ng-if="auth.inRole('vouch')",ng-click="state.go('panel.vouch')") {{ 'Vouch' | translate }}
-        paper-button(role="button",style="height:100%",ng-if="auth.inRole('admin')",ng-click="state.go('panel.admin')") {{ 'Admin' | translate }}
-      div(style="width:100%;height:100%;float:left",ng-if="state.current.name==='panel.chat'")
-        paper-tabs.orange(ng-model="chatTabs.selected",flex="",style="",role="tablist")
-          paper-tab(ng-repeat="chat in chats")
-            | {{chat.Name}}
+      div(style="width:100%;height:100%;float:left")
+        paper-tabs.orange(ng-model="panelTabs.selected",flex="",style="",role="tablist",scrollable="",hideScrollButton="")
+          paper-tab(ng-repeat="chat in chats",ng-click="selectChat(chat.Name)")
+            | {{humanizeChatName(chat.Name)}}
+          paper-tab(ng-click="state.go('panel.leaderboard')") {{ 'Leaderboards' | translate }}
+          paper-tab(ng-if="auth.inRole('vouch')",ng-click="state.go('panel.vouch')") {{ 'Vouch' | translate }}
+          paper-tab(ng-if="auth.inRole('admin')",ng-click="state.go('panel.admin')") {{ 'Admin' | translate }}
         div(style="width: 100px;position:relative;top:-5px;float:left")
           paper-icon-button(icon="add", role="button", ng-click="showJoinDialog()")
-          paper-icon-button(icon="close", role="button", ng-disabled="!chats[chatTabs.selected].Leavable", ng-click="leaveCurrentChat()")
+          paper-icon-button(icon="close", role="button", ng-disabled="!chats[panelTabs.selected].Leavable", ng-click="leaveCurrentChat()")
   #panelInnerContainer(ui-view="")
   #rightcont(ng-if="showRightCont()")
     .mains
