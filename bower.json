@@ -38,6 +38,8 @@
     "paper-dialog": "Polymer/paper-dialog#~0.5.5",
     "paper-dropdown": "Polymer/paper-dropdown#~0.5.5",
     "paper-dropdown-menu": "Polymer/paper-dropdown-menu#~0.5.5",
+    "paper-toggle-button": "Polymer/paper-toggle-button#~0.5.5",
+    "paper-slider": "Polymer/paper-slider#~0.5.5",
     "paper-item": "Polymer/paper-item#~0.5.5",
     "core-menu": "Polymer/core-menu#~0.5.5",
     "angular-vs-repeat": "1.0.0-rc5",

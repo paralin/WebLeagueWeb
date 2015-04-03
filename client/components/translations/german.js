@@ -25,5 +25,6 @@ window.translations.de = {
   'You must enter a match name.': 'Spielname notwendig',
   'Enter a chat message': 'Enter a chat message',
   'Rating': 'Rating',
-  'View Steam Profile': 'View Steam Profile'
+  'View Steam Profile': 'View Steam Profile',
+  'language': "German"
 };

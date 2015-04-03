@@ -29,7 +29,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
               td(style="user-select:all;-moz-user-select:all;-webkit-user-select:all")
                 | Lobby Password:
                 b(style="color: red")
-                  | {{match.Setup.Details.Password}}
+                  | &nbsp;{{match.Setup.Details.Password}}
           // Bullshit captain status if just to make sure it refreshes
           template(repeat="{{player in match.Players}}", if="{{match.Info.CaptainStatus>-40}}")
             tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner||player.SID==match.Info.Opponent, leaver: plyr.IsLeaver} | tokenList }}")

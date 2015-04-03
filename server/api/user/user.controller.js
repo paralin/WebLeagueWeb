@@ -19,7 +19,8 @@ exports.status = function(req, res){
       steam: req.user.steam,
       profile: req.user.profile,
       authItems: req.user.authItems,
-      vouch: req.user.vouch
+      vouch: req.user.vouch,
+      settings: req.user.settings
     };
     var profile = {
       _id: req.user._id,
@@ -30,4 +31,25 @@ exports.status = function(req, res){
     resp.user = user;
   }
   res.json(resp);
+};
+
+exports.saveSettings = function(req, res)
+{
+  // Validate login
+  if(req.user && req.body)
+  {
+    req.user.settings = req.body;
+    User.update({_id: req.user._id}, {$set: {settings: req.body}}, function(err, user){
+      if(err)
+      {
+        res.json(500, {error: 500, text: "internal server error"});
+        return;
+      }
+      exports.status(req, res);
+    });
+  }
+  else
+  {
+    res.json(430, {error: 430, text: "unauthorized"});
+  }
 };

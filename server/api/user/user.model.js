@@ -39,6 +39,10 @@ var UserSchema = mongoose.Schema({
     loccountrycode: String,
     locstatecode: String,
     loccityid: Number
+  },
+  settings: {
+    language: String,
+    sounds: {}
   }
 });
 

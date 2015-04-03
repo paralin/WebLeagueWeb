@@ -1,12 +1,5 @@
 'use strict'
 
-foundSound = new buzz.sound "/assets/sounds/match_ready.wav"
-challengeSound = new buzz.sound "/assets/sounds/ganked_sml_01.mp3"
-uiButtonSound = new buzz.sound "/assets/sounds/ui_button_click_01.wav"
-findMatchSound = new buzz.sound "/assets/sounds/ui_findmatch_join_01.wav"
-window.quitMatchSound = new buzz.sound "/assets/sounds/ui_findmatch_quit_01.wav"
-window.lobbyReadySound = new buzz.sound "/assets/sounds/ui_findmatch_search_01.wav"
-
 PNotify.desktop.permission()
 angular.module 'webleagueApp'
 .controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate) ->
@@ -23,9 +16,9 @@ angular.module 'webleagueApp'
     member.SteamID isnt Auth.currentUser.steam.steamid
   $scope.pickPlayer = (event)->
     Network.matches.do.pickPlayer event.detail.SID
-    uiButtonSound.play()
+    $rootScope.playSound "buttonPress"
   $scope.selectChat = (name)->
-    $state.go("panel.chat", {name: name})
+    $state.go("panel.chat", {name: name.replace(" ", "-")})
   clr.push $rootScope.$on "chatChannelAdd", ->
     $scope.selectChat Network.chats[Network.chats.length-1].Name
   clr.push $rootScope.$on "challengeSnapshot", ->
@@ -33,6 +26,7 @@ angular.module 'webleagueApp'
     if challenge?
       if challenge.ChallengedSID is Auth.currentUser.steam.steamid
         challengeSound.play()
+        $rootScope.playSound "challenge"
         window.aswal = swal(
           title: "Incoming challenge"
           text: "You have an incoming challenge from #{challenge.ChallengerName}!"
@@ -45,11 +39,11 @@ angular.module 'webleagueApp'
         , ->
           safeApply $scope, ->
             Network.matches.do.respondchallenge true
-            uiButtonSound.play()
+            $rootScope.playSound "buttonPress"
         , ->
           safeApply $scope, ->
             Network.matches.do.respondchallenge false
-            uiButtonSound.play()
+            $rootScope.playSound "buttonPress"
         )
     else if window.aswal?
       window.aswal()
@@ -80,7 +74,7 @@ angular.module 'webleagueApp'
     Network.matches.do.creatematch
       Name: name
       GameMode: gm
-    findMatchSound.play()
+    $rootScope.playSound "gameHosted"
   $scope.dismissCreate = ->
     $scope.showCreateMatch = false
   # Is currently controlling a game
@@ -100,7 +94,7 @@ angular.module 'webleagueApp'
     bootbox.prompt "What is the chat name?", (cb)->
       return if !cb? || cb is ""
       Network.chat.invoke("joinorcreate", {Name: cb}).then (err)->
-        uiButtonSound.play()
+        $rootScope.playSound "buttonPress"
         if err?
           new PNotify
             title: "Join Error"
@@ -135,7 +129,7 @@ angular.module 'webleagueApp'
       return false if !plyr.Ready
     return true
   $scope.joinGame = (game)->
-    findMatchSound.play()
+    $rootScope.playSound "gameJoin"
     Network.matches.do.joinmatch
       Id: game.Id
   $scope.gameFilter = (game)->
@@ -155,6 +149,8 @@ angular.module 'webleagueApp'
       idx = $scope.chats.length+1
     else if state.is "panel.admin"
       idx = $scope.chats.length+staticTabCount
+    else if state.is "panel.settings"
+      idx = $scope.chats.length+staticTabCount+1
     $scope.panelTabs.selected = idx
   clr.push $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
     $scope.checkPanelTab()

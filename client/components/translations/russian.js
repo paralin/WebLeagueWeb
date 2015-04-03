@@ -25,5 +25,6 @@ window.translations.ru = {
   'Match Name': 'Match Name',
   'You must enter a match name.': 'You must enter a match name.',
   'Enter a chat message': 'Enter a chat message',
-  'View Steam Profile': 'View Steam Profile'
+  'View Steam Profile': 'View Steam Profile',
+  "language": "Russian"
 };

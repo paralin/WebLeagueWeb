@@ -1,0 +1,45 @@
+.container-fluid(style="padding-top:15px")
+  .col-md-12(style="padding:25px;box-shadow: 0 0 5px 0 rgba(0,0,0,0.75)")
+    p(style="margin-bottom:0;font-weight:bold;font-size:1.5em") User Settings
+    p
+      span(style="font-weight: bold") Language:&nbsp;
+      paper-dropdown-menu#languageInput(ng-label="'Site Language' | translate")
+        paper-dropdown.dropdown(layered="true")
+          core-menu.menu(ng-model="selectedLanguage")
+            paper-item(ng-repeat="key in languageids" value="{{key}}") {{languages[key]}}
+    p(style="font-weight: bold")
+      | Note: volume selection does not work for voice synth due to a Chrome bug.
+    p
+      table.table.table-bordered.table-striped
+        thead
+          tr
+            th(style="width: 200px")
+              | Sound Notifications
+            th(style="width: 150px")
+              | Type
+            th
+              | Sound
+            th(style="width: 200px")
+              | Volume
+            th(style="width: 32px")
+        tbody
+          tr(ng-repeat="(id, sound) in settings.sounds")
+            th.text-nowrap(scope='row') {{sound.name}}
+            td(style="padding-top:13px")
+              | Sound
+              paper-toggle-button(ng-model="sound.type", style="margin-left:5px;margin-right:5px")
+              | Voice
+            td(ng-if="sound.type == 0", style="margin:0")
+              paper-tabs.transparent-teal(ng-model="sound.sound", style="width: 100%;height:30px" scrollable="")
+                paper-tab(ng-click="playSound(id, sound.volume)", ng-repeat="(id, name) in SoundsName") {{name}}
+            td(ng-if="sound.type == 1", style="margin:0")
+              paper-input-decorator(label="text to speech", style="padding:0")
+                input(is="core-input", ng-model="sound.text" ng-change="settingsDirty = true")
+            td
+              paper-slider(min="0" max="100" ng-model="sound.volume" ng-change="settingsDirty=true" ng-disabled="sound.type!=0")
+            td(style="padding:0;padding-top:5px")
+              paper-button(ng-if="sound.type==1" ng-click="playTts(sound.text, sound.volume)") play
+
+    p(ng-if="settingsDirty")
+      paper-button.primary-btn(raised="", ng-click="saveSettings()") Save
+      paper-button.danger-btn(raised="", ng-click="revertSettings()")  Revert

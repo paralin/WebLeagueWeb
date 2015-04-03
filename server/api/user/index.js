@@ -8,5 +8,6 @@ var auth = require('../../auth/auth.service');
 var router = express.Router();
 
 router.get('/status', controller.status);
+router.post('/saveSettings', controller.saveSettings);
 
 module.exports = router;

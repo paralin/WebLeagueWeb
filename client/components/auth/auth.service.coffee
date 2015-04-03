@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, User, $interval, $q) ->
+angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, User, $interval, $q, $translate) ->
   service =
     currentPromise: null
     currentUser: null
@@ -25,6 +25,8 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
       data = User.get =>
         if data.isAuthed
           @currentUser = data.user
+          $rootScope.fillSettings @currentUser
+          $translate.use @currentUser.settings.language
           @currentToken = data.token
           @currentServer = data.server
         else
@@ -34,6 +36,8 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
         @currentPromise = null
         deferred.resolve()
       @currentPromise
+    saveSettings: ->
+      $http.post "/api/users/saveSettings", @currentUser.settings
   $interval =>
     service.update()
   , 30000

@@ -134,3 +134,88 @@ angular.module 'webleagueApp', [
     7: "All players disconnecting..."
     8: "Showcasing teams ???"
     9: "Last game state!! IDK"
+  $rootScope.SoundsURL =
+    0: "/assets/sounds/match_ready.wav"
+    1: "/assets/sounds/ganked_sml_01.mp3"
+    2: "/assets/sounds/ui_button_click_01.wav"
+    3: "/assets/sounds/ui_findmatch_join_01.wav"
+    4: "/assets/sounds/ui_findmatch_quit_01.wav"
+    5: "/assets/sounds/ui_findmatch_search_01.wav"
+  $rootScope.SoundsName =
+    0: "Match Ready"
+    1: "Stunned"
+    2: "Button Click"
+    3: "Find Match"
+    4: "Stop Find Match"
+    5: "Find Match (Search)"
+  $rootScope.SoundsInstances = {}
+  for id, url of $rootScope.SoundsURL
+    $rootScope.SoundsInstances[id] = new buzz.sound url
+  $rootScope.DefaultSettings =
+    language: "en"
+  ###
+  # Sound Options (Default)
+  # type: 0 for sound, 1 for text
+  ###
+  $rootScope.SoundOptions =
+    gameHosted:
+      name: "Game Hosted"
+      type: 1
+      text: "New game hosted!"
+      volume: 100
+      sound: 0
+    challenge:
+      name: "Challenge Received"
+      type: 0
+      sound: 1
+      volume: 100
+      text: "Challenge received!"
+    gameCanceled:
+      name: "Game Canceled"
+      type: 0
+      sound: 4
+      volume: 100
+      text: "Game canceled!"
+    buttonPress:
+      name: "General Button Press"
+      type: 0
+      sound: 2
+      volume: 100
+      text: "Why would you make this text to speech?"
+    lobbyReady:
+      name: "Lobby Ready"
+      type: 0
+      sound: 3
+      volume: 100
+      text: "Lobby ready!"
+    gameJoin:
+      name: "Joined Game"
+      type: 0
+      sound: 3
+      volume: 100
+      text: "Joined game!"
+  $rootScope.fillSettings = (user)->
+    user.settings = {} if !user.settings?
+    user.settings.language = "en" if !user.settings.language?
+    user.settings.sounds = {} if !user.settings.sounds?
+    soundIds = _.keys $rootScope.SoundOptions
+    for soundid in soundIds
+      continue if user.settings.sounds[soundid]?
+      user.settings.sounds[soundid] = $rootScope.SoundOptions[soundid]
+  $rootScope.playSound = (name)->
+    Auth.getLoginStatus (user)->
+      if user?
+        option = user.settings.sounds[name]
+        return if !option?
+        if option.type is 0
+          inst = $rootScope.SoundsInstances[option.sound]
+          return if !inst?
+          inst.setVolume option.volume
+          inst.play()
+        else
+          if !window.speechSynthesis?
+            console.log "!! speech synthesis not available in this browser !!"
+            return
+          msg = new SpeechSynthesisUtterance(option.text)
+          msg.volume = option.volume/100
+          window.speechSynthesis.speak(msg)
