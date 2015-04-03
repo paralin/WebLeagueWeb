@@ -114,7 +114,7 @@ angular.module 'webleagueApp'
     selected: 0
   }
   $scope.humanizeChatName = (name)->
-    Humanize.capitalize name
+    Humanize.titleCase name
   $scope.leaveCurrentChat = (cb)->
     chat = $scope.chats[$scope.panelTabs.selected]
     return if !chat?
