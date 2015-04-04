@@ -211,6 +211,7 @@ class NetworkService
             @availableGames[idx] = match
           else
             @availableGames[@availableGames.length] = match
+            @scope.$broadcast "newGameHosted"
       availablegamerm: (upd)->
         for id in upd.ids
           idx = _.findIndex @availableGames, {Id: id}

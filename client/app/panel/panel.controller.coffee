@@ -21,6 +21,8 @@ angular.module 'webleagueApp'
     $state.go("panel.chat", {name: name.replace(" ", "-")})
   clr.push $rootScope.$on "chatChannelAdd", ->
     $scope.selectChat Network.chats[Network.chats.length-1].Name
+  clr.push $rootScope.$on "newGameHosted", ->
+    $rootScope.playSound "gameHosted"
   clr.push $rootScope.$on "challengeSnapshot", ->
     challenge = Network.activeChallenge
     if challenge?
