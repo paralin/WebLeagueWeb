@@ -21,13 +21,17 @@ angular.module 'webleagueApp'
     $state.go("panel.chat", {name: name.replace(" ", "-")})
   clr.push $rootScope.$on "chatChannelAdd", ->
     $scope.selectChat Network.chats[Network.chats.length-1].Name
+  clr.push $rootScope.$on "gameCanceled", (event, game)->
+    if game.Info.Status is 0
+      $rootScope.playSound "gameCanceled"
   clr.push $rootScope.$on "newGameHosted", ->
     $rootScope.playSound "gameHosted"
+  clr.push $rootScope.$on "lobbyReady", ->
+    $rootScope.playSound "lobbyReady"
   clr.push $rootScope.$on "challengeSnapshot", ->
     challenge = Network.activeChallenge
     if challenge?
       if challenge.ChallengedSID is Auth.currentUser.steam.steamid
-        challengeSound.play()
         $rootScope.playSound "challenge"
         window.aswal = swal(
           title: "Incoming challenge"
@@ -76,7 +80,6 @@ angular.module 'webleagueApp'
     Network.matches.do.creatematch
       Name: name
       GameMode: gm
-    $rootScope.playSound "gameHosted"
   $scope.dismissCreate = ->
     $scope.showCreateMatch = false
   # Is currently controlling a game

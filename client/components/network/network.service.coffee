@@ -57,7 +57,6 @@ class NetworkService
       pickPlayer: (sid)->
         @invoke "pickPlayer", {SID: sid}
       leavematch: ->
-        quitMatchSound.play()
         (@invoke "leavematch").then (err)->
           return if !err?
           new PNotify
@@ -147,7 +146,7 @@ class NetworkService
           match.Players = upd.Players
     matches:
       onlobbyready: ->
-        lobbyReadySound.play()
+        @scope.$broadcast "lobbyReady"
       userped: ->
         console.log "Connection userped"
         @status = "You have logged into your account from another location and are disconnected."
@@ -216,7 +215,8 @@ class NetworkService
         for id in upd.ids
           idx = _.findIndex @availableGames, {Id: id}
           if idx isnt -1
-            @availableGames.splice idx, 1
+            [game] = @availableGames.splice idx, 1
+            @scope.$broadcast "gameCanceled", game
       clearsetup: ->
         if @activeMatch?
           #find the match
