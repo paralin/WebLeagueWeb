@@ -1,5 +1,5 @@
 'use strict';
-angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeout) {
+angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeout, Network) {
   return {
     templateUrl: '/components/wl-chat/wl-chat.html',
     scope: {
@@ -22,7 +22,6 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
       }, true);
       scope.setSelectedMember = function(member){
         scope.selectedMember = member;
-        console.log(member);
       };
       scope.viewProfile = function(member){
         $state.go("panel.profile", {id: member.UID});
@@ -30,11 +29,17 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
       scope.canChallenge = function(member){
         return member != null && member.SteamID !== Auth.currentUser.steam.steamid && _.contains(Auth.currentUser.authItems, "startGames");
       };
+      scope.isMe = function(member){
+        return member != null && member.SteamID === Auth.currentUser.steam.steamid;
+      };
       scope.sendChallenge = function(member){
         scope.sendchallenge({member: member});
       };
       scope.steamProfile = function(member){
         window.open('http://steamcommunity.com/profiles/'+member.SteamID,'_blank');
+      };
+      scope.openDirectMessage = function(member){
+        Network.chat.invoke("joinorcreate", {Name: member.SteamID, OneToOne: true});
       };
       element.bind("keypress", function(event) {
         if(event.which === 13) {

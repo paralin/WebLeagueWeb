@@ -43,7 +43,8 @@ var UserSchema = mongoose.Schema({
   settings: {
     language: String,
     sounds: {}
-  }
+  },
+  channels: [String]
 });
 
 /**

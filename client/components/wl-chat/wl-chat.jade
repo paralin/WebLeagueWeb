@@ -21,9 +21,12 @@
     li
       a.pointer(role="menuitem", tabindex="2", ng-click="viewProfile(selectedMember)")
         | View Profile
-    li
-      a.pointer(role="menuitem", tabindex="3", ng-click="sendChallenge(selectedMember)", ng-if="canChallenge(selectedMember)")
+    li(ng-if="canChallenge(selectedMember)")
+      a.pointer(role="menuitem", tabindex="3", ng-click="sendChallenge(selectedMember)")
         | Send Challenge
     li
       a.pointer(role="menuitem", tabindex="4", ng-click="steamProfile(selectedMember)")
         | View Steam Profile
+    li(ng-if="!isMe(selectedMember)")
+      a.pointer(role="menuitem", tabindex="5", ng-click="openDirectMessage(selectedMember)")
+        | Open Private Chat

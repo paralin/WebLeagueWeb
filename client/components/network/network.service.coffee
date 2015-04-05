@@ -334,22 +334,22 @@ class NetworkService
           @adminMatches.length = 0
           bootbox.hideAll()
           @activeChallenge = null
-      for name, cbs of @handlers
-        continue unless _.contains conts, name
-        @[name] = cont = @conn.controller name
-        for cbn, cb of cbs
-          do (cbn, cb, cont, name) ->
-            cont[cbn] = (arg)->
-              safeApply scope, ->
-                cb.call serv, arg
-      for name, cbs of @methods
-        continue unless _.contains conts, name
-        @[name] = cont = @conn.controller name
-        cont.do = {}
-        for cbn, cb of cbs
-          do (cbn, cb, cont, name) ->
-            cont.do[cbn] = ->
-              cb.apply cont, arguments
+        for name, cbs of @handlers
+          continue unless _.contains conts, name
+          @[name] = cont = @conn.controller name
+          for cbn, cb of cbs
+            do (cbn, cb, cont, name) ->
+              cont[cbn] = (arg)->
+                safeApply scope, ->
+                  cb.call serv, arg
+        for name, cbs of @methods
+          continue unless _.contains conts, name
+          @[name] = cont = @conn.controller name
+          cont.do = {}
+          for cbn, cb of cbs
+            do (cbn, cb, cont, name) ->
+              cont.do[cbn] = ->
+                cb.apply cont, arguments
       @conn.ondisconnected = =>
         console.log "Disconnected from the network..."
         #@disconnect()
