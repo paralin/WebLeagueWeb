@@ -51,6 +51,9 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
         }
         return "";
       };
+      scope.values = function(members) {
+        return _.values(members);
+      };
       element.bind("keypress", function(event) {
         if(event.which === 13) {
           var msg = scope.chatInput;
