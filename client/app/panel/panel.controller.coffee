@@ -57,15 +57,6 @@ angular.module 'webleagueApp'
   $scope.sortedGameModes = ->
     _.keys($rootScope.GameModeN).map(Number)
   $scope.confirmCreateMatch = ->
-    console.log $scope.matchName
-    name = $scope.matchName
-    if name is ""
-      $scope.showCreateMatch = true
-      new PNotify
-        title: "Name Needed"
-        text: "Please enter a match name."
-        type: "error"
-      return
     sel = $scope.selectedGameMode
     if !sel?
       $scope.showCreateMatch = true
@@ -78,7 +69,6 @@ angular.module 'webleagueApp'
     sorted = _.sortBy(_.keys($rootScope.GameModeN).map(Number))
     gm = sorted[gm]
     Network.matches.do.creatematch
-      Name: name
       GameMode: gm
   $scope.dismissCreate = ->
     $scope.showCreateMatch = false

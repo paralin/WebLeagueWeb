@@ -9,8 +9,6 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
     .tablewrapper
       table.table.table-condensed(style="margin-bottom:0")
         tbody
-          tr(style="font-weight:bold;color:black;background:white")
-            td {{match.Info.Name}}
           template(bind="",if="{{match.Info.MatchType==1}}")
             template(bind="",if="{{match.Info.Status==0}}")
               tr(style="font-weight:bold;color:black;background:white")
