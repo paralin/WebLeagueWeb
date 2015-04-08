@@ -42,14 +42,17 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
         Network.chat.invoke("joinorcreate", {Name: member.SteamID, OneToOne: true});
       };
       scope.memberRole = function(member){
+        var str = "";
         switch(member.MemberType)
         {
           case 1:
-            return "Moderator";
+            str = "Moderator";
           case 2:
-            return "Admin";
+            str = "Admin";
         }
-        return "";
+        if(str.length > 0) str += " ";
+        str += "("+member.Rating+")";
+        return str;
       };
       scope.values = function(members) {
         return _.values(members);
