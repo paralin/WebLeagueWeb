@@ -41,6 +41,16 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
       scope.openDirectMessage = function(member){
         Network.chat.invoke("joinorcreate", {Name: member.SteamID, OneToOne: true});
       };
+      scope.memberRole = function(member){
+        switch(member.MemberType)
+        {
+          case 1:
+            return "Moderator";
+          case 2:
+            return "Admin";
+        }
+        return "";
+      };
       element.bind("keypress", function(event) {
         if(event.which === 13) {
           var msg = scope.chatInput;

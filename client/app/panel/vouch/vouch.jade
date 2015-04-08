@@ -20,39 +20,17 @@
       paper-button.btn-danger.center-block(raised="" role="button" ng-click="deleteVouch()") Unvouch Player
     p(ng-if="vouchEmpty" style="margin-top:15px")
       paper-button.center-block(raised="" role="button" ng-click="createVouch()") Vouch Player
-  paper-shadow.col-md-12.col-sm-12.col-lg-5.span-shadow(z="1", style="padding: 25px")
-    p(style="margin-bottom:0;font-weight:bold;font-size: 1.5em")
-      | {{"Pending Vouches" | translate}}
-    table.table.table-hover.table-condensed(ng-if="!loadingVouches&&vouches.length>0")
-      thead
-        tr
-          th {{'Steam ID'|translate}}
-          th
-      tbody
-        tr(ng-repeat="vouch in vouches")
-          td {{vouch._id}}
-          td
-            paper-button.pull-right(raised="" role="button" ng-click="loadVouch(vouch._id)") Edit
-    p(style="margin-bottom:0;font-weight:bold;text-align:center", ng-if="!loadingVouches&&vouches.length==0")
-      | {{"No Pending Vouches" | translate}}
-    paper-spinner.blue.center-block(active="", style="margin-top:25px", ng-if="loadingVouches")
 .row(style="padding: 15px")
   paper-shadow.col-md-12.col-sm-12.col-lg-5.span-shadow(z="1", style="padding: 25px")
     p(style="margin-bottom:0;font-weight:bold;font-size: 1.5em")
-      | {{"Existing Users" | translate}}
-    table.table.table-hover.table-condensed
-      thead
-        tr
-          th(style="width:50px")
-          th {{'Name'|translate}}
-          th {{'Rating'|translate}}
-          th 
-      tbody
-        tr(ng-repeat="profile in profiles" ng-class="{danger: !profile.vouch}")
-          td
-            img(style="width:20px;height:20px",ng-src="{{profile.steam.avatarfull}}")
-          td {{profile.profile.name}}
-          td {{profile.profile.rating}}
-          td 
-            paper-button.pull-right(raised="" role="button" ng-click="loadVouch(profile.steam.steamid)") Edit
+      | {{"Vouch Tree" | translate}}
+    p
+      paper-shadow
+        core-selector
+          div(ui-tree="")
+            ol(ui-tree-nodes="", ng-model="vouchTree")
+              li(ng-repeat="item in vouchTree" ui-tree-node="")
+                paper-item(ui-tree-handle="")
+                  | {{item.title}}
+
     paper-spinner.blue.center-block(active="", style="margin-top:25px", ng-if="profiles.length == 0")

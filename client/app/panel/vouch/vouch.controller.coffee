@@ -1,10 +1,11 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'VouchCtrl', ($scope, Profile, $state, $http, $filter, SteamID, Vouch) ->
-  clr = [] 
+.controller 'VouchCtrl', ($scope, $rootScope, Profile, $state, $http, $filter, SteamID, Vouch) ->
+  clr = []
   $scope.profiles = []
   $scope.vouches = []
+  $scope.vouchTree = [{title: "Test"}]
   loadProfiles = ->
     Profile.list (data)->
       $scope.profiles = data
@@ -116,3 +117,7 @@ angular.module 'webleagueApp'
             title: "Server Error"
             text: "Problem fetching vouch information [#{stat}]."
             type: "error"
+  $scope.$on 'destroy', ->
+    for cl in clr
+      cl()
+    clr.length = 0

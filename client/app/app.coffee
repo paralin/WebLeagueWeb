@@ -9,9 +9,10 @@ angular.module 'webleagueApp', [
   'AutoFontSize'
   'pascalprecht.translate'
   'ng-context-menu'
+  'ui.tree'
   'vs-repeat'
 ]
-.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider) ->
+.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $tooltipProvider) ->
   $urlRouterProvider
   .otherwise '/panel/chat'
 
@@ -21,6 +22,9 @@ angular.module 'webleagueApp', [
   for id, trans of window.translations
     $translateProvider.translations id, trans
   $translateProvider.preferredLanguage 'en'
+
+  $tooltipProvider.options
+    appendToBody: true
 
 .factory 'authInterceptor', ($rootScope, $q, $location) ->
   # Add authorization token to headers
