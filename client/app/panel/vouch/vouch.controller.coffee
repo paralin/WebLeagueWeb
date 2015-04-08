@@ -5,7 +5,7 @@ angular.module 'webleagueApp'
   clr = []
   $scope.profiles = []
   $scope.vouches = []
-  $scope.vouchTree = [{title: "Test"}]
+  window.vouchScope = $scope
   loadProfiles = ->
     Profile.list (data)->
       $scope.profiles = data
