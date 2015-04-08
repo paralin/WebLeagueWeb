@@ -9,7 +9,6 @@ angular.module 'webleagueApp', [
   'AutoFontSize'
   'pascalprecht.translate'
   'ng-context-menu'
-  'ui.tree'
   'vs-repeat'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $tooltipProvider) ->
