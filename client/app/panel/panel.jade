@@ -36,17 +36,9 @@
     .btns(ng-if="isInGame()&&!isAdminOfGame()&&network.activeMatch.Info.Status<1")
       paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
     .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null")
-      paper-button(raised,ng-click="createStartgame()") {{ 'Start Match' | translate }}
+      paper-button(raised,ng-click="createStartgame(1)",style="width:33.3%;display:inline-block") {{ 'Start AP' | translate }}
+      paper-button(raised,ng-click="createStartgame(2)",style="width:33.3%;display:inline-block") {{ 'Start CM' | translate }}
+      paper-button(raised,ng-click="createStartgame(16)",style="width:33.3%;display:inline-block") {{ 'Start CD' | translate }}
     .btns(ng-if="network.activeResult != null")
       paper-button(raised,ng-click="network.matches.do.dismissResult()") {{ 'Dismiss' | translate }} {{ 'Result' | translate }}
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
-paper-action-dialog#createMatch(ng-heading="'Create Match' | translate", transition="core-transition-bottom", style="width: 600px", ng-opened="showCreateMatch")
-  p(style="margin-bottom:0")
-    | {{"Choose your match options" | translate}}
-  p(style="margin-top:0")
-    paper-dropdown-menu#gameModeInput(ng-label="'Game mode' | translate")
-      paper-dropdown.dropdown(layered="true", style="height: 35%")
-        core-menu.menu(ng-model="selectedGameMode")
-          paper-item(ng-repeat="id in sortedGameModes() | orderBy" value="{{id}}") {{GameModeN[id]}}
-  paper-button(affirmative="") {{"Cancel" | translate}}
-  paper-button.primary-btn(affirmative="", autofocus="", ng-click="confirmCreateMatch()", ng-model="matchName") {{"Create" | translate}}

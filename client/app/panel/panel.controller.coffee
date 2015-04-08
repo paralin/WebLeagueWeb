@@ -56,25 +56,10 @@ angular.module 'webleagueApp'
       window.aswal = null
   $scope.sortedGameModes = ->
     _.keys($rootScope.GameModeN).map(Number)
-  $scope.confirmCreateMatch = ->
-    sel = $scope.selectedGameMode
-    if !sel?
-      $scope.showCreateMatch = true
-      new PNotify
-        title: "Game Mode Needed"
-        text: "Please select a game mode."
-        type: "error"
-      return
-    gm = parseInt sel
-    sorted = _.sortBy(_.keys($rootScope.GameModeN).map(Number))
-    gm = sorted[gm]
+  $scope.createStartgame = (mod)->
     Network.matches.do.creatematch
-      GameMode: gm
-  $scope.dismissCreate = ->
-    $scope.showCreateMatch = false
+      GameMode: mod
   # Is currently controlling a game
-  $scope.createStartgame = ->
-    $scope.showCreateMatch = true
   $scope.showRightCont = ->
     Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()||Network.activeResult?||Network.activeMatch?||Network.activeChallenge?
   $scope.isAdminOfGame = ->
