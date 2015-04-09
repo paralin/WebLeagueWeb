@@ -6,7 +6,7 @@
         th {{'Name'|translate}}
         th {{'Rating'|translate}}
     tbody
-      tr(ng-repeat="profile in profiles | orderBy:'-profile.rating':false",ng-click="goToProfile(profile)")
+      tr(ng-repeat="profile in profiles | orderBy:['-profile.rating', 'profile.name']",ng-click="goToProfile(profile)")
         td
           img(style="width:20px;height:20px",ng-src="{{profile.steam.avatarfull}}")
         td {{profile.profile.name}}
