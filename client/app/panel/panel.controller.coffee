@@ -6,7 +6,7 @@ angular.module 'webleagueApp'
   clr = []
   $scope.auth = Auth
   $scope.network = Network
-  window.state = $scope.state = state = $state
+  $scope.state = state = $state
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames

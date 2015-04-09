@@ -209,6 +209,7 @@ angular.module 'webleagueApp', [
     Auth.getLoginStatus (user)->
       if user?
         option = user.settings.sounds[name]
+        console.log option
         return if !option?
         if option.type is 0
           inst = $rootScope.SoundsInstances[option.sound]

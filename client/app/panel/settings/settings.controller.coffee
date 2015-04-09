@@ -24,12 +24,16 @@ angular.module 'webleagueApp'
       $scope.settingsDirty = false
     $scope.saveSettings = ->
       Auth.currentUser.settings = settings
+      for id, sound of settings.sounds
+        sound.type = if sound.type then 1 else 0
       Auth.saveSettings()
       $scope.settingsDirty = false
     $scope.playSound = (id, volume)->
       $rootScope.SoundsInstances[id].stop()
       $rootScope.SoundsInstances[id].setVolume volume
       $rootScope.SoundsInstances[id].play()
+      $scope.settingsDirty = true
+    $scope.setSettingsDirty = ->
       $scope.settingsDirty = true
     $scope.playTts = (text, volume)->
       if !window.speechSynthesis?
