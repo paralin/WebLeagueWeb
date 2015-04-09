@@ -128,3 +128,14 @@ paper-checkbox::shadow #ink {
   width: 90%;
   margin-top: 4px;
 }
+
+@-webkit-keyframes pulse
+{
+  0% {background-color: rgba(255, 84, 0, 0.2);}
+  100% {background-color: rgba(255, 84, 0, 0.8);}
+}
+
+.flashTab
+{
+  -webkit-animation: pulse 1s infinite alternate;
+}

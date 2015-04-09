@@ -211,7 +211,6 @@ angular.module 'webleagueApp', [
       if user?
         return if user.settings.soundMuted
         option = user.settings.sounds[name]
-        console.log option
         return if !option?
         if option.type is 0
           inst = $rootScope.SoundsInstances[option.sound]

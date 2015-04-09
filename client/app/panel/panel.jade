@@ -12,7 +12,7 @@
     .bottom.fit(horizontal="",layout="",style="height: 35px")
       div(style="width:100%;height:100%;float:left")
         paper-tabs.orange(ng-model="panelTabs.selected",flex="",style="",role="tablist",scrollable="",hideScrollButton="")
-          paper-tab(ng-repeat="chat in chats",ng-click="selectChat(chat.Name)")
+          paper-tab(ng-repeat="chat in chats",ng-click="selectChat(chat.Name)",ng-class="{flashTab: chat.HasUnread}")
             | {{humanizeChatName(chat.Name)}}
           paper-tab(ng-click="state.go('panel.leaderboard')") {{ 'Leaderboards' | translate }}
           paper-tab(ng-if="auth.inRole('vouch')",ng-click="state.go('panel.vouch')") {{ 'Vouch' | translate }}
