@@ -201,6 +201,7 @@ angular.module 'webleagueApp', [
     user.settings = {} if !user.settings?
     user.settings.language = "en" if !user.settings.language?
     user.settings.sounds = {} if !user.settings.sounds?
+    user.settings.soundMuted = false if !user.settings.soundMuted?
     soundIds = _.keys $rootScope.SoundOptions
     for soundid in soundIds
       continue if user.settings.sounds[soundid]?
@@ -208,6 +209,7 @@ angular.module 'webleagueApp', [
   $rootScope.playSound = (name)->
     Auth.getLoginStatus (user)->
       if user?
+        return if user.settings.soundMuted
         option = user.settings.sounds[name]
         console.log option
         return if !option?

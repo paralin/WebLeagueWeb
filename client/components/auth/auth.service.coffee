@@ -36,8 +36,9 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
         @currentPromise = null
         deferred.resolve()
       @currentPromise
-    saveSettings: ->
+    saveSettings: _.debounce ->
       $http.post "/api/users/saveSettings", @currentUser.settings
+    , 1000
   $interval =>
     service.update()
   , 30000

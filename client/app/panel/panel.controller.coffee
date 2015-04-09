@@ -17,6 +17,10 @@ angular.module 'webleagueApp'
   $scope.pickPlayer = (event)->
     Network.matches.do.pickPlayer event.detail.SID
     $rootScope.playSound "buttonPress"
+  $scope.toggleSoundMuted = (mute)->
+    console.log mute
+    Auth.currentUser.settings.soundMuted = mute
+    Auth.saveSettings()
   $scope.selectChat = (name)->
     $state.go("panel.chat", {name: name.replace(" ", "-")})
   clr.push $rootScope.$on "chatChannelAdd", ->
