@@ -1,5 +1,6 @@
 'use strict'
 
+ignoreNext = true
 angular.module 'webleagueApp', [
   'ngResource'
   'ngSanitize'
@@ -12,8 +13,7 @@ angular.module 'webleagueApp', [
   'vs-repeat'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $tooltipProvider) ->
-  $urlRouterProvider
-  .otherwise '/panel/chat'
+  $urlRouterProvider.otherwise '/panel/chat'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
@@ -34,12 +34,15 @@ angular.module 'webleagueApp', [
   # Intercept 401s and redirect you to login
   responseError: (response) ->
     if response.status is 401
+      console.log "intercepted #{response.status} -> login"
       $location.path '/login'
     $q.reject response
 
 .run ($rootScope, $location, Auth) ->
   # Redirect to login if route requires auth and you're not logged in
   $rootScope.$on '$stateChangeStart', (event, next) ->
+    console.log "Route -> #{next.name}"
+    ignoreNext = false if next.name is "panel.chat"
     Auth.getLoginStatus (user, token) ->
       loggedIn = user?
       if next.authenticate
@@ -47,8 +50,12 @@ angular.module 'webleagueApp', [
           $location.path "/login"
         else if !user.vouch?
           $location.path "/novouch" if next.name isnt "novouch"
-        else
-          $location.path "/panel/chat" if next.name is "login" || next.name is "panel" || next.name is "novouch"
+        else if next.name is "login" || next.name is "novouch"
+          $location.path "/panel/chat"
+          console.log "redirected, #{JSON.stringify user} #{JSON.stringify next}"
+        else if ignoreNext
+          event.preventDefault()
+          ignoreNext = false
   $rootScope.openLink = (url)->
     win = window.open(url, '_blank')
     win.focus()

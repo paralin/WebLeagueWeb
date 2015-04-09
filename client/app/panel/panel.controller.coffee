@@ -23,7 +23,10 @@ angular.module 'webleagueApp'
   $scope.selectChat = (name)->
     $state.go("panel.chat", {name: name.replace(" ", "-")})
   clr.push $rootScope.$on "chatChannelAdd", ->
-    $scope.selectChat Network.chats[Network.chats.length-1].Name
+    if $state.$current.name is "panel.chat"
+      $scope.selectChat Network.chats[Network.chats.length-1].Name
+    else
+      $scope.checkPanelTab()
   clr.push $rootScope.$on "gameCanceled", (event, game)->
     if game.Info.Status is 0
       $rootScope.playSound "gameCanceled"
@@ -135,6 +138,8 @@ angular.module 'webleagueApp'
     else if state.is "panel.settings"
       idx = $scope.chats.length+staticTabCount+1
     $scope.panelTabs.selected = idx
+  Auth.getLoginStatus ->
+    $scope.checkPanelTab()
   clr.push $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
     $scope.checkPanelTab()
   $scope.$on 'destroy', ->
