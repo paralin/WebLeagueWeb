@@ -57,13 +57,25 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
       scope.values = function(members) {
         return _.values(members);
       };
+      scope.messageClass = function(chat, message)
+      {
+        var member = chat.Members[message.member];
+        var mclass = {};
+        switch(member.MemberType)
+        {
+          case 1:
+            mclass.moderator = true;
+          case 2:
+            mclass.admin = true;
+        }
+        return mclass;
+      };
       element.bind("keypress", function(event) {
         if(event.which === 13) {
           var msg = scope.chatInput;
           scope.chatInput = "";
           if(msg.length > 0){
             scope.$apply(function() {
-              console.log(msg);
               scope.sendchat({message: msg});
             });
           }

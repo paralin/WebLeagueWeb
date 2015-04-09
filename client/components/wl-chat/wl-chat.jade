@@ -3,7 +3,7 @@
     .msg-container(vs-repeat="", vs-autoresize="")
       p(ng-repeat="message in chat.messages" ng-class="{systemMsg: message.Auto}")
         span(ng-if="!message.Auto")
-          b {{message.name}}:&nbsp;
+          span.senderName(ng-class="messageClass(chat, message)") {{message.name}}:&nbsp;
           | {{message.msg}}
         span(ng-if="message.Auto")
           b {{message.name}} {{message.msg}}
