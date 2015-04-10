@@ -16,4 +16,9 @@ Polymer 'match-game', {
     @fire "picked-player", {SID: sid}
   toJson: (o)->
     JSON.stringify o
+  numPlayers: ->
+    return 0 if !@match? or !@match.Players?
+    plyrs = _.filter @match.Players, (plyr)->
+      plyr.Team < 2
+    plyrs.length
 }
