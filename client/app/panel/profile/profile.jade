@@ -27,10 +27,10 @@
           .desc Abandons: {{profile.profile.abandons}}
         .bottom
           p
-            paper-button.btn-primary
+            paper-button.btn-primary(raised="",ng-click="openLink(profile.steam.profileurl)")
               i.fa.fa-steam &nbsp;
               | View Steam Profile
           p(ng-if="auth.inRole('vouch')")
-            paper-button.btn-danger(ng-click="devouch()")
+            paper-button.btn-danger(raised="",ng-click="devouch()")
               i.fa.fa-ban &nbsp;
               | Unvouch Player
