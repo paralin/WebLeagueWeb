@@ -18,7 +18,8 @@ var ResultSchema = mongoose.Schema({
   }],
   RatingDire: Number,
   RatingRadiant: Number,
-  Match: {}
+  Match: {},
+  MatchCounted: Boolean
 });
 
 module.exports = mongoose.model('results', ResultSchema, "matchResults");

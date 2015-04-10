@@ -22,7 +22,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
           template(bind="",if="{{match.Setup != null&&match.Info.Status!=3}}")
             tr(style="font-weight:bold;color:black;background:white")
               td {{setupstatusn[match.Setup.Details.Status]}}
-          template(bind="",if="{{match.Setup != null&&match.Setup.Details != null && match.Setup.Details.Status==3}}")
+          template(bind="",if="{{match.Setup != null&&inGame&&match.Setup.Details != null && match.Setup.Details.Status==3}}")
             tr(style="font-weight:bold;color:black;background:white")
               td(style="user-select:all;-moz-user-select:all;-webkit-user-select:all")
                 | Lobby Password:
@@ -42,7 +42,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
                 | {{player.Name}}
                 |  ({{player.Rating}})
-          template(bind="",if="{{!inGame&&(match.Players.length<10||match.Info.MatchType==1)&&canJoin}}")
+          template(bind="",if="{{!inGame&&(match.Players.length<10||match.Info.MatchType==1)&&canJoin&&match.Info.Status==0}}")
             tr(style="padding:0")
               td(style="padding:0")
                 paper-button.join-btn(style="width:100%;margin:0;font-weight:bold;",on-click="{{joinMatch}}") Join Match

@@ -119,7 +119,7 @@ angular.module 'webleagueApp'
     Network.matches.do.joinmatch
       Id: game.Id
   $scope.gameFilter = (game)->
-    game.Info.Status==0 || (Network.activeMatch? && Network.activeMatch.Id is game.Id)
+    true #game.Info.Status==0 || (Network.activeMatch? && Network.activeMatch.Id is game.Id)
   $scope.sendChat = (msg)->
     Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.panelTabs.selected].Id, Text: msg})
   $scope.checkPanelTab = ->

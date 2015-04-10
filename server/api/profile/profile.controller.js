@@ -9,15 +9,26 @@ var selection = {'profile': 1, 'steam.avatarfull': 1, 'steam.steamid': 1, 'steam
 exports.index = function(req, res) {
   User.find({}).select(selection).exec(function (err, profiles) {
     if(err) { return handleError(res, err); }
-    return res.status(200).json(profiles);
+    var ress = [];
+    profiles.forEach(function(profile){
+      var prof = profile.toObject();
+      prof.profile.totalGames = prof.profile.wins+prof.profile.losses;
+      ress.push(prof);
+    });
+    return res.status(200).json(ress);
   });
 };
 
 exports.indexLeader = function(req, res) {
   User.find({vouch: {$exists: true}, "vouch._id": {$exists: true}}).select(selection).exec(function (err, profiles) {
     if(err) { return handleError(res, err); }
-    profiles.forEach(function(profile){profile.totalGames = profile.wins+profile.losses;});
-    return res.status(200).json(profiles);
+    var ress = [];
+    profiles.forEach(function(profile){
+      var prof = profile.toObject();
+      prof.profile.totalGames = prof.profile.wins+prof.profile.losses;
+      ress.push(prof);
+    });
+    return res.status(200).json(ress);
   });
 };
 
@@ -27,7 +38,6 @@ exports.show = function(req, res) {
   if(id === "me"){
     id = req.user._id;
   }
-  console.log(id);
   if(id === "leader"){
       return exports.indexLeader(req, res);
   }

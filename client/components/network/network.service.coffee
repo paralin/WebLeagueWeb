@@ -1,5 +1,8 @@
 'use strict'
 
+Function::property = (prop, desc) ->
+  Object.defineProperty @prototype, prop, desc
+
 class NetworkService
   disconnected: true
   doReconnect: true
@@ -7,7 +10,11 @@ class NetworkService
   attempts: 0
   status: "Disconnected from the server."
 
-  activeMatch: null
+  _activeMatch: null
+  @property "activeMatch",
+    get: ->
+      return null if !@_activeMatch?
+      _.findWhere @availableGames, {Id: @_activeMatch.Id}
   activeChallenge: null
   activeResult: null
   hasChallenge: false
@@ -151,7 +158,7 @@ class NetworkService
         console.log "Connection userped"
         @status = "You have logged into your account from another location and are disconnected."
         @disconnected = true
-        @activeMatch = null
+        @_activeMatch = null
         bootbox.hideAll()
         @activeChallenge = null
         @activeResult = null
@@ -163,7 +170,7 @@ class NetworkService
         @adminMatches.length = 0
         @disconnect()
       matchsnapshot: (match)->
-        @activeMatch = match
+        @_activeMatch = match
       challengesnapshot: (match)->
         @activeChallenge = match
         @hasChallenge = @activeChallenge?
@@ -182,14 +189,10 @@ class NetworkService
         @activeResult = snp
         @scope.$broadcast "resultSnapshot", null
       matchplayerssnapshot: (upd)->
-        #find the match
-        mtchs = []
-        match = _.find @availableGames, {Id: upd.Id}
-        mtchs[mtchs.length] = match if match?
-        mtchs[mtchs.length] = @activeMatch if @activeMatch? && @activeMatch.Id is upd.Id
-        if mtchs.length is 0
-          console.log "Received match player remove for an unknown match #{upd.Id}"
-        for match in mtchs
+        match = _.findWhere @availableGames, {Id: upd.Id}
+        if !match?
+          console.log "Received match player snapshot for an unknown match #{upd.Id}"
+        else
           match.Players = upd.Players
       publicmatchupd: (upd)->
         for match in upd.matches
@@ -217,25 +220,25 @@ class NetworkService
           if idx isnt -1
             [game] = @availableGames.splice idx, 1
             @scope.$broadcast "gameCanceled", game
-      clearsetup: ->
-        if @activeMatch?
+      #clearsetup: ->
+      #  if @activeMatch?
           #find the match
-          mtchs = _.where @availableGames, {Id: @activeMatch.Id}
-          mtchs[mtchs.length] = @activeMatch
-          for match in mtchs
-            match.Setup = null
-      setupsnapshot: (snap)->
-        if @activeMatch?
-          #find the match
-          mtchs = _.where @availableGames, {Id: @activeMatch.Id}
-          mtchs[mtchs.length] = @activeMatch
-          for match in mtchs
-            match.Setup = snap
+      #    mtchs = _.where @availableGames, {Id: @activeMatch.Id}
+      #    mtchs[mtchs.length] = @activeMatch
+      #    for match in mtchs
+      #      match.Setup = null
+      clearsetupmatch: (upd)->
+        idx = _.findIndex @availableGames, {Id: upd.Id}
+        if idx isnt -1
+          @availableGames[idx].Setup = null
+      setupsnapshot: (upd)->
+        idx = _.findIndex @availableGames, {Id: upd.Id}
+        if idx isnt -1
+          @availableGames[idx].Setup = upd
       infosnapshot: (snap)->
         #find the match
-        mtchs = _.where @availableGames, {Id: snap.Id}
-        mtchs[mtchs.length] = @activeMatch if @activeMatch? && @activeMatch.Id is snap.Id
-        for match in mtchs
+        match = _.findWhere @availableGames, {Id: snap.Id}
+        if match?
           match.Info = snap
     chat:
       onopen: (ci)->
@@ -256,23 +259,22 @@ class NetworkService
           console.log "Message for unknown chat #{upd.Id}"
         else
           chat.messages.push
-            member: upd.Member.ID
+            member: upd.Member
             msg: upd.Text
-            name: chat.Members[upd.Member.ID].Name
+            name: chat.Members[upd.Member].Name
             Auto: upd.Auto
       #add or remove a chat channel
       chatchannelupd: (upd)->
         for chan in upd.channels
-          console.log chan
+          chan.Members["system"] = {Id: "system", Name: ""}
           #get idx in array
           idx = _.findIndex @chats, {Id: chan.Id}
           if idx is -1
             chan.messages = []
             @chats.push chan
+            @scope.$broadcast 'chatChannelAdd'
           else
             _.merge @chats[idx], chan
-        #@scope.$broadcast 'chatMembersUpd'
-        @scope.$broadcast 'chatChannelAdd'
       chatchannelrm: (upd)->
         for id in upd.ids
           idx = _.findIndex @chats, {Id: id}
@@ -329,7 +331,7 @@ class NetworkService
           @status = "Connected to the network."
           @attempts = 0
           @chats.length = 0
-          @activeMatch = null
+          @_activeMatch = null
           @activeResult = null
           @adminMatches.length = 0
           bootbox.hideAll()
@@ -337,6 +339,7 @@ class NetworkService
         for name, cbs of @handlers
           continue unless _.contains conts, name
           @[name] = cont = @conn.controller name
+          continue unless cont?
           for cbn, cb of cbs
             do (cbn, cb, cont, name) ->
               cont[cbn] = (arg)->
@@ -345,6 +348,7 @@ class NetworkService
         for name, cbs of @methods
           continue unless _.contains conts, name
           @[name] = cont = @conn.controller name
+          continue unless cont?
           cont.do = {}
           for cbn, cb of cbs
             do (cbn, cb, cont, name) ->
