@@ -15,6 +15,6 @@ function isAuthenticated(req, res, next){
 }
 
 router.get('/', isAuthenticated, controller.index);
-router.get('/:id', isAuthenticated, controller.show);
+router.get('/:id', controller.show);
 
 module.exports = router;
