@@ -14,6 +14,7 @@ angular.module('ng-polymer-elements').constant '$ngPolymerMappings',
     ngMatchTypes: primitive: 'modes'
     ngInGame: primitive: 'inGame'
     ngPressedJoin: event: 'pressed-join'
+    ngPressedJoinSpec: event: 'pressed-join-spec'
     ngPickedPlayer: event: 'picked-player'
     ngSetupStatusn: primitive: 'setupstatusn'
     ngCanJoin: primitive: 'canJoin'

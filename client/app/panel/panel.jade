@@ -25,7 +25,7 @@
   #rightcont(ng-if="showRightCont()")
     .mains
       live-matches(ng-if="liveMatches.length>0",ng-match-types="MatchTypeNS",ng-model="liveMatches",ng-game-modes="GameModeN")
-      match-game(ng-repeat="game in games|filter:gameFilter",ng-model="game",ng-game-modes="GameModeN",ng-match-types="MatchTypeNS",ng-in-game="isInGame(game)",ng-pressed-join="joinGame(game)",ng-picked-player="pickPlayer($event)",ng-setup-statusn="SetupStatusN",ng-captain-statusn="CaptainStatusN",ng-can-join="!isInGame()", ng-steamid="auth.currentUser.steam.steamid",ng-match-states="MatchStateN")
+      match-game(ng-repeat="game in games|filter:gameFilter",ng-model="game",ng-game-modes="GameModeN",ng-match-types="MatchTypeNS",ng-in-game="isInGame(game)",ng-pressed-join="joinGame(game)",ng-pressed-join-spec="joinGameSpec(game)",ng-picked-player="pickPlayer($event)",ng-setup-statusn="SetupStatusN",ng-captain-statusn="CaptainStatusN",ng-can-join="!isInGame()", ng-steamid="auth.currentUser.steam.steamid",ng-match-states="MatchStateN")
       pending-challenge(ng-if="network.activeChallenge!=null")
       match-result(ng-if="network.activeResult!=null",ng-model="network.activeResult")
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup==null&&network.activeMatch.Info.Status==0")
@@ -34,7 +34,7 @@
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup!=null&&network.activeMatch.Info.Status<3")
       paper-button.primary-btn(raised,ng-click="network.matches.do.finalizematch()",ng-if="allAreReady()") {{ 'Start Match' | translate }}
       paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Cancel' | translate }} {{ 'Match' | translate }}
-    .btns(ng-if="isInGame()&&!isAdminOfGame()&&network.activeMatch.Info.Status<1")
+    .btns(ng-if="isInGame()&&!isAdminOfGame()&&canLeaveGame()")
       paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
     .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null",style="padding-left:10px;padding-right:10px")
       paper-button(raised,ng-click="createStartgame(1)",style="width:33.3%;display:inline-block") {{ 'Start AP' | translate }}

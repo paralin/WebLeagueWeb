@@ -2,6 +2,8 @@ Polymer 'match-game', {
   inGame: false
   joinMatch: ->
     @fire 'pressed-join', {match: @match}
+  joinMatchSpectator: ->
+    @fire 'pressed-join-spec', {match: @match}
   getMe: ->
     _.find @match.Players, {SID: @steamid}
   showCaptainButtons: ->
