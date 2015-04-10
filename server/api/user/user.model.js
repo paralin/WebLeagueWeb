@@ -9,7 +9,9 @@ var UserSchema = mongoose.Schema({
   authItems: [String],
   profile: {
     name: String,
-    rating: Number
+    rating: Number,
+    wins: Number,
+    losses: Number
   },
   vouch: {
     _id: String,

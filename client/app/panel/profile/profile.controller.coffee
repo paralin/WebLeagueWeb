@@ -14,7 +14,7 @@ angular.module 'webleagueApp'
     Profile.me processProfile
   $scope.devouch = ->
     return if !Auth.inRole('vouch')
-    $http.post('/api/vouches/delete/'+$scope.profile._id)
+    $http.post('/api/vouches/delete/'+$scope.profile.steam.steamid)
       .success ->
         state.go "panel.leaderboard"
         swal
