@@ -1,13 +1,39 @@
-.col-md-12
-  table.table.table-hover.table-condensed
-    thead
-      tr
-        th(style="width:50px")
-        th {{'Name'|translate}}
-        th {{'Rating'|translate}}
-    tbody
-      tr(ng-repeat="profile in profiles | orderBy:['-profile.rating', 'profile.name']",ng-click="goToProfile(profile)")
-        td
-          img(style="width:20px;height:20px",ng-src="{{profile.steam.avatarfull}}")
-        td {{profile.profile.name}}
-        td {{profile.profile.rating}}
+.container-fluid
+  .row(style="padding:10px;")
+    paper-shadow.col-sm-5
+      h3 Top Players by Rating
+      table.table.table-hover.table-condensed
+        thead
+          tr
+            th(style="width:50px")
+            th {{'Name'|translate}}
+            th {{'Wins'|translate}}
+            th {{'Losses'|translate}}
+            th {{'Rating'|translate}}
+        tbody
+          tr(ng-repeat="profile in profiles | orderBy:['-profile.rating', 'profile.name']",ng-click="goToProfile(profile)")
+            td
+              img(style="width:20px;height:20px",ng-src="{{profile.steam.avatarfull}}")
+            td {{profile.profile.name}}
+            td {{profile.profile.wins}}
+            td {{profile.profile.losses}}
+            td {{profile.profile.rating}}
+    div.col-sm-1
+    paper-shadow.col-sm-5
+      h3 Top Players by Games Played
+      table.table.table-hover.table-condensed
+        thead
+          tr
+            th(style="width:50px")
+            th {{'Name'|translate}}
+            th {{'Wins'|translate}}
+            th {{'Losses'|translate}}
+            th {{'Rating'|translate}}
+        tbody
+          tr(ng-repeat="profile in profiles | orderBy:['-profile.totalGames', 'profile.name']",ng-click="goToProfile(profile)")
+            td
+              img(style="width:20px;height:20px",ng-src="{{profile.steam.avatarfull}}")
+            td {{profile.profile.name}}
+            td {{profile.profile.wins}}
+            td {{profile.profile.losses}}
+            td {{profile.profile.rating}}

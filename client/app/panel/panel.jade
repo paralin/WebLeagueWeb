@@ -36,7 +36,7 @@
       paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Cancel' | translate }} {{ 'Match' | translate }}
     .btns(ng-if="isInGame()&&!isAdminOfGame()&&network.activeMatch.Info.Status<1")
       paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
-    .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null")
+    .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null",style="padding-left:10px;padding-right:10px")
       paper-button(raised,ng-click="createStartgame(1)",style="width:33.3%;display:inline-block") {{ 'Start AP' | translate }}
       paper-button(raised,ng-click="createStartgame(2)",style="width:33.3%;display:inline-block") {{ 'Start CM' | translate }}
       paper-button(raised,ng-click="createStartgame(16)",style="width:33.3%;display:inline-block") {{ 'Start CD' | translate }}

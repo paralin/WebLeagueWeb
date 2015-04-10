@@ -16,6 +16,7 @@ exports.index = function(req, res) {
 exports.indexLeader = function(req, res) {
   User.find({vouch: {$exists: true}, "vouch._id": {$exists: true}}).select(selection).exec(function (err, profiles) {
     if(err) { return handleError(res, err); }
+    profiles.forEach(function(profile){profile.totalGames = profile.wins+profile.losses;});
     return res.status(200).json(profiles);
   });
 };
