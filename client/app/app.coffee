@@ -56,6 +56,9 @@ angular.module 'webleagueApp', [
         else if ignoreNext
           event.preventDefault()
           ignoreNext = false
+  $rootScope.$on 'authStatusChange', ->
+    Auth.getLoginStatus (user, token) ->
+      $location.path "/login" if !user?
   $rootScope.openLink = (url)->
     win = window.open(url, '_blank')
     win.focus()

@@ -6,6 +6,7 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
     currentUser: null
     currentToken: null
     currentServer: null
+    wasAuthed: false
     inRole: (name)->
       return false if !@currentUser?
       _.contains @currentUser.authItems, name
@@ -35,6 +36,9 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
           @currentServer = null
         @currentPromise = null
         deferred.resolve()
+        if data.isAuthed isnt wasAuthed
+          wasAuthed = data.isAuthed
+          $rootScope.$broadcast('authStatusChange')
       @currentPromise
     saveSettings: _.debounce ->
       $http.post "/api/users/saveSettings", @currentUser.settings
