@@ -43,6 +43,7 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
       };
       scope.memberRole = function(member){
         var str = "";
+        return "unknown" if !member?
         switch(member.MemberType)
         {
           case 1:
@@ -60,6 +61,7 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
       scope.messageClass = function(chat, message)
       {
         var member = chat.Members[message.member];
+        return "" if !member?
         var mclass = {};
         switch(member.MemberType)
         {
