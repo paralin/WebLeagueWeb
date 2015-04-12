@@ -44,6 +44,12 @@ exports.setup = function (User, Vouch, config) {
           }else{
             user.profile.name = profile.personaname;
           }
+          if(user.profile.wins == null)
+            user.profile.wins = 0;
+          if(user.profile.losses == null)
+            user.profile.losses = 0;
+          if(user.profile.abandons == null)
+            user.profile.abandons = 0;
           user.save(function(error){
             if(error)
               throw error;
@@ -56,6 +62,9 @@ exports.setup = function (User, Vouch, config) {
             newUser.steam = profile;
             newUser.profile.name = profile.personaname;
             newUser.profile.rating = 1200;
+            newUser.profile.wins = 0;
+            newUser.profile.losses = 0;
+            newUser.profile.abandons = 0;
             newUser.authItems = ['chat', 'startGames', 'matches'];
             newUser.vouch = null;
             //Find if they have a active vouch
