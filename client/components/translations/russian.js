@@ -1,5 +1,5 @@
 window.translations.ru = {
-  'TITLE': 'IDEC League',
+  'TITLE': 'FACEIT Pro League',
   'Profile': 'Профиль',
   'Sign Out': 'Выйти',
   'Chat': 'Чат',

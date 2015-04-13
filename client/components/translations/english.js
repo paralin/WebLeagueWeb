@@ -1,5 +1,5 @@
 window.translations.en = {
-  'TITLE': 'IDEC League',
+  'TITLE': 'FACEIT Pro League',
   'Profile': 'Profile',
   'Sign Out': 'Sign Out',
   'Chat': 'Chat',
