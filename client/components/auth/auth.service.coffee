@@ -36,8 +36,8 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
           @currentServer = null
         @currentPromise = null
         deferred.resolve()
-        if data.isAuthed isnt wasAuthed
-          wasAuthed = data.isAuthed
+        if data.isAuthed isnt service.wasAuthed
+          service.wasAuthed = data.isAuthed
           $rootScope.$broadcast('authStatusChange')
       @currentPromise
     saveSettings: _.debounce ->

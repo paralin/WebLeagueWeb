@@ -158,7 +158,7 @@ class NetworkService
         @scope.$broadcast "lobbyReady"
       userped: ->
         console.log "Connection userped"
-        @status = "You have logged into your account from another location and are disconnected."
+        @status = "You have logged into your account from another location and are disconnected. Refresh to re-connect."
         @disconnected = true
         @_activeMatch = null
         bootbox.hideAll()
@@ -382,6 +382,7 @@ class NetworkService
 angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, safeApply) ->
   service = new NetworkService $rootScope, $timeout, safeApply
   checkLogin = ->
+    console.log "check login"
     Auth.getLoginStatus (currentUser, currentToken, currentServer)->
       service.token = currentToken
       service.server = currentServer
