@@ -29,17 +29,24 @@ exports.fetchHeros = function()
       var data = JSON.parse(body);
       if(data.result && data.result.heroes && data.result.heroes.length > 10)
       {
-        data.result.heroes.forEach(function(hero){
-          hero["fullName"] = Humanize.titleCase(hero.name.replace("npc_dota_hero_", "").replace("_", " "));
-          Hero.findByIdAndUpdate(hero.id, {_id: hero.id, name: hero.name, fullName: hero.fullName}, {upsert: true}, function(err)
+        Hero.remove({}, function(err){
+          if(err)
           {
-            if(err)
+            console.log("error removing hero database, "+err);
+            return;
+          }
+          data.result.heroes.forEach(function(hero){
+            hero["fullName"] = Humanize.titleCase(hero.name.replace("npc_dota_hero_", "").replace("_", " "));
+            Hero.insert({_id: hero.id, name: hero.name, fullName: hero.fullName}, function(err)
             {
-              console.log("error updating hero "+hero.id+", "+err);
-            }
+              if(err)
+              {
+                console.log("error updating hero "+hero.id+", "+err);
+              }
+            });
           });
+          console.log("updated "+data.result.heroes.length+" heros' information");
         });
-        console.log("updated "+data.result.heroes.length+" heros' information");
       }
     }
   });
