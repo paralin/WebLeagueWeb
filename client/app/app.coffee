@@ -38,7 +38,7 @@ angular.module 'webleagueApp', [
       $location.path '/login'
     $q.reject response
 
-.run ($rootScope, $location, Auth) ->
+.run ($rootScope, $location, Auth, $state) ->
   # Redirect to login if route requires auth and you're not logged in
   $rootScope.$on '$stateChangeStart', (event, next) ->
     console.log "Route -> #{next.name}"
@@ -58,7 +58,13 @@ angular.module 'webleagueApp', [
           ignoreNext = false
   $rootScope.$on 'authStatusChange', ->
     Auth.getLoginStatus (user, token) ->
-      $location.path "/login" if !user?
+      loggedIn = user?
+      if !loggedIn
+        $location.path "/login"
+      else if !user.vouch?
+        $location.path "/novouch"
+      else if $state.includes("login") || $state.includes("novouch")
+        $location.path "/panel/chat"
   $rootScope.openLink = (url)->
     win = window.open(url, '_blank')
     win.focus()

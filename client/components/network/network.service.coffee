@@ -15,6 +15,7 @@ class NetworkService
     get: ->
       return null if !@_activeMatch?
       _.findWhere @availableGames, {Id: @_activeMatch.Id}
+
   activeChallenge: null
   activeResult: null
   hasChallenge: false
@@ -381,6 +382,10 @@ angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, s
       service.token = currentToken
       service.server = currentServer
       service.user = currentUser
+      if currentUser?
+        service.connect()
+      else
+        service.disconnect()
   $rootScope.$on 'authStatusChange', ->
     checkLogin()
   checkLogin()
