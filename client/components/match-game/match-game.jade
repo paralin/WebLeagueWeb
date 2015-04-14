@@ -33,8 +33,15 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 | Lobby Password:
                 b(style="color: red")
                   | &nbsp;{{match.Setup.Details.Password}}
-          // Bullshit captain status if just to make sure it refreshes
-          template(repeat="{{player in match.Players | orderBy('Team')}}", if="{{match.Info.CaptainStatus>-40}}")
+          template(bind="",if="{{!inGame&&(numPlayers(match.Players)<10||match.Info.MatchType==1)&&canJoin&&match.Info.Status==0}}")
+            tr(style="padding:0")
+              td(style="padding:0")
+                paper-button.join-btn(style="width:100%;margin:0;font-weight:bold;",on-click="{{joinMatch}}") Join Match
+          template(bind="",if="{{!inGame&&match.Info.Status<3}}")
+            tr(style="padding:0")
+              td(style="padding:0")
+                paper-button.join-spec-btn(style="width:100%;margin:0;font-weight:bold;",on-click="{{joinMatchSpectator}}") Spectate Match
+          template(repeat="{{player in match.Players | orderBy('Team')}}")
             tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner||player.SID==match.Info.Opponent, leaver: player.IsLeaver, spectator: player.Team==2} | tokenList }}")
               td
                 template(bind="",if="{{match.Info.Status==2&&match.Setup!=null&&match.Setup.Details.Status==3&&player.Team<2}}")
@@ -48,14 +55,6 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 | {{player.Name}} ({{player.Rating}})
                 template(bind="",if="{{player.Hero}}")
                   | &nbsp;[{{player.Hero.fullName}}]
-          template(bind="",if="{{!inGame&&(numPlayers(match.Players)<10||match.Info.MatchType==1)&&canJoin&&match.Info.Status==0}}")
-            tr(style="padding:0")
-              td(style="padding:0")
-                paper-button.join-btn(style="width:100%;margin:0;font-weight:bold;",on-click="{{joinMatch}}") Join Match
-          template(bind="",if="{{!inGame&&match.Info.Status<3}}")
-            tr(style="padding:0")
-              td(style="padding:0")
-                paper-button.join-spec-btn(style="width:100%;margin:0;font-weight:bold;",on-click="{{joinMatchSpectator}}") Spectate Match
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
     style.
       .header {
