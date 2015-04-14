@@ -22,6 +22,8 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
           template(bind="",if="{{match.Info.Status==3}}")
             tr(style="font-weight:bold;color:black;background:white")
               td {{matchstatesn[match.Setup.Details.State]}}
+                template(if="{{match.Setup.Details.SpectatorCount > 0}}")
+                  | &nbsp;{{match.Setup.Details.SpectatorCount}} spectators.
           template(bind="",if="{{match.Setup != null&&match.Info.Status!=3}}")
             tr(style="font-weight:bold;color:black;background:white")
               td {{setupstatusn[match.Setup.Details.Status]}}
