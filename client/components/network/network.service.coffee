@@ -6,6 +6,7 @@ Function::property = (prop, desc) ->
 class NetworkService
   disconnected: true
   doReconnect: true
+  connecting: false
   reconnTimeout: null
   attempts: 0
   status: "Disconnected from the server."
@@ -27,6 +28,7 @@ class NetworkService
 
   constructor: (@scope, @timeout, @safeApply)->
   disconnect: ->
+    @connecting = false
     if @conn?
       @conn.disconnect()
     if @reconnTimeout?
@@ -301,14 +303,14 @@ class NetworkService
         @scope.$broadcast 'chatMembersUpd'
 
   connect: ->
-    if !@disconnected
+    if !@disconnected || @connecting
       return
     @attempts += 1
     if !@server?
       console.log "No server info yet."
       @status = "Waiting for server info..."
     else
-      @status = "Connecting to the network..."
+      @connecting = true
       console.log "Connecting to #{@server}..."
       conts = _.keys @handlers
       if !@conn?
@@ -322,6 +324,7 @@ class NetworkService
       scope = @scope
       serv = @
       @conn.onconnected = =>
+        @connecting = false
         console.log "Connected to the network!"
         if @reconnTimeout?
           @timeout.cancel(@reconnTimeout)
@@ -355,6 +358,7 @@ class NetworkService
               cont.do[cbn] = ->
                 cb.apply cont, arguments
       @conn.ondisconnected = =>
+        @connecting = false
         console.log "Disconnected from the network..."
         #@disconnect()
         @reconnect()
