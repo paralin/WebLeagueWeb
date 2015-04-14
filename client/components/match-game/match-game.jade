@@ -5,7 +5,10 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
     link(rel="stylesheet",href="/bower_components/font-awesome/css/font-awesome.css")
     .header(class="{{inGame?'blueHeader':'redHeader'}}")
       | {{modes[match.Info.MatchType]}} - {{gametypes[match.Info.GameMode]}} -
-      | ({{numPlayers(match.Players)}}/10)
+      template(bind="",if="{{match.Info.Status<2}}")
+        | ({{numPlayers(match.Players)}}/10)
+      template(bind="",if="{{match.Info.Status>=2}}")
+        | &nbsp;{{msubstr(match.Id, 0, 4)}}
     .tablewrapper
       table.table.table-condensed(style="margin-bottom:0")
         tbody
@@ -30,7 +33,7 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                   | &nbsp;{{match.Setup.Details.Password}}
           // Bullshit captain status if just to make sure it refreshes
           template(repeat="{{player in match.Players | orderBy('Team')}}", if="{{match.Info.CaptainStatus>-40}}")
-            tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner||player.SID==match.Info.Opponent, leaver: plyr.IsLeaver, spectator: player.Team==2} | tokenList }}")
+            tr(class="{{ {success: match.Info.Status>0&&player.Team==0, danger: match.Info.Status>0&&player.Team==1, boldText: player.SID==match.Info.Owner||player.SID==match.Info.Opponent, leaver: player.IsLeaver, spectator: player.Team==2} | tokenList }}")
               td
                 template(bind="",if="{{match.Info.Status==2&&match.Setup!=null&&match.Setup.Details.Status==3&&player.Team<2}}")
                   template(bind="",if="{{player.Ready}}")
@@ -40,8 +43,9 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 template(bind="",if="{{match.Info.Status==1&&showCaptainButtons()&&player.Team==3}}")
                   i.fa.fa-check-square-o(style="margin-right:5px",on-click="{{pickPlayer}}",data-player="{{player.SID}}")
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
-                | {{player.Name}}
-                |  ({{player.Rating}})
+                | {{player.Name}} ({{player.Rating}})
+                template(bind="",if="{{player.Hero}}")
+                  | &nbsp;[{{player.Hero.fullName}}]
           template(bind="",if="{{!inGame&&(numPlayers(match.Players)<10||match.Info.MatchType==1)&&canJoin&&match.Info.Status==0}}")
             tr(style="padding:0")
               td(style="padding:0")

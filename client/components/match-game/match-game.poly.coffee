@@ -20,4 +20,6 @@ Polymer 'match-game', {
     plyrs = _.filter Players, (plyr)->
       plyr.Team < 2
     plyrs.length
+  msubstr: (str, i, x)->
+    str.substring i, x
 }

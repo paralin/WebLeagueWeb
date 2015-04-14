@@ -26,7 +26,6 @@ class NetworkService
 
   constructor: (@scope, @timeout, @safeApply)->
   disconnect: ->
-    console.log "Disconnect called"
     if @conn?
       @conn.disconnect()
     if @reconnTimeout?
@@ -377,11 +376,14 @@ class NetworkService
 
 angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, safeApply) ->
   service = new NetworkService $rootScope, $timeout, safeApply
-  Auth.getLoginStatus (currentUser, currentToken, currentServer)->
-    service.token = currentToken
-    service.server = currentServer
-    service.user = currentUser
-    service.connect()
+  checkLogin = ->
+    Auth.getLoginStatus (currentUser, currentToken, currentServer)->
+      service.token = currentToken
+      service.server = currentServer
+      service.user = currentUser
+  $rootScope.$on 'authStatusChange', ->
+    checkLogin()
+  checkLogin()
   $(window).unload ->
     service.disconnect()
   window.service = service
