@@ -37,7 +37,8 @@ exports.fetchHeros = function()
           }
           data.result.heroes.forEach(function(hero){
             hero["fullName"] = Humanize.titleCase(hero.name.replace("npc_dota_hero_", "").replace("_", " "));
-            Hero.insert({_id: hero.id, name: hero.name, fullName: hero.fullName}, function(err)
+            var tHero = new Hero({_id: hero.id, name: hero.name, fullName: hero.fullName});
+            tHero.save(function(err)
             {
               if(err)
               {
