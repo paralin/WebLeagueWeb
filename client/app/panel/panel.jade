@@ -4,10 +4,11 @@
     paper-icon-button(ng-if="auth.currentUser.settings.soundMuted",icon="alarm-off",role="button",tabindex="0",ng-click="toggleSoundMuted(false)")
     div(flex="") FACEIT Pro League: S1: April 13-May 13, PrizePool 10k&euro;
     div(dropdown="",style="margin:0")
-      paper-button.dropdown-toggle(role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}} ({{auth.currentUser.profile.rating}})
+      paper-button.dropdown-toggle(dropdown-toggle="", role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}} ({{auth.currentUser.profile.rating}})
       ul.dropdown-menu(role="menu",style="right:0;left:auto;")
         li
           a(ui-sref="panel.profile") {{ 'Profile' | translate }}
+          a.tsModal(href="", ng-click="showTsInfoModal()") {{ 'Teamspeak Info' | translate }}
           a(href="/auth/logout",ng-click="$event.stopPropagation()") {{ 'Sign Out' | translate }}
     .bottom.fit(horizontal="",layout="",style="height: 35px")
       div(style="width:100%;height:100%;float:left")
@@ -42,3 +43,17 @@
     .btns(ng-if="network.activeResult != null")
       paper-button(raised,ng-click="network.matches.do.dismissResult()") {{ 'Dismiss' | translate }} {{ 'Result' | translate }}
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
+paper-action-dialog.tsInfo(backdrop="", autoclosedisabled="", layered="true")
+  p
+    | Connect to the TeamSpeak server using the following credentials:
+  p
+    | Address:&nbsp;
+    b fplts.paral.in
+  p
+    | Password:&nbsp;
+    b arisespam
+  p
+    | Once you are connected, follow the instructions the server gives you in the text chat. Here is your token:
+  p
+    b {{auth.currentUser.tstoken}}
+  paper-button(affirmative="", autofocus="") Close

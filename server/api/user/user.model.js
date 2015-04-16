@@ -48,7 +48,9 @@ var UserSchema = mongoose.Schema({
     sounds: {},
     soundMuted: Boolean
   },
-  channels: [String]
+  channels: [String],
+  tsuniqueids: [String],
+  tsonetimeid: String
 });
 
 /**

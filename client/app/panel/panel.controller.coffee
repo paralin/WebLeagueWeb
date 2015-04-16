@@ -107,13 +107,15 @@ angular.module 'webleagueApp'
     return false if !Auth.currentUser? or !Network.activeMatch?
     (_.findIndex game.Players, {SID: Auth.currentUser.steam.steamid}) != -1
   $scope.canJoinGames = ->
-    return false if !Auth.currentUser? or !Auth.currentUser.authItems? or "spectateOnly" in Auth.currentUser.authItems
+    Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems
   $scope.canLeaveGame = ()->
     if !game?
       return false if !Network.activeMatch?
       player = (_.findWhere Network.activeMatch.Players, {SID: Auth.currentUser.steam.steamid})
       return false if !player?
       return (player.Team is 2 and Network.activeMatch.Info.Status <= 2) or (Network.activeMatch.Info.Status is 0)
+  $scope.showTsInfoModal = ->
+    $(".tsInfo")[0].open()
   $scope.gameList = ->
     return $scope.games
   $scope.allAreReady = ->
