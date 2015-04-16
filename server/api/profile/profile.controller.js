@@ -26,7 +26,8 @@ exports.indexLeader = function(req, res) {
     profiles.forEach(function(profile){
       var prof = profile.toObject();
       prof.profile.totalGames = prof.profile.wins+prof.profile.losses;
-      ress.push(prof);
+      if(prof.profile.totalGames > 0)
+        ress.push(prof);
     });
     return res.status(200).json(ress);
   });
