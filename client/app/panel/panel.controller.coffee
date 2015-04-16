@@ -144,12 +144,14 @@ angular.module 'webleagueApp'
       return
     else if state.is "panel.leaderboard"
       idx = $scope.chats.length
-    else if state.is "panel.vouch"
+    else if state.is "panel.results"
       idx = $scope.chats.length+1
+    else if state.is "panel.vouch"
+      idx = $scope.chats.length+2
     else if state.is "panel.admin"
-      idx = $scope.chats.length+staticTabCount
-    else if state.is "panel.settings"
       idx = $scope.chats.length+staticTabCount+1
+    else if state.is "panel.settings"
+      idx = $scope.chats.length+staticTabCount+2
     $scope.panelTabs.selected = idx
   Auth.getLoginStatus ->
     $scope.checkPanelTab()

@@ -15,6 +15,7 @@
           paper-tab(ng-repeat="chat in chats",ng-click="selectChat(chat.Name)")
             | {{humanizeChatName(chat.Name)}}
           paper-tab(ng-click="state.go('panel.leaderboard')") {{ 'Leaderboards' | translate }}
+          paper-tab(ng-click="state.go('panel.results')") {{ 'Results' | translate }}
           paper-tab(ng-if="auth.inRole('vouch')",ng-click="state.go('panel.vouch')") {{ 'Vouch' | translate }}
           paper-tab(ng-if="auth.inRole('admin')",ng-click="state.go('panel.admin')") {{ 'Admin' | translate }}
           paper-tab(ng-click="state.go('panel.settings')") {{ 'Settings' | translate }}
