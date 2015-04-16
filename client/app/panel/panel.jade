@@ -37,9 +37,8 @@
     .btns(ng-if="isInGame()&&!isAdminOfGame()&&canLeaveGame()")
       paper-button.danger-btn(raised,ng-click="network.matches.do.leavematch()") {{ 'Leave' | translate }}
     .btns(ng-if="canStartGames()&&!isAdminOfGame()&&network.activeChallenge==null&&network.activeResult==null",style="padding-left:10px;padding-right:10px")
-      paper-button(raised,ng-click="createStartgame(1)",style="width:33.3%;display:inline-block") {{ 'Start AP' | translate }}
-      paper-button(raised,ng-click="createStartgame(2)",style="width:33.3%;display:inline-block") {{ 'Start CM' | translate }}
-      paper-button(raised,ng-click="createStartgame(16)",style="width:33.3%;display:inline-block") {{ 'Start CD' | translate }}
+      paper-button(raised,ng-click="createStartgame(2)",style="width:50%;display:inline-block") {{ 'Start CM' | translate }}
+      paper-button(raised,ng-click="createStartgame(16)",style="width:50%;display:inline-block") {{ 'Start CD' | translate }}
     .btns(ng-if="network.activeResult != null")
       paper-button(raised,ng-click="network.matches.do.dismissResult()") {{ 'Dismiss' | translate }} {{ 'Result' | translate }}
   paper-toast-fa(icon="fa-sun-o fa-spin",ng-text="network.status",ng-opened="network.disconnected",duration=-1,swipeDisabled=true,autoCloseDisabled=true,backdrop=false,layered=false)
