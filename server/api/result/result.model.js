@@ -7,6 +7,8 @@ var crypto = require('crypto');
 var ResultSchema = mongoose.Schema({
   _id: Number,
   Result: Number,
+  MatchId: String,
+  DateFinished: Date,
   Players: [{
     SID: String,
     Name: String,
@@ -18,6 +20,7 @@ var ResultSchema = mongoose.Schema({
   }],
   RatingDire: Number,
   RatingRadiant: Number,
+  RatingDelta: Number,
   Match: {},
   MatchCounted: Boolean
 });

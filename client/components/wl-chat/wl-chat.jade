@@ -1,5 +1,5 @@
 .chat-cont(horizontal="", layout="")
-  .main-chat
+  .main-chat(style="padding-bottom: 5px")
     .msg-container(vs-repeat="", vs-autoresize="")
       p(ng-repeat="message in chat.messages" ng-class="{systemMsg: message.Auto}")
         span(ng-if="!message.Auto")
@@ -10,7 +10,7 @@
     paper-input#inputcont(horizontal="",layout="",label="Enter a chat message",style="width:100%;position:relative;top:-10px;padding-right:5px" ng-model="chatInput")
   core-splitter(direction="left")
   .member-list(flex="")
-    p(ng-repeat="member in values(chat.Members) | filter:{Id:'!system'} | orderBy:['-MemberType','Name']", context-menu="setSelectedMember(member)", data-target="menu-chatrightclick", ng-class="{admin: member.MemberType == 2, moderator: member.MemberType == 1}")
+    p(ng-repeat="member in values(chat.Members) | filter:{Id:'!system'} | orderBy:['-MemberType','Name']", context-menu="setSelectedMember(member)", data-target="menu-chatrightclick", ng-class="{admin: member.MemberType == 2, moderator: member.MemberType == 1, spectator: member.MemberType == -1}")
       span(tooltip="{{memberRole(member)}}", tooltip-placement="left")
         img(ng-src="{{member.Avatar}}")
         | {{member.Name}}

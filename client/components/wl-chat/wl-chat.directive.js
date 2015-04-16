@@ -47,10 +47,15 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
           return "unknown";
         switch(member.MemberType)
         {
+          case -1:
+            str = "Spectator";
+            break;
           case 1:
-            str = "Moderator";
+            str = "Voucher";
+            break;
           case 2:
             str = "Admin";
+            break;
         }
         if(str.length > 0) str += " ";
         str += "("+member.Rating+")";
@@ -67,6 +72,8 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
         var mclass = {};
         switch(member.MemberType)
         {
+          case -1:
+            mclass.spectator = true;
           case 1:
             mclass.moderator = true;
             break;

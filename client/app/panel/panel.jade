@@ -21,11 +21,11 @@
         div(style="width: 100px;position:relative;top:-5px;float:left")
           paper-icon-button(icon="add", role="button", ng-click="showJoinDialog()")
           paper-icon-button(icon="close", role="button", ng-disabled="!chats[panelTabs.selected].Leavable", ng-click="leaveCurrentChat()")
-  #panelInnerContainer(ui-view="")
+  #panelInnerContainer(ui-view="", ng-class="{withRightCont: showRightCont(), withoutRightCont: !showRightCont()}")
   #rightcont(ng-if="showRightCont()")
     .mains
       live-matches(ng-if="liveMatches.length>0",ng-match-types="MatchTypeNS",ng-model="liveMatches",ng-game-modes="GameModeN")
-      match-game(ng-repeat="game in games|filter:gameFilter",ng-model="game",ng-game-modes="GameModeN",ng-match-types="MatchTypeNS",ng-in-game="isInGame(game)",ng-pressed-join="joinGame(game)",ng-pressed-join-spec="joinGameSpec(game)",ng-picked-player="pickPlayer($event)",ng-setup-statusn="SetupStatusN",ng-captain-statusn="CaptainStatusN",ng-can-join="!isInGame()", ng-steamid="auth.currentUser.steam.steamid",ng-match-states="MatchStateN")
+      match-game(ng-repeat="game in games|filter:gameFilter",ng-model="game",ng-game-modes="GameModeN",ng-match-types="MatchTypeNS",ng-in-game="isInGame(game)",ng-pressed-join="joinGame(game)",ng-pressed-join-spec="joinGameSpec(game)",ng-picked-player="pickPlayer($event)",ng-setup-statusn="SetupStatusN",ng-captain-statusn="CaptainStatusN",ng-can-join="!isInGame()&&canJoinGames()", ng-steamid="auth.currentUser.steam.steamid",ng-match-states="MatchStateN")
       pending-challenge(ng-if="network.activeChallenge!=null")
       match-result(ng-if="network.activeResult!=null",ng-model="network.activeResult")
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup==null&&network.activeMatch.Info.Status==0")
