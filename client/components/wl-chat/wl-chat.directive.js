@@ -69,8 +69,10 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
         {
           case 1:
             mclass.moderator = true;
+            break;
           case 2:
             mclass.admin = true;
+            break;
         }
         return mclass;
       };
