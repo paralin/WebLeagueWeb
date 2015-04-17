@@ -318,8 +318,6 @@ class NetworkService
           conts = _.without conts, "admin"
         console.log conts
         @conn = new XSockets.WebSocket @server, conts, {token:@token}
-      else
-        @conn.reconnect()
       safeApply = @safeApply
       scope = @scope
       serv = @
@@ -360,7 +358,7 @@ class NetworkService
       @conn.ondisconnected = =>
         @connecting = false
         console.log "Disconnected from the network..."
-        #@disconnect()
+        @disconnect()
         @reconnect()
 
   chatByID: (id)->
