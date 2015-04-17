@@ -31,6 +31,7 @@ class NetworkService
     @connecting = false
     if @conn?
       @conn.disconnect()
+      @conn = null
     if @reconnTimeout?
       @timeout.cancel(@reconnTimeout)
       @reconnTimeout = null
