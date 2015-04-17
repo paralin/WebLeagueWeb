@@ -51,7 +51,7 @@ exports.setup = function (User, Vouch, config) {
             user.profile.losses = 0;
           if(user.profile.abandons == null)
             user.profile.abandons = 0;
-          user.tsonetimeid = chance.string();
+          user.tsonetimeid = null;
           user.save(function(error){
             if(error)
               throw error;
@@ -69,7 +69,7 @@ exports.setup = function (User, Vouch, config) {
             newUser.profile.abandons = 0;
             newUser.authItems = ['chat', 'startGames', 'matches'];
             newUser.vouch = null;
-            newUser.tsonetimeid = chance.guid();
+            newUser.tsonetimeid = null;
 
             //Find if they have a active vouch
             Vouch.findOne({"_id": profile.steamid}, function(err, vou){
