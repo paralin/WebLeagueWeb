@@ -14,6 +14,7 @@ module.exports = function(app) {
   app.use('/api/profiles', require('./api/profile'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/heros', require('./api/hero'));
+  app.use('/api/activematches', require('./api/activematch'));
 
   app.use('/auth', require('./auth'));
 
