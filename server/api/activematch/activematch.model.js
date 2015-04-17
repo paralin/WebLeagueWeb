@@ -24,7 +24,7 @@ var ActiveMatchSchema = mongoose.Schema({
         fullName: String
       }
     }],
-    GameMode: 2,
+    GameMode: Number,
     Bot: {
       _id: String,
       Username: String,
