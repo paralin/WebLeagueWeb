@@ -4,7 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
-var chance = new require('chance')();
+var chance = require('chance');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -17,7 +17,7 @@ exports.status = function(req, res){
     resp.sessID = req.sessionID;
     if(!req.user.tsonetimeid)
     {
-      req.user.tsonetimeid = chance.string();
+      req.user.tsonetimeid = (new chance()).string();
       req.user.save(function(err){
         if(err) console.log("Can't save tsonetimeid, "+err);
       });
