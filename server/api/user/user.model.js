@@ -12,7 +12,8 @@ var UserSchema = mongoose.Schema({
     rating: Number,
     wins: Number,
     losses: Number,
-    abandons: Number
+    abandons: Number,
+    winStreak: Number
   },
   vouch: {
     _id: String,

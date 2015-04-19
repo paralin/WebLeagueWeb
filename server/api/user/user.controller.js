@@ -15,6 +15,7 @@ exports.status = function(req, res){
   resp.isAuthed = req.user != null;
   if(req.user){
     resp.sessID = req.sessionID;
+    req.user.profile.winStreak = req.user.profile.winStreak || 0;
     if(!req.user.tsonetimeid)
     {
       req.user.tsonetimeid = (new chance()).string();

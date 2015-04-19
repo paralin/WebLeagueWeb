@@ -57,8 +57,12 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
             str = "Admin";
             break;
         }
-        if(str.length > 0) str += " ";
-        str += "("+member.Rating+")";
+        if(str.length > 0 && member.Rating != 1200) str += " ";
+        if(member.Rating != 1200)
+          str += "("+member.Rating+")";
+        if(str.length > 0 && member.WinStreak > 0) str += " ";
+        if(member.WinStreak > 0)
+          str += "("+member.WinStreak+" streak)";
         return str;
       };
       scope.values = function(members) {

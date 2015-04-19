@@ -67,6 +67,7 @@ exports.setup = function (User, Vouch, config) {
             newUser.profile.wins = 0;
             newUser.profile.losses = 0;
             newUser.profile.abandons = 0;
+            newUser.profile.winStreak = 0;
             newUser.authItems = ['chat', 'startGames', 'matches'];
             newUser.vouch = null;
             newUser.tsonetimeid = null;
