@@ -61,8 +61,8 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
         if(member.Rating != 1200)
           str += "("+member.Rating+")";
         if(str.length > 0 && member.WinStreak > 0) str += " ";
-        if(member.WinStreak > 0)
-          str += "("+member.WinStreak+" streak)";
+        if(member.WinStreak > 1)
+          str += "("+member.WinStreak+" win streak)";
         return str;
       };
       scope.values = function(members) {
