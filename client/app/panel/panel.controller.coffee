@@ -72,7 +72,7 @@ angular.module 'webleagueApp'
     Network.activeMatch.Info.Owner is Auth.currentUser.steam.steamid
   $scope.canStartGames = ->
     if Auth.currentUser? && !Network.activeMatch? && Auth.currentUser.authItems?
-      'startGames' in Auth.currentUser.authItems and 'spectateOnly' not in Auth.currentUser.authItems
+      'startGames' in Auth.currentUser.authItems and 'spectateOnly' not in Auth.currentUser.authItems and "challengeOnly" not in Auth.currentUser.authItems
     else
       false
   $scope.showJoinDialog = ->
@@ -106,8 +106,8 @@ angular.module 'webleagueApp'
       return Network.activeMatch?
     return false if !Auth.currentUser? or !Network.activeMatch?
     (_.findIndex game.Players, {SID: Auth.currentUser.steam.steamid}) != -1
-  $scope.canJoinGames = ->
-    Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems
+  $scope.canJoinGame = (game)->
+    Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems and ("challengeOnly" not in Auth.currentUser.authItems or game.Info.MatchType == 1)
   $scope.canLeaveGame = ()->
     if !game?
       return false if !Network.activeMatch?
