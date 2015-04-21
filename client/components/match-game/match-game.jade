@@ -21,7 +21,13 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                 td {{captainstatusn[match.Info.CaptainStatus]}}
           template(bind="",if="{{match.Info.Status==3}}")
             tr(style="font-weight:bold;color:black;background:white")
-              td {{matchstatesn[match.Setup.Details.State]}}
+              td
+                template(if="{{match.Setup.Details.State != 5}}")
+                  | {{matchstatesn[match.Setup.Details.State]}}
+                template(if="{{match.Setup.Details.State == 5}}")
+                  | Started&nbsp;
+                  time(is="time-ago" datetime="{{match.Setup.Details.GameStartTime}}")
+                  |.
                 template(if="{{match.Setup.Details.SpectatorCount > 0}}")
                   | &nbsp;{{match.Setup.Details.SpectatorCount}} spectators.
           template(bind="",if="{{match.Setup != null&&match.Info.Status!=3}}")
@@ -103,5 +109,6 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
         line-height: 10px;
       }
   script(src="/bower_components/lodash/dist/lodash.min.js")
+  script(src="/bower_components/time-elements/time-elements.js")
   link(rel="import", href="/bower_components/paper-button/paper-button.html")
   script(src="match-game.js")
