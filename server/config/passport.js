@@ -9,7 +9,7 @@ module.exports = function(app){
   app.use(session({
     secret: config.secrets.session,
     cookie: {
-      maxAge: 86400000
+      maxAge: 604800000
     },
     store: new MongoStore({
       url: config.mongo.uri
