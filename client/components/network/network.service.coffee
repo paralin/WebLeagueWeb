@@ -66,6 +66,8 @@ class NetworkService
           return
       pickPlayer: (sid)->
         @invoke "pickPlayer", {SID: sid}
+      kickPlayer: (sid)->
+        @invoke "kickPlayer", {SID: sid}
       leavematch: ->
         (@invoke "leavematch").then (err)->
           return if !err?
@@ -157,6 +159,8 @@ class NetworkService
     matches:
       onlobbyready: ->
         @scope.$broadcast "lobbyReady"
+      onkickedfromsg: ->
+        @scope.$broadcast "kickedFromSG"
       userped: ->
         console.log "Connection userped"
         @status = "You have logged into your account from another location and are disconnected. Refresh to re-connect."

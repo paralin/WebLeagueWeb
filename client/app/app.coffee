@@ -160,6 +160,9 @@ angular.module 'webleagueApp', [
     3: "/assets/sounds/ui_findmatch_join_01.wav"
     4: "/assets/sounds/ui_findmatch_quit_01.wav"
     5: "/assets/sounds/ui_findmatch_search_01.wav"
+    6: "/assets/sounds/culling_blade_success.wav"
+    7: "/assets/sounds/quest_complete_01.mp3"
+    8: "/assets/sounds/reincarnate_03.mp3"
   $rootScope.SoundsName =
     0: "Match Ready"
     1: "Stunned"
@@ -167,6 +170,9 @@ angular.module 'webleagueApp', [
     3: "Find Match"
     4: "Stop Find Match"
     5: "Find Match (Search)"
+    6: "Culling Blade"
+    7: "Quest Complete"
+    8: "Reincarnate"
   $rootScope.SoundsInstances = {}
   for id, url of $rootScope.SoundsURL
     $rootScope.SoundsInstances[id] = new buzz.sound url
@@ -213,6 +219,12 @@ angular.module 'webleagueApp', [
       sound: 3
       volume: 100
       text: "Joined game!"
+    kicked:
+      name: "Kicked"
+      type: 0
+      sound: 6
+      volume: 100
+      text: "Kicked from the game!"
   $rootScope.fillSettings = (user)->
     user.settings = {} if !user.settings?
     user.settings.language = "en" if !user.settings.language?

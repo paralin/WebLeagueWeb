@@ -17,6 +17,9 @@ angular.module 'webleagueApp'
   $scope.pickPlayer = (event)->
     Network.matches.do.pickPlayer event.detail.SID
     $rootScope.playSound "buttonPress"
+  $scope.kickPlayer = (event)->
+    Network.matches.do.kickPlayer event.detail.SID
+    $rootScope.playSound "kicked"
   $scope.toggleSoundMuted = (mute)->
     Auth.currentUser.settings.soundMuted = mute
     Auth.saveSettings()
@@ -34,6 +37,12 @@ angular.module 'webleagueApp'
     $rootScope.playSound "gameHosted"
   clr.push $rootScope.$on "lobbyReady", ->
     $rootScope.playSound "lobbyReady"
+  clr.push $rootScope.$on "kickedFromSG", ->
+    $rootScope.playSound "kicked"
+    swal
+      title: "Kicked from Match"
+      type: "error"
+      text: "You have been kicked from the game by its owner."
   clr.push $rootScope.$on "challengeSnapshot", ->
     challenge = Network.activeChallenge
     if challenge?

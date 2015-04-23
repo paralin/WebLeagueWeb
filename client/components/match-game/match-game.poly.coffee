@@ -10,9 +10,16 @@ Polymer 'match-game', {
     me = @getMe()
     return false if !me?
     me.IsCaptain && @match.Info.CaptainStatus isnt me.Team
+  isOwner: ->
+    me = @getMe()
+    return false if !me?
+    me.SID == @match.Info.Owner
   pickPlayer: (e, d, t)->
     sid = t.attributes["data-player"].value
     @fire "picked-player", {SID: sid}
+  kickPlayer: (e, d, t)->
+    sid = t.attributes["data-player"].value
+    @fire "kicked-player", {SID: sid}
   toJson: (o)->
     JSON.stringify o
   numPlayers: (Players)->

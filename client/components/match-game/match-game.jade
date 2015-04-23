@@ -57,6 +57,8 @@ polymer-element(name="match-game", attributes="match modes gametypes inGame setu
                     i.fa.fa-cog.fa-spin(style="margin-right:5px")
                 template(bind="",if="{{match.Info.Status==1&&showCaptainButtons()&&player.Team==3}}")
                   i.fa.fa-check-square-o(style="margin-right:5px",on-click="{{pickPlayer}}",data-player="{{player.SID}}")
+                template(bind="",if="{{match.Info.MatchType==0&&match.Info.Status==0&&isOwner()&&player.Team!=2&&player.SID!=steamid}}")
+                  i.fa.fa-ban(style="margin-right:5px",on-click="{{kickPlayer}}",data-player="{{player.SID}}")
                 img(src="{{player.Avatar}}",style="width:15px;height:15px;margin-right:5px")
                 | {{player.Name}} ({{player.Rating}})
                 template(bind="",if="{{player.Hero}}")
