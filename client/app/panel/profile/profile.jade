@@ -13,7 +13,7 @@
       | {{'Devouch Player'|translate}}
 
   .row
-    .col-lg-3.col-sm-6
+    .col-lg-5.col-md-6.col-sm-12
       .card.hovercard
         .cardheader(style="background-image: url('{{profile.vouch.teamavatar || profile.vouch.avatar || 'http://i.imgur.com/kQpTWRb.png'}}')")
         .avatar
@@ -34,3 +34,15 @@
             paper-button.btn-danger(raised="",ng-click="devouch()")
               i.fa.fa-ban &nbsp;
               | Unvouch Player
+    .col-sm-3(style="text-align:center;padding:25px;box-shadow: 0 0 2px 0 rgba(0,0,0,0.5)", ng-if="auth.inRole('admin')")
+      p(style="margin-bottom:0;font-weight:bold;font-size: 1.5em")
+        | {{"Admin Tools" | translate}}
+      paper-button(raised="",ng-click="addRating()",style="margin-top:5px") 
+        i.fa.fa-star(style="margin-right:5px")
+        | {{'Adjust Rating'|translate}}
+      paper-button(raised="",ng-click="addWins()",style="margin-top:5px") 
+        i.fa.fa-flag(style="margin-right:5px")
+        | {{'Adjust Wins'|translate}}
+      paper-button(raised="",ng-click="addLosses()",style="margin-top:5px") 
+        i.fa.fa-close(style="margin-right:5px")
+        | {{'Adjust Losses'|translate}}

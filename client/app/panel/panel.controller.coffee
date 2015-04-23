@@ -85,10 +85,21 @@ angular.module 'webleagueApp'
     else
       false
   $scope.showJoinDialog = ->
-    bootbox.prompt "What is the chat name?", (cb)->
-      return if !cb? || cb is ""
-      Network.chat.invoke("joinorcreate", {Name: cb}).then (err)->
-        $rootScope.playSound "buttonPress"
+    swal {
+      title: 'Open Chat'
+      text: 'Enter the chat name.'
+      type: 'input'
+      showCancelButton: true
+      animation: 'slide-from-top'
+      inputPlaceholder: 'Write a chat'
+    }, (inputValue) ->
+      if inputValue == false
+        return false
+      if inputValue == ''
+        swal.showInputError 'You need to write something!'
+        return false
+      $rootScope.playSound "buttonPress"
+      Network.chat.invoke("joinorcreate", {Name: inputValue}).then (err)->
         if err?
           new PNotify
             title: "Join Error"
@@ -97,6 +108,7 @@ angular.module 'webleagueApp'
             desktop:
               desktop: true
           return
+      return
     return
   $scope.panelTabs = {
     selected: 0

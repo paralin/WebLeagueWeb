@@ -17,8 +17,6 @@
     "ng-polymer-elements": "~0.2.0",
     "pnotify": "~2.0.1",
     "moment": "~2.10.0",
-    "sweetalert": "paralin/sweetalert#master",
-    "bootbox": "~4.4.0",
     "buzz": "~1.1.9",
     "auto-font-size": "rschmukler/auto-font-size",
     "angular-translate": "~2.6.1",
@@ -44,7 +42,8 @@
     "polymer-filters": "addyosmani/polymer-filters#0.2.1",
     "angular-vs-repeat": "1.0.0-rc5",
     "humanize-plus": "~1.5.0",
-    "time-elements": "~0.4.0"
+    "time-elements": "~0.4.0",
+    "sweetalert": "~0.5.0"
   },
   "resolutions": {
     "angular": "1.3.15",
