@@ -166,7 +166,6 @@ class NetworkService
         @status = "You have logged into your account from another location and are disconnected. Refresh to re-connect."
         @disconnected = true
         @_activeMatch = null
-        bootbox.hideAll()
         @activeChallenge = null
         @activeResult = null
         @doReconnect = false
@@ -340,7 +339,6 @@ class NetworkService
           @_activeMatch = null
           @activeResult = null
           @adminMatches.length = 0
-          bootbox.hideAll()
           @activeChallenge = null
         for name, cbs of @handlers
           continue unless _.contains conts, name
