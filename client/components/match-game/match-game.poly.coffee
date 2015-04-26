@@ -25,7 +25,7 @@ Polymer 'match-game', {
   numPlayers: (Players)->
     return 0 if !Players?
     plyrs = _.filter Players, (plyr)->
-      plyr.Team < 2
+      plyr.Team < 2 || plyr.Team is 3
     plyrs.length
   msubstr: (str, i, x)->
     str.substring i, x
