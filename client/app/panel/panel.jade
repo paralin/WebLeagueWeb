@@ -2,7 +2,7 @@
   core-toolbar.medium-tall(style="height: 90px")
     paper-icon-button(ng-if="!auth.currentUser.settings.soundMuted",icon="alarm-on",role="button",tabindex="0",ng-click="toggleSoundMuted(true)")
     paper-icon-button(ng-if="auth.currentUser.settings.soundMuted",icon="alarm-off",role="button",tabindex="0",ng-click="toggleSoundMuted(false)")
-    div(flex="") FACEIT Pro League: S1: April 13-May 13, PrizePool 10k&euro;
+    div(flex="") {{"HEAD"|translate}}
     div(dropdown="",style="margin:0")
       paper-button.dropdown-toggle(dropdown-toggle="", role="button",tabindex="0",style="margin:0") {{auth.currentUser.profile.name}} ({{auth.currentUser.profile.rating}})
       ul.dropdown-menu(role="menu",style="right:0;left:auto;")
