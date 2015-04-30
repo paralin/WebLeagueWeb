@@ -1,6 +1,6 @@
 window.translations.en = {
   'TITLE': 'FACEIT Pro League',
-  'HEAD': 'FACEIT Pro League: S1: April 13-May 13, PrizePool 10k &euro;',
+  'HEAD': 'FACEIT Pro League Qualifier: S2',
   'Profile': 'Profile',
   'Sign Out': 'Sign Out',
   'Chat': 'Chat',
