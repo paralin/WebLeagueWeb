@@ -27,7 +27,7 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
         $state.go("panel.profile", {id: member.UID});
       };
       scope.canChallenge = function(member){
-        return member != null && member.SteamID !== Auth.currentUser.steam.steamid && _.contains(Auth.currentUser.authItems, "startGames");
+        return member != null && member.SteamID !== Auth.currentUser.steam.steamid && _.contains(Auth.currentUser.authItems, "startGames") && _.contains(Auth.currentUser.authItems, "challenge");
       };
       scope.isMe = function(member){
         return member != null && member.SteamID === Auth.currentUser.steam.steamid;
