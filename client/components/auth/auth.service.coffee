@@ -30,6 +30,7 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
           $translate.use @currentUser.settings.language
           @currentToken = data.token
           @currentServer = data.server
+          $rootScope.$broadcast('buildIdUpdate', data.build_id)
         else
           @currentUser = null
           @currentToken = null

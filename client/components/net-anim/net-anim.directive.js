@@ -6,7 +6,7 @@ angular.module('webleagueApp').directive('netAnim', function($interval) {
     link: function(scope, element, attrs) {
       var viewWidth = 400,
       viewHeight = 400,
-      drawingCanvas = element.find("canvas")[0],
+      drawingCanvas = element.find('canvas')[0],
       ctx,
       transInt,
       timeStep = (1/60),

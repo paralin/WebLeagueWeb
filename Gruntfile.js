@@ -15,7 +15,8 @@ module.exports = function (grunt) {
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
-    injector: 'grunt-asset-injector'
+    injector: 'grunt-asset-injector',
+    version: 'grunt-version'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -29,6 +30,11 @@ module.exports = function (grunt) {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
       dist: 'dist'
+    },
+    version: {
+      defaults: {
+        src: ['client/components/version/version.js', 'server/app.js', 'server/version.js']
+      }
     },
     express: {
       options: {
@@ -564,6 +570,7 @@ module.exports = function (grunt) {
 
     if (target === 'debug') {
       return grunt.task.run([
+        'version',
         'clean:server',
         'env:all',
         'injector:less',
@@ -576,6 +583,7 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
+      'version',
       'clean:server',
       'env:all',
       'injector:less',
@@ -597,6 +605,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'version',
     'injector:less',
     'concurrent:dist',
     'injector',
