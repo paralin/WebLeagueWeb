@@ -76,6 +76,14 @@ class NetworkService
             text: err
             type: "error"
           return
+      cancelChallenge: ->
+        (@invoke "cancelchallenge").then (err)->
+          return if !err?
+          new PNotify
+            title: "Cancel Error"
+            text: err
+            type: "error"
+          return
       startmatch: ->
         @invoke("startmatch").then (err)->
           return if !err?

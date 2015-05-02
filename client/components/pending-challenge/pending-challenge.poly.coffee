@@ -1,2 +1,3 @@
-Polymer 'pending-challenge', {
-}
+Polymer 'pending-challenge',
+  cancelChallenge: ->
+    @fire 'cancel-challenge', {}
