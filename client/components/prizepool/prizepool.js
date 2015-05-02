@@ -1,16 +1,7 @@
+// No prizepool for qualifiers
 window.prizepool = {
   rating: {
-    0: "4k €",
-    1: "2k €",
-    2: "1.5k €",
-    3: "1k €",
-    4: "500 €"
   },
   gamesPlayed: {
-    0: "200 €",
-    1: "200 €",
-    2: "200 €",
-    3: "200 €",
-    4: "200 €"
   }
 };
