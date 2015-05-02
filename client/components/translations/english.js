@@ -1,5 +1,4 @@
 window.translations.en = {
-  'TITLE': 'FACEIT Pro League',
   'HEAD': 'FACEIT Pro League Qualifier: S2',
   'Profile': 'Profile',
   'Sign Out': 'Sign Out',

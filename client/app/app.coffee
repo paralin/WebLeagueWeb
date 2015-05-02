@@ -65,6 +65,12 @@ angular.module 'webleagueApp', [
         $location.path "/novouch"
       else if $state.includes("login") || $state.includes("novouch")
         $location.path "/panel/chat"
+  $rootScope.$on "buildIdUpdate", (eve, version)->
+    if version isnt window.build_id
+      console.log "Server version: "+version
+      console.log "Client version: "+window.build_id
+      console.log "Refreshing for update..."
+      window.location.reload(true)
   $rootScope.openLink = (url)->
     win = window.open(url, '_blank')
     win.focus()

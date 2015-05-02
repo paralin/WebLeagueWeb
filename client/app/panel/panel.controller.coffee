@@ -17,6 +17,8 @@ angular.module 'webleagueApp'
   $scope.pickPlayer = (event)->
     Network.matches.do.pickPlayer event.detail.SID
     $rootScope.playSound "buttonPress"
+  $scope.cancelChallenge = ->
+    Network.matches.do.cancelChallenge()
   $scope.kickPlayer = (event)->
     Network.matches.do.kickPlayer event.detail.SID
     $rootScope.playSound "kicked"
@@ -48,7 +50,8 @@ angular.module 'webleagueApp'
     if challenge?
       if challenge.ChallengedSID is Auth.currentUser.steam.steamid
         $rootScope.playSound "challenge"
-        window.aswal = swal(
+        window.aswal = swal.close
+        swal(
           title: "Incoming challenge"
           text: "You have an incoming challenge from #{challenge.ChallengerName}!"
           type: "success"

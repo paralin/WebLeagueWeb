@@ -5,6 +5,7 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var chance = require('chance');
+var build_id = require('../../version');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -39,6 +40,7 @@ exports.status = function(req, res){
     user.tstoken = req.user.tsonetimeid;
     resp.server = config.networkServer;
     resp.user = user;
+    resp.build_id = build_id;
   }
   res.json(resp);
 };

@@ -8,6 +8,8 @@ angular.module('ng-polymer-elements').constant '$ngPolymerMappings',
     ngModel: primitive: 'matches'
     ngGameModes: primitive: 'gmodes'
   matchResult: ngModel: primitive: 'result'
+  pendingChallenge:
+    ngCanceledChallenge: event: 'cancel-challenge'
   matchGame:
     ngModel: primitive: 'match'
     ngGameModes: primitive: 'gametypes'

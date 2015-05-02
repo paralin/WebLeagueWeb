@@ -1,6 +1,6 @@
 {
   "name": "webleague",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "server/app.js",
   "dependencies": {
     "body-parser": "^1.0.2",
@@ -60,6 +60,7 @@
     "time-grunt": "~0.3.1",
     "grunt-express-server": "~0.4.17",
     "grunt-open": "~0.2.3",
+    "grunt-version": "^1.0.0",
     "open": "~0.0.4",
     "jshint-stylish": "~0.1.5",
     "connect-livereload": "~0.4.0",

@@ -27,7 +27,7 @@
     .mains
       live-matches(ng-if="liveMatches.length>0",ng-match-types="MatchTypeNS",ng-model="liveMatches",ng-game-modes="GameModeN")
       match-game(ng-repeat="game in games|filter:gameFilter|orderBy:'Info.Status'",ng-model="game",ng-game-modes="GameModeN",ng-match-types="MatchTypeNS",ng-in-game="isInGame(game)",ng-pressed-join="joinGame(game)",ng-pressed-join-spec="joinGameSpec(game)",ng-picked-player="pickPlayer($event)",ng-kicked-player="kickPlayer($event)",ng-setup-statusn="SetupStatusN",ng-captain-statusn="CaptainStatusN",ng-can-join="!isInGame()&&canJoinGame(game)", ng-steamid="auth.currentUser.steam.steamid",ng-match-states="MatchStateN")
-      pending-challenge(ng-if="network.activeChallenge!=null")
+      pending-challenge(ng-if="network.activeChallenge!=null",ng-canceled-challenge="cancelChallenge()")
       match-result(ng-if="network.activeResult!=null",ng-model="network.activeResult")
     .btns(ng-if="isAdminOfGame()&&network.activeMatch.Setup==null&&network.activeMatch.Info.Status==0")
       paper-button.primary-btn(raised,ng-click="network.matches.do.startmatch()") {{ 'Start' | translate }}
