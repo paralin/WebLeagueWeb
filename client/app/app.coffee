@@ -10,7 +10,6 @@ angular.module 'webleagueApp', [
   'AutoFontSize'
   'pascalprecht.translate'
   'ng-context-menu'
-  'vs-repeat'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $tooltipProvider) ->
   $urlRouterProvider.otherwise '/panel/chat'
