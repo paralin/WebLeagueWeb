@@ -32,6 +32,9 @@ module.exports = function (grunt) {
       dist: 'dist'
     },
     version: {
+      options: {
+        pkg: "version.json"
+      },
       defaults: {
         src: ['client/components/version/version.js', 'server/app.js', 'server/version.js']
       }
