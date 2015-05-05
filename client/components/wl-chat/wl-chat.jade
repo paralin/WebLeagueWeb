@@ -24,8 +24,11 @@
       a.pointer(role="menuitem", tabindex="2", ng-click="viewProfile(selectedMember)")
         | View Profile
     li(ng-if="canChallenge(selectedMember)")
-      a.pointer(role="menuitem", tabindex="3", ng-click="sendChallenge(selectedMember)")
+      a.pointer(role="menuitem", tabindex="3", ng-click="sendChallenge(selectedMember, 1)")
         | Send Challenge
+    li(ng-if="canChallenge(selectedMember)")
+      a.pointer(role="menuitem", tabindex="3", ng-click="sendChallenge(selectedMember, 2)")
+        | Send 1V1 Challenge
     li
       a.pointer(role="menuitem", tabindex="4", ng-click="steamProfile(selectedMember)")
         | View Steam Profile

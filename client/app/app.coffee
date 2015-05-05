@@ -99,37 +99,39 @@ angular.module 'webleagueApp', [
     ALLDRAFT: 22
   $rootScope.GameModeK = _.invert $rootScope.GameMode
   $rootScope.GameModeN =
-    #0: "None"
+    0: "None"
     1: "All Pick"
     2: "Captains Mode"
     3: "Ranked Draft"
     4: "Single Draft"
     5: "All Random"
-    #6: "Intro"
-    #7: "Halloween"
+    6: "Intro"
+    7: "Halloween"
     8: "Reverse Captains"
-    #9: "Xmas"
-    #10: "Tutorial"
+    9: "Xmas"
+    10: "Tutorial"
     11: "Mid Only"
-    #12: "Low Priority"
-    #13: "Pool1"
-    #14: "FH"
-    #15: "Custom Games"
+    12: "Low Priority"
+    13: "Pool1"
+    14: "FH"
+    15: "Custom Games"
     16: "Captains Draft"
-    #17: "Balanced Draft"
+    17: "Balanced Draft"
     18: "Ability Draft"
-    #19: "TI4 Event"
+    19: "TI4 Event"
     20: "Deathmatch"
-    #21: "Solo Mid"
+    21: "Solo Mid"
     22: "All Draft"
   $rootScope.GameModeNK = _.invert $rootScope.MatchTypeN
   $rootScope.MatchType =
     STARTGAME: 0
     CAPTAINS: 1
+    ONEVSONE: 2
   $rootScope.MatchTypeK = _.invert $rootScope.MatchType
   $rootScope.MatchTypeNS =
     0: "S"
     1: "C"
+    2: "1v1"
   $rootScope.SetupStatus =
     QUEUE: 0
     QUEUEHOST: 1
