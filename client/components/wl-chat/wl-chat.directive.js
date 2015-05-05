@@ -32,8 +32,8 @@ angular.module('webleagueApp').directive('wlChat', function($state, Auth, $timeo
       scope.isMe = function(member){
         return member != null && member.SteamID === Auth.currentUser.steam.steamid;
       };
-      scope.sendChallenge = function(member){
-        scope.sendchallenge({member: member});
+      scope.sendChallenge = function(member, typ){
+        scope.sendchallenge({member: member, typ: typ});
       };
       scope.steamProfile = function(member){
         window.open('http://steamcommunity.com/profiles/'+member.SteamID,'_blank');
