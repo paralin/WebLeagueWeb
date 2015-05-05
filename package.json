@@ -1,6 +1,5 @@
 {
   "name": "webleague",
-  "version": "1.0.2",
   "main": "server/app.js",
   "dependencies": {
     "body-parser": "^1.0.2",
