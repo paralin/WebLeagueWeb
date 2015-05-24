@@ -1,25 +1,38 @@
 'use strict'
 
 ignoreNext = true
-angular.module 'webleagueApp', [
-  'ngResource'
-  'ngSanitize'
-  'ui.router'
-  'ui.bootstrap'
-  'ng-polymer-elements'
-  'AutoFontSize'
-  'pascalprecht.translate'
-  'ng-context-menu'
+angular.module 'webleagueApp', [ 'ngAnimate',
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'ngTouch',
+  'picardy.fontawesome',
+  'ui.bootstrap',
+  'ui.router',
+  'ui.utils',
+  'angular-loading-bar',
+  'angular-momentjs',
+  'FBAngular',
+  'angularBootstrapNavTree',
+  'ui.select',
+  'ui.tree',
+  'datatables',
+  'datatables.bootstrap',
+  'datatables.colreorder',
+  'datatables.colvis',
+  'datatables.tabletools',
+  'datatables.scroller',
+  'datatables.columnfilter',
+  'ui.grid',
+  'ui.grid.resizeColumns',
+  'ui.grid.edit',
+  'ui.grid.moveColumns',
 ]
-.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider, $tooltipProvider) ->
-  $urlRouterProvider.otherwise '/panel/chat'
+.config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $tooltipProvider) ->
+  $urlRouterProvider.otherwise '/panel'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
-
-  for id, trans of window.translations
-    $translateProvider.translations id, trans
-  $translateProvider.preferredLanguage 'en'
 
   $tooltipProvider.options
     appendToBody: true
@@ -37,11 +50,36 @@ angular.module 'webleagueApp', [
       $location.path '/login'
     $q.reject response
 
-.run ($rootScope, $location, Auth, $state) ->
+.run ($rootScope, $location, Auth, $state, $stateParams, $timeout) ->
+  $rootScope.main =
+    title: "FACEIT Pro"
+    settings:
+      navbarHeaderColor: 'scheme-default'
+      sidebarColor: 'scheme-default'
+      brandingColor: 'scheme-default'
+      activeColor: 'scheme-default'
+      headerFixed: true
+      asideFixed: true
+      rightbarShow: false
+
+  $rootScope.$state = $state
+  $rootScope.$stateParams = $stateParams
+
+  $rootScope.$on "$stateChangeSuccess", (event, toState)->
+    event.targetScope.$watch "$viewContentLoaded", ->
+      angular.element("html, body, #content").animate({scrollTop: 0}, 200)
+      $timeout ->
+        angular.element("#wrap").css("visibility", "visible")
+
+        unless angular.element(".dropdown").hasClass("open")
+          angular.element(".dropdown").find(">ul").slideUp()
+      , 200
+
+
   # Redirect to login if route requires auth and you're not logged in
   $rootScope.$on '$stateChangeStart', (event, next) ->
     console.log "Route -> #{next.name}"
-    ignoreNext = false if next.name is "panel.chat"
+    ignoreNext = false if next.name is "panel"
     Auth.getLoginStatus (user, token) ->
       loggedIn = user?
       if next.authenticate
@@ -50,11 +88,12 @@ angular.module 'webleagueApp', [
         else if !user.vouch?
           $location.path "/novouch" if next.name isnt "novouch"
         else if next.name is "login" || next.name is "novouch"
-          $location.path "/panel/chat"
+          $location.path "/panel"
           console.log "redirected, #{JSON.stringify user} #{JSON.stringify next}"
         else if ignoreNext
           event.preventDefault()
           ignoreNext = false
+
   $rootScope.$on 'authStatusChange', ->
     Auth.getLoginStatus (user, token) ->
       loggedIn = user?
@@ -63,16 +102,19 @@ angular.module 'webleagueApp', [
       else if !user.vouch?
         $location.path "/novouch"
       else if $state.includes("login") || $state.includes("novouch")
-        $location.path "/panel/chat"
+        $location.path "/panel"
+
   $rootScope.$on "buildIdUpdate", (eve, version)->
     if version isnt window.build_id
       console.log "Server version: "+version
       console.log "Client version: "+window.build_id
       console.log "Refreshing for update..."
       window.location.reload(true)
+
   $rootScope.openLink = (url)->
     win = window.open(url, '_blank')
     win.focus()
+
   $rootScope.GameMode =
     NONE: 0
     AP: 1

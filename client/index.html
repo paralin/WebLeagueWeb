@@ -1,137 +1,135 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" ng-app="webleagueApp"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" ng-app="webleagueApp"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" ng-app="webleagueApp"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="webleagueApp"> <!--<![endif]-->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
     <base href="/">
-    <title>FACEIT Pro League</title>
+    <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
-      <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css" />
       <!-- bower:css -->
-      <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-      <link rel="stylesheet" href="/bower_components/pnotify/pnotify.core.css" />
-      <link rel="stylesheet" href="/bower_components/pnotify/pnotify.buttons.css" />
-      <link rel="stylesheet" href="/bower_components/pnotify/pnotify.history.css" />
-      <link rel="stylesheet" href="/bower_components/sweetalert/lib/sweet-alert.css" />
+      <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+      <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
+      <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+      <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+      <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
+      <link rel="stylesheet" href="bower_components/simple-line-icons/css/simple-line-icons.css" />
+      <link rel="stylesheet" href="bower_components/angular-bootstrap-nav-tree/dist/abn_tree.css" />
+      <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
-      <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'> 
-      <link rel="stylesheet" href="app/app.css">
+    <link rel="stylesheet" href="app/app.css">
       <!-- injector:css -->
       <!-- endinjector -->
     <!-- endbuild -->
+  </head>
+  <body  id="minovate" class="{{main.settings.navbarHeaderColor}} {{main.settings.activeColor}} {{containerClass}}" ng-class="{'header-fixed':main.settings.headerFixed, 'header-static':!main.settings.headerFixed, 'aside-fixed':main.settings.asideFixed, 'aside-static':!main.settings.asideFixed, 'rightbar-show':main.settings.rightbarShow, 'rightbar-hidden':!main.settings.rightbarShow }">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div id="wrap" ui-view="" autoscroll="false"></div>
+
+    <div id="pageloader" page-loader></div>
 
     <!--[if lt IE 9]>
-    <script src="/bower_components/es5-shim/es5-shim.js"></script>
-    <script src="/bower_components/json3/lib/json3.min.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-
-    <!-- build:js(client) app/translations.js -->
-    <script src="/components/translations/base.js"></script>
+    <!-- build:js({client,node_modules}) app/vendor.js -->
+      <!-- bower:js -->
+      <script src="bower_components/jquery/dist/jquery.js"></script>
+      <script src="bower_components/angular/angular.js"></script>
+      <script src="bower_components/angular-resource/angular-resource.js"></script>
+      <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+      <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+      <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+      <script src="bower_components/angular-animate/angular-animate.js"></script>
+      <script src="bower_components/angular-touch/angular-touch.js"></script>
+      <script src="bower_components/angular-fontawesome/dist/angular-fontawesome.js"></script>
+      <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+      <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+      <script src="bower_components/moment/moment.js"></script>
+      <script src="bower_components/angular-momentjs/angular-momentjs.js"></script>
+      <script src="bower_components/angular-fullscreen/src/angular-fullscreen.js"></script>
+      <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+      <script src="bower_components/angular-ui-select/dist/select.js"></script>
+      <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+      <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+      <script src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.min.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.min.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.min.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.min.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.min.js"></script>
+      <script src="bower_components/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.min.js"></script>
+      <script src="bower_components/html.sortable/dist/html.sortable.js"></script>
+      <script src="bower_components/angular-bootstrap-nav-tree/dist/abn_tree_directive.js"></script>
+      <script src="bower_components/jquery.slimscroll/jquery.slimscroll.min.js"></script>
+      <script src="bower_components/jquery.sparkline/index.js"></script>
+      <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+      <script src="bower_components/buzz/dist/buzz.js"></script>
+      <!-- endbower -->
     <!-- endbuild -->
 
-    <link rel="import" href="/bower_components/polymer/polymer.html">
-    <link rel="import" href="/bower_components/paper-button/paper-button.html">
-    <link rel="import" href="/bower_components/paper-tabs/paper-tabs.html">
-    <link rel="import" href="/bower_components/paper-fab/paper-fab.html">
-    <link rel="import" href="/bower_components/paper-input/paper-input.html">
-    <link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
-    <link rel="import" href="/bower_components/core-icons/core-icons.html">
-    <link rel="import" href="/bower_components/core-splitter/core-splitter.html">
-    <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
-    <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
-    <link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
-    <link rel="import" href="/bower_components/paper-dialog/paper-action-dialog.html">
-    <link rel="import" href="/bower_components/paper-spinner/paper-spinner.html">
-    <link rel="import" href="/bower_components/paper-dropdown/paper-dropdown.html">
-    <link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-    <link rel="import" href="/bower_components/paper-toggle-button/paper-toggle-button.html">
-    <link rel="import" href="/bower_components/core-menu/core-menu.html">
-    <link rel="import" href="/bower_components/paper-item/paper-item.html">
-    <link rel="import" href="/bower_components/paper-slider/paper-slider.html">
-    <link rel="import" href="/bower_components/polymer-filters/polymer-filters.html">
-    <link rel="import" href="/components/paper-toast-fa/paper-toast-fa.html">
-    <link rel="import" href="/components/live-matches/live-matches.html">
-    <link rel="import" href="/components/match-game/match-game.html">
-    <link rel="import" href="/components/match-result/match-result.html">
-    <link rel="import" href="/components/pending-challenge/pending-challenge.html">
-
-    <!-- build:js(client) app/vendor.js -->
-    <script src="/components/xsockets/xsockets.js"></script>
-    <!-- bower:js -->
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="/bower_components/angular/angular.js"></script>
-    <script src="/bower_components/angular-resource/angular-resource.js"></script>
-    <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="/bower_components/lodash/dist/lodash.compat.js"></script>
-    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="/bower_components/pnotify/pnotify.core.js"></script>
-    <script src="/bower_components/pnotify/pnotify.buttons.js"></script>
-    <script src="/bower_components/pnotify/pnotify.callbacks.js"></script>
-    <script src="/bower_components/pnotify/pnotify.confirm.js"></script>
-    <script src="/bower_components/pnotify/pnotify.desktop.js"></script>
-    <script src="/bower_components/pnotify/pnotify.history.js"></script>
-    <script src="/bower_components/pnotify/pnotify.nonblock.js"></script>
-    <script src="/bower_components/moment/moment.js"></script>
-    <script src="/bower_components/buzz/dist/buzz.js"></script>
-    <script src="/bower_components/auto-font-size/dist/auto_font_size.js"></script>
-    <script src="/bower_components/angular-translate/angular-translate.js"></script>
-    <script src="/bower_components/ng-context-menu/dist/ng-context-menu.js"></script>
-    <script src="/bower_components/humanize-plus/public/src/humanize.js"></script>
-    <script src="/bower_components/time-elements/time-elements.js"></script>
-    <script src="/bower_components/sweetalert/lib/sweet-alert.js"></script>
-    <!-- endbower -->
-    <script src="/bower_components/ng-polymer-elements/ng-polymer-elements.js"></script>
-    <script src="/components/version/version.js"></script>
-    <script src="/components/translations/english.js"></script>
-    <script src="/components/translations/russian.js"></script>
-    <script src="/components/translations/german.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,client}) app/app.js -->
-    <script src="/app/app.js"></script>
-    <script src="/components/prizepool/prizepool.js"></script>
-    <!-- injector:js -->
-    <script src="/app/login/login.js"></script>
-    <script src="/app/novouch/novouch.js"></script>
-    <script src="/app/panel/admin/admin.js"></script>
-    <script src="/app/panel/chat/chat.js"></script>
-    <script src="/app/panel/leaderboard/leaderboard.js"></script>
-    <script src="/app/panel/panel.js"></script>
-    <script src="/app/panel/profile/profile.js"></script>
-    <script src="/app/panel/settings/settings.js"></script>
-    <script src="/app/panel/vouch/vouch.js"></script>
-    <script src="/app/pnotify/pnotify.js"></script>
-    <!-- endinjector -->
-    <script src="/components/auth/auth.js"></script>
-    <script src="/components/steamid/steamid.js"></script>
-    <script src="/components/auth/user.js"></script>
-    <script src="/components/profile/profile.js"></script>
-    <script src="/components/mongoose-error/mongoose-error.js"></script>
-    <script src="/components/network/network.js"></script>
-    <script src="/components/safeApply/safeApply.js"></script>
-    <script src="/components/win-state/win-state.js"></script>
-    <script src="/components/net-anim/net-anim.directive.js"></script>
-    <script src="/components/wl-chat/wl-chat.directive.js"></script>
-    <script src="/components/vouch/vouch.js"></script>
-    <script src="/components/poly-mappings/poly-mappings.js"></script>
-    <!-- endbuild -->
-  </head>
-  <body ng-app="webleagueApp">
-    <!--[if lt IE 7]>
-    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <div ui-view="" style="width:100%;height:100%"></div>
-  </body>
+        <!-- build:js({.tmp,client}) app/app.js -->
+        <script src="app/app.js"></script>
+          <!-- injector:js -->
+          <script src="app/login/login.js"></script>
+          <script src="app/novouch/novouch.js"></script>
+          <script src="app/panel/dashboard/dashboard.js"></script>
+          <script src="app/panel/panel.js"></script>
+          <script src="components/auth/auth.js"></script>
+          <script src="components/auth/user.js"></script>
+          <script src="components/network/network.js"></script>
+          <script src="components/safeApply/safeApply.js"></script>
+          <script src="components/steamid/steamid.js"></script>
+          <script src="components/vouch/vouch.js"></script>
+          <script src="components/directives/activatebutton.js"></script>
+          <script src="components/directives/active-toggle.js"></script>
+          <script src="components/directives/anchor-scroll.js"></script>
+          <script src="components/directives/chart-morris.js"></script>
+          <script src="components/directives/check-toggler.js"></script>
+          <script src="components/directives/clock.js"></script>
+          <script src="components/directives/collapsesidebar.js"></script>
+          <script src="components/directives/daterangepicker.js"></script>
+          <script src="components/directives/formsubmit.js"></script>
+          <script src="components/directives/gaugechart.js"></script>
+          <script src="components/directives/lazymodel.js"></script>
+          <script src="components/directives/native-tab.js"></script>
+          <script src="components/directives/navcollapse.js"></script>
+          <script src="components/directives/offcanvas-sidebar.js"></script>
+          <script src="components/directives/onblurvalidation.js"></script>
+          <script src="components/directives/pageloader.js"></script>
+          <script src="components/directives/prettyprint.js"></script>
+          <script src="components/directives/ripple.js"></script>
+          <script src="components/directives/setnganimate.js"></script>
+          <script src="components/directives/slimscroll.js"></script>
+          <script src="components/directives/sparkline.js"></script>
+          <script src="components/directives/submitvalidate.js"></script>
+          <script src="components/directives/tilecontrolclose.js"></script>
+          <script src="components/directives/tilecontrolfullscreen.js"></script>
+          <script src="components/directives/tilecontrolrefresh.js"></script>
+          <script src="components/directives/tilecontroltoggle.js"></script>
+          <script src="components/directives/toastrinject.js"></script>
+          <script src="components/directives/todoescape.js"></script>
+          <script src="components/directives/todofocus.js"></script>
+          <script src="components/directives/vector-map.js"></script>
+          <script src="components/directives/wrap-owlcarousel.js"></script>
+          <script src="components/nav/nav.js"></script>
+          <script src="components/nav/navbar-chart.js"></script>
+          <script src="components/version/version.js"></script>
+          <script src="components/xsockets/xsockets.js"></script>
+          <!-- endinjector -->
+        <!-- endbuild -->
+</body>
 </html>

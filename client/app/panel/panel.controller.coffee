@@ -1,8 +1,7 @@
 'use strict'
 
-PNotify.desktop.permission()
 angular.module 'webleagueApp'
-.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state, $translate) ->
+.controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state) ->
   clr = []
   $scope.auth = Auth
   $scope.network = Network
@@ -10,8 +9,6 @@ angular.module 'webleagueApp'
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
-  $scope.setLanguage = (ln)->
-    $translate.use ln
   $scope.notMe = (member)->
     member.SteamID isnt Auth.currentUser.steam.steamid
   $scope.pickPlayer = (event)->
@@ -25,13 +22,6 @@ angular.module 'webleagueApp'
   $scope.toggleSoundMuted = (mute)->
     Auth.currentUser.settings.soundMuted = mute
     Auth.saveSettings()
-  $scope.selectChat = (name)->
-    $state.go("panel.chat", {name: name.replace(" ", "-")})
-  clr.push $rootScope.$on "chatChannelAdd", ->
-    if $state.$current.name is "panel.chat"
-      $scope.selectChat Network.chats[Network.chats.length-1].Name
-    else
-      $scope.checkPanelTab()
   clr.push $rootScope.$on "gameCanceled", (event, game)->
     if game.Info.Status is 0
       $rootScope.playSound "gameCanceled"
@@ -113,18 +103,8 @@ angular.module 'webleagueApp'
           return
       return
     return
-  $scope.panelTabs = {
-    selected: 0
-  }
   $scope.humanizeChatName = (name)->
     Humanize.titleCase name
-  $scope.leaveCurrentChat = (cb)->
-    chat = $scope.chats[$scope.panelTabs.selected]
-    return if !chat?
-    if chat.Leavable
-      Network.chat.invoke "leave", {Id: chat.Id}
-    else
-      swal("Can't Leave", "You can't leave this chat.", "error")
   $scope.isInGame = (game)->
     if !game?
       return Network.activeMatch?
@@ -159,28 +139,6 @@ angular.module 'webleagueApp'
       Spec: true
   $scope.gameFilter = (game)->
     true #game.Info.Status==0 || (Network.activeMatch? && Network.activeMatch.Id is game.Id)
-  $scope.sendChat = (msg)->
-    Network.chat.invoke("sendmessage", {Channel: service.chats[$scope.panelTabs.selected].Id, Text: msg})
-  $scope.checkPanelTab = ->
-    staticTabCount = 0
-    staticTabCount++ if Auth.inRole "vouch"
-    staticTabCount++ if Auth.inRole "admin"
-    idx = 0
-    if state.is "panel.chat"
-      return
-    else if state.is "panel.leaderboard"
-      idx = $scope.chats.length
-    else if state.is "panel.vouch"
-      idx = $scope.chats.length+1
-    else if state.is "panel.admin"
-      idx = $scope.chats.length+staticTabCount
-    else if state.is "panel.settings"
-      idx = $scope.chats.length+staticTabCount+1
-    $scope.panelTabs.selected = idx
-  Auth.getLoginStatus ->
-    $scope.checkPanelTab()
-  clr.push $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
-    $scope.checkPanelTab()
   $scope.$on 'destroy', ->
     for cl in clr
       cl()

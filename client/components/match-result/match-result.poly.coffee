@@ -1,2 +1,0 @@
-Polymer 'match-result', {
-}

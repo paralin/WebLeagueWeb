@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, User, $interval, $q, $translate) ->
+angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, User, $interval, $q) ->
   service =
     currentPromise: null
     currentUser: null
@@ -27,7 +27,6 @@ angular.module('webleagueApp').factory 'Auth', ($location, $rootScope, $http, Us
         if data.isAuthed
           @currentUser = data.user
           $rootScope.fillSettings @currentUser
-          $translate.use @currentUser.settings.language
           @currentToken = data.token
           @currentServer = data.server
           $rootScope.$broadcast('buildIdUpdate', data.build_id)
