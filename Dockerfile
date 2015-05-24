@@ -2,6 +2,7 @@ FROM node:0.12.1
 
 WORKDIR /build/
 
+RUN echo "export LC_ALL=\"en_US.UTF-8\" && export LANG=\"en_US.UTF-8\"" >> /etc/profile.d/lang.sh
 RUN apt-get update && apt-get install ruby libpng-dev -y && gem install sass && apt-get dist-upgrade -y && npm install -g grunt-cli bower && mkdir -p /build/client/bower_components/
 ADD package.json bower.json .bowerrc /build/
 RUN npm install && bower install --allow-root
