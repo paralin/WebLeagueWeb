@@ -51,13 +51,14 @@ angular.module 'webleagueApp', [ 'ngAnimate',
     $q.reject response
 
 .run ($rootScope, $location, Auth, $state, $stateParams, $timeout) ->
-  $rootScope.main =
+  window.rootScope = $rootScope
+  window.main = $rootScope.main =
     title: "FACEIT Pro"
     settings:
-      navbarHeaderColor: 'scheme-default'
-      sidebarColor: 'scheme-default'
-      brandingColor: 'scheme-default'
-      activeColor: 'scheme-default'
+      navbarHeaderColor: 'scheme-black'
+      sidebarColor: 'scheme-black'
+      brandingColor: 'scheme-black'
+      activeColor: 'scheme-black'
       headerFixed: true
       asideFixed: true
       rightbarShow: false
