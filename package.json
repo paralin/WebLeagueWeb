@@ -22,7 +22,7 @@
     "passport-local": "^0.1.6",
     "passport-steam": "^0.1.4",
     "request": "^2.40.0",
-    "static-favicon": "^1.0.2",
+    "serve-favicon": "^2.2.1",
     "steam-webapi": "^0.6.4"
   },
   "devDependencies": {
