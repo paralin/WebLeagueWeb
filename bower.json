@@ -38,9 +38,6 @@
     "angular-mocks": ">=1.2.*",
     "angular-scenario": ">=1.2.*"
   },
-  "resolutions": {
-    "es5-shim": "~3.1.0"
-  },
   "overrides": {
     "angular-datatables": {
       "main": [
@@ -55,5 +52,9 @@
         "./dist/plugins/tabletools/angular-datatables.tabletools.min.js"
       ]
     }
+  },
+  "resolutions": {
+    "es5-shim": "~3.1.0",
+    "angular": ">=1.2.*"
   }
 }
