@@ -85,6 +85,15 @@ exports.setup = function (User, Vouch, config) {
                   if(err)
                     throw err;
                 });
+              }else if(process.env.AUTOVOUCH)
+              {
+                newUser.vouch = {
+                  _id: newUser.steam.steamid,
+                  name: newUser.steam.personaname,
+                  teamname: null,
+                  teamavatar: null,
+                  avatar: null
+                };
               }
               newUser.save(function(err){
                 if(err)
