@@ -3,6 +3,7 @@ var MongoStore = require('connect-mongo')(session);
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var config = require('./environment');
+var mongoose = require('mongoose');
 
 module.exports = function(app){
   app.use(cookieParser(config.secrets.session));
@@ -12,7 +13,7 @@ module.exports = function(app){
       maxAge: 604800000
     },
     store: new MongoStore({
-      url: config.mongo.uri
+      mongooseConnection: mongoose.connection
     }),
     saveUninitialized: true,
     resave: true
