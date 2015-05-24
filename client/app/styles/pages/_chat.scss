@@ -1,3 +1,14 @@
+@mixin chat-color($i, $color)
+{
+    .media-body.c#{$i}
+    {
+      border-left: 3px solid $color;
+    }
+    .name.c#{$i}
+    {
+      color: $color;
+    }
+}
 .page-chat {
   #inbox {
     margin: 20px -15px -15px;
@@ -102,13 +113,13 @@
   ul.chats {
     >li {
       .media-body {
-        padding: 10px;
+        padding: 5px;
       }
 
       &.in {
         .media-body {
           background-color: white;
-          padding-left: 20px;
+          padding-left: 10px;
         }
       }
 
@@ -127,6 +138,9 @@ ul.chats {
 
   >li {
     margin: 5px auto;
+    margin-bottom: 0;
+    margin-top: 0;
+
     font-size: $font-size-small;
 
     &:last-child {
@@ -154,6 +168,9 @@ ul.chats {
       color: white;
       text-align: center;
 
+      margin-bottom: 5px;
+      margin-top: 5px;
+
       span {
         display: inline-block;
         position: relative;
@@ -171,19 +188,14 @@ ul.chats {
         margin-left: 65px;
         padding-left: 5px;
       }
-      .name {
-        color: $greensea;
-      }
-      .media {
-        &:after {
-          content: "";
-          @include triangle(8px, $greensea, left);
-          position: absolute;
-          top: 18px;
-          left: 36px;
-          z-index: 1;
-        }
-      }
+      @include chat-color(1, $greensea);
+      @include chat-color(2, $cyan);
+      @include chat-color(3, $amethyst);
+      @include chat-color(4, $green);
+      @include chat-color(5, $orange);
+      @include chat-color(6, $red);
+      @include chat-color(7, $dutch);
+      @include chat-color(8, $drank);
     }
 
     &.out {
