@@ -8,7 +8,7 @@
   >.tcol {
     display: table-cell;
     float: none;
-    height: 100%;
+    height: calc(100% - 77px);
     vertical-align: top;
   }
 }
