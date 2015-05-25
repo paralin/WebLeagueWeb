@@ -23,6 +23,7 @@
     </ul>
 
     <h6><strong>Offline</strong> Users</h6>
+    <ul>
       <li ng-repeat="memb in getMembers(network.members, false)" class="{{stateClass[memb.State]}}">
         <div class="media">
           <a class="pull-left thumb thumb-sm" href="javascript:;">
@@ -35,8 +36,6 @@
           </div>
         </div>
       </li>
-    <ul>
-
     </ul>
   </tab>
 
