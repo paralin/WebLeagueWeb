@@ -21,6 +21,9 @@ class NetworkService
   activeResult: null
   hasChallenge: false
   chats: []
+
+  members: {}
+
   liveMatches: []
   availableGames: []
 
@@ -266,8 +269,20 @@ class NetworkService
               @disconnect()
             else
               console.log "Authenticated with auth groups #{auths}"
-              #@chat.invoke('joinorcreate', {Name: "main"})
               @fetchMatches()
+      globalmembersnap: (upd)->
+        @members.length = 0
+        for memb in upd.members
+          @members[memb.SteamID] = memb
+        console.log upd
+      globalmemberupdate: (upd)->
+        memb = @members[upd.id]
+        if memb?
+          memb[upd.key] = upd.value
+        console.log upd
+        console.log memb
+      globalmemberrm: (upd)->
+        console.log upd
       onchatmessage: (upd)->
         chat = @chatByID upd.Id
         if !chat?
