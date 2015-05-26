@@ -32,11 +32,10 @@
       </accordion-heading>
       <ul id="navigation" nav-collapse ripple>
         <li ui-sref-active="active"><a ui-sref="panel.dashboard"><fa name="dashboard"></fa> <span>Dashboard</span></a></li>
-        <li ui-sref-active="active" ng-class="{'open':$state.includes('app.mail')}">
-          <a ui-sref="app.mail"><fa name="soccer-ball-o"></fa> <span>Your Leagues</span></a>
+        <li ui-sref-active="active" ng-class="{'open':$state.includes('panel.league')}">
+          <a href="#"><fa name="soccer-ball-o"></fa> <span>Your Leagues</span></a>
           <ul>
-            <li ui-sref-active="active"><a ui-sref="app.mail.inbox"><fa name="caret-right"></fa> FPL North America</a></li>
-            <li ui-sref-active="active"><a ui-sref="app.mail.compose"><fa name="caret-right"></fa> FPL Europe</a></li>
+            <li ng-repeat="league in leagues(leagueStore.leagues)" ui-sref-active="active"><a ui-sref="panel.league({id: league._id})"><fa name="caret-right"></fa> {{league.Name}}</a></li>
           </ul>
         </li>
       </ul>

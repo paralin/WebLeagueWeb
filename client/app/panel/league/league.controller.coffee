@@ -1,11 +1,26 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'LeagueCtrl', ($scope, Network, $rootScope, $stateParams, $http, safeApply, $timeout) ->
+.controller 'LeagueCtrl', ($scope, Network, $stateParams, $timeout, LeagueStore, safeApply) ->
   $scope.message = ""
-  $scope.page =
-    title: 'League',
-    subtitle: 'A league'
+
+  $scope.leagues = LeagueStore.leagues
+  $scope.leagueid = $stateParams.id
+
+  $scope.network = Network
+
+  $scope.chat = (chats, leagueid)->
+    _.findWhere _.values(chats), {Name: leagueid}
+
+  $scope.chatMembers = (chat)->
+    return [] if !chat?
+    res = []
+    for member in chat.Members
+      res.push Network.members[member]
+    res
+
+  $scope.member = (sid)->
+    Network.members[sid]
 
   adjustInputLocation = ->
     th = $(".chatBox").width()
@@ -27,6 +42,12 @@ angular.module 'webleagueApp'
     safeApply $scope, ->
       $timeout ->
         return if $scope.message.length is 0
+        msg = $scope.message
+        chat = $scope.chat(Network.chats, $scope.leagueid)
+        if chat?
+          Network.chat.invoke "SendMessage", {Channel: chat.Id, Text: msg}
+        else
+          console.log "Can't find chat to send message to"
         $scope.message = ""
       , 10
 

@@ -20,7 +20,7 @@ class NetworkService
   activeChallenge: null
   activeResult: null
   hasChallenge: false
-  chats: []
+  chats: {}
 
   members: {}
 
@@ -29,7 +29,7 @@ class NetworkService
 
   adminMatches: []
 
-  constructor: (@scope, @timeout, @safeApply)->
+  constructor: (@scope, @timeout, @safeApply, @leagueStore)->
   disconnect: ->
     @connecting = false
     if @conn?
@@ -173,6 +173,8 @@ class NetworkService
         @scope.$broadcast "lobbyReady"
       onkickedfromsg: ->
         @scope.$broadcast "kickedFromSG"
+      refreshleagues: ->
+        @leagueStore.refresh()
       userped: ->
         console.log "Connection userped"
         @status = "You have logged into your account from another location and are disconnected. Refresh to re-connect."
@@ -182,7 +184,7 @@ class NetworkService
         @activeResult = null
         @doReconnect = false
         @hasChallenge = false
-        @chats.length = 0
+        delete @chats[member] for member in @chats
         @liveMatches.length = 0
         @availableGames.length = 0
         @adminMatches.length = 0
@@ -271,7 +273,7 @@ class NetworkService
               console.log "Authenticated with auth groups #{auths}"
               @fetchMatches()
       globalmembersnap: (upd)->
-        @members.length = 0
+        delete @members[memb] for memb in @members
         for memb in upd.members
           @members[memb.SteamID] = memb
         console.log upd
@@ -291,25 +293,22 @@ class NetworkService
           chat.messages.push
             member: upd.Member
             msg: upd.Text
-            name: chat.Members[upd.Member].Name
+            name: @members[upd.Member].Name
             Auto: upd.Auto
       #add or remove a chat channel
       chatchannelupd: (upd)->
         for chan in upd.channels
-          chan.Members["system"] = {Id: "system", Name: ""}
-          #get idx in array
-          idx = _.findIndex @chats, {Id: chan.Id}
-          if idx is -1
+          echan = @chats[chan.Id]
+          unless echan?
             chan.messages = []
-            @chats.push chan
+            @chats[chan.Id] = chan
             @scope.$broadcast 'chatChannelAdd'
           else
-            _.merge @chats[idx], chan
+            _.merge echan, chan
       chatchannelrm: (upd)->
         for id in upd.ids
-          idx = _.findIndex @chats, {Id: id}
-          @chats.splice idx, 1 if idx > -1
-        @scope.$broadcast 'chatMembersUpd'
+          delete @chats[id]
+        @scope.$broadcast 'chatChannelRm'
       #add or remove a chat member
       chatmemberupd: (upd)->
         chat = @chatByID upd.id
@@ -359,7 +358,7 @@ class NetworkService
           @disconnected = false
           @status = "Connected to the network."
           @attempts = 0
-          @chats.length = 0
+          delete @chats[member] for member in @chats
           @_activeMatch = null
           @activeResult = null
           @adminMatches.length = 0
@@ -389,7 +388,7 @@ class NetworkService
         @reconnect()
 
   chatByID: (id)->
-    _.find @chats, {Id: id}
+    @chats[id]
   fetchMatches: ->
     #return
     @matches.invoke('getpublicgamelist').then (ms)=>
@@ -404,8 +403,8 @@ class NetworkService
           for game in ms
             @availableGames[@availableGames.length] = game
 
-angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, safeApply) ->
-  service = new NetworkService $rootScope, $timeout, safeApply
+angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, LeagueStore, safeApply) ->
+  service = new NetworkService $rootScope, $timeout, safeApply, LeagueStore
   checkLogin = ->
     console.log "check login"
     Auth.getLoginStatus (currentUser, currentToken, currentServer)->

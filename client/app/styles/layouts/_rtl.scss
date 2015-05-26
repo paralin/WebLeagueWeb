@@ -270,7 +270,7 @@
 
   &.header-fixed.aside-fixed {
     #content {
-      right: 250px;
+      right: $navwidth;
       left: 0;
     }
   }
@@ -300,11 +300,11 @@
         right: auto;
       }
       #header {
-        left: 250px;
+        left: $navwidth;
         right: 0;
       }
       #content {
-        left: 250px;
+        left: $navwidth;
       }
     }
   }
@@ -402,10 +402,10 @@
         left: 0;
       }
       #header {
-        padding-left: 250px;
+        padding-left: $navwidth;
       }
       #content {
-        padding-left: 250px;
+        padding-left: $navwidth;
       }
     }
 

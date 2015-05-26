@@ -14,7 +14,7 @@
           </div>
         </div>
 
-        <h3 class="custom-font m-0 mr-5 inline-block">FACEIT Pro League: North America</h3>
+        <h3 class="custom-font m-0 mr-5 inline-block">{{leagues[leagueid].Name}}</h3>
       </div>
       <!-- /right side header -->
 
@@ -23,19 +23,12 @@
 
         <!-- chats -->
         <ul class="chats p-0">
-          <li class="text-center"><a href="javascript:;">Load More...</a></li>
-          <li class="conversation-divider"><span>26.03.2014</span></li>
-          <li class="in">
+          <!--<li class="text-center"><a href="javascript:;">Load More...</a></li>-->
+          <!--<li class="conversation-divider"><span>26.03.2014</span></li>-->
+          <li ng-repeat="message in chat(network.chats, leagueid).messages" class="in">
             <div class="media">
-              <div class="media-body c2" style="margin-left:0">
-                <span class="body"><span class="name c2">Arteezy:</span> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
-              </div>
-            </div>
-          </li>
-          <li class="in">
-            <div class="media">
-              <div class="media-body c3" style="margin-left:0">
-                <span class="body"><span class="name c3">Mikey:</span> #yolo</span>
+              <div class="media-body c{{member(message.member).MemberType}}" style="margin-left:0">
+                <span class="body"><span class="name c{{member(message.member).MemberType}}">{{message.name}}:</span> {{message.msg}}</span>
               </div>
             </div>
           </li>
@@ -62,23 +55,73 @@
     </div>
     <!-- /right side -->
     <!-- left side -->
-    <div class="tcol w-xl bg-tr-white lt b-r">
+    <div class="tcol w-240 bg-tr-white lt b-r">
       <!-- left side header-->
       <div class="p-15 bg-white">
 
-        <h3 class="custom-font m-0 mr-5 inline-block">Games</h3><span class="badge bg-lightred">3</span>
+        <h3 class="custom-font m-0 mr-5 inline-block">players</h3><span class="badge bg-orange">{{chat(network.chats, leagueid).Members.length}}</span>
 
         <div class="btn-group pull-right">
           <button class="btn btn-sm btn-default pull-right visible-sm visible-xs ml-5" active-toggle target="#open-chats"><i class="fa fa-bars"></i></button>
           <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-            More <span class="caret"></span>
+            more <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="#">action</a></li>
+            <li><a href="#">another action</a></li>
+            <li><a href="#">something else here</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="#">separated link</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /left side header -->
+
+      <!-- left side body -->
+      <div class="p-15 hidden-sm hidden-xs" id="open-chats">
+
+        <ul class="list-unstyled" id="inbox" style="margin-top: 0">
+          <li ng-repeat="member in chatMembers(chat(network.chats, leagueid))">
+            <a href="#" class="active" style="padding: 5px;padding-left:10px">
+              <div class="media" style="height:23px">
+
+                <div class="media-left thumb thumb-sm" style="width: 23px">
+                  <img class="media-object img-circle" ng-src="{{member.Avatar}}">
+                </div>
+
+                <div class="media-body" style="padding-left: 10px">
+                  <p class="media-heading">
+                    <span class="membername c{{member.MemberType}}" ng-class="{'text-strong': member.MemberType==2}">{{member.Name}}</span>
+                    <span class="badge bg-orange pull-right" style="margin-top:2px">{{member.LeagueProfiles[leagueid].rating}}</span>
+                  </p>
+                </div>
+
+              </div>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- /left side body -->
+    </div>
+
+    <div class="tcol w-xl bg-tr-white lt b-r">
+      <!-- left side header-->
+      <div class="p-15 bg-white">
+
+        <h3 class="custom-font m-0 mr-5 inline-block">games</h3><span class="badge bg-orange">0</span>
+
+        <div class="btn-group pull-right">
+          <button class="btn btn-sm btn-default pull-right visible-sm visible-xs ml-5" active-toggle target="#open-chats"><i class="fa fa-bars"></i></button>
+          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+            more <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">action</a></li>
+            <li><a href="#">another action</a></li>
+            <li><a href="#">something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">separated link</a></li>
           </ul>
         </div>
       </div>
@@ -88,7 +131,7 @@
       <div class="p-15 hidden-sm hidden-xs" id="open-chats">
 
         <ul class="list-unstyled" id="inbox">
-          <li ng-repeat="message in inbox | filter:searchText" ng-class="{'active': message.active}">
+          <li ng-repeat="message in inbox | filter:searchtext" ng-class="{'active': message.active}">
             <a href="javascript:;" class="active">
               <div class="media">
 
@@ -103,9 +146,9 @@
                     <small class="text-muted pull-right">{{message.date}}</small>
                   </p>
                   <div class="chat-actions pull-right">
-                    <span class="mark-readed" tooltip="Mark as readed" ng-show="message.unread" ng-click="message.unread = false"><i class="fa fa-circle"></i></span>
-                    <span class="mark-unread" tooltip="Mark as unread" ng-hide="message.unread" ng-click="message.unread = true"><i class="fa fa-circle-o"></i></span>
-                    <span class="archive" tooltip="Archive" ng-click="archive($index)"><i class="fa fa-times"></i></span>
+                    <span class="mark-readed" tooltip="mark as readed" ng-show="message.unread" ng-click="message.unread = false"><i class="fa fa-circle"></i></span>
+                    <span class="mark-unread" tooltip="mark as unread" ng-hide="message.unread" ng-click="message.unread = true"><i class="fa fa-circle-o"></i></span>
+                    <span class="archive" tooltip="archive" ng-click="archive($index)"><i class="fa fa-times"></i></span>
                   </div>
                   <small class="text-muted message">{{message.content}}</small>
                 </div>

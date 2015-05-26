@@ -8,7 +8,7 @@
 }
 #minovate:not(.header-fixed) {
   #header {
-    padding-left: 250px;
+    padding-left: $navwidth;
 
     .branding {
       position: fixed;
@@ -39,7 +39,7 @@
 
   .branding {
     background-color: $sidebar-bg;
-    width: 250px;
+    width: $navwidth;
     height: 45px;
     float: left;
     padding: 0 15px;

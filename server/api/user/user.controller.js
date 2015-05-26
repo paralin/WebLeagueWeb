@@ -30,14 +30,15 @@ exports.status = function(req, res){
       profile: req.user.profile,
       authItems: req.user.authItems,
       vouch: req.user.vouch,
-      settings: req.user.settings
+      settings: req.user.settings,
+      tstoken: req.user.tsonetimeid,
+      leagues: req.user.leagues
     };
     var profile = {
       _id: req.user._id,
       steamid: req.user.steam.steamid
     }
     resp.token = jwt.sign(profile, config.secrets.session, {algorithm:'HS256'});//{expiresInMinutes: 5});
-    user.tstoken = req.user.tsonetimeid;
     resp.server = config.networkServer;
     resp.user = user;
     resp.build_id = build_id;

@@ -4,7 +4,7 @@
     {
       border-left: 3px solid $color;
     }
-    .name.c#{$i}
+    .name.c#{$i}, .membername.c#{$i}
     {
       color: $color;
     }
@@ -133,6 +133,26 @@
   }
 }
 
+.chatContainer {
+  // Spectator
+  @include chat-color(-1, $green);
+  // Normal
+  @include chat-color(0, $amethyst);
+  // Moderator
+  @include chat-color(1, $dutch);
+  // Admin
+  @include chat-color(2, $red);
+
+  @include chat-color(5, $orange);
+  @include chat-color(6, $red);
+  @include chat-color(7, $dutch);
+  @include chat-color(8, $drank);
+
+  .membername {
+    font-size: 18px;
+  }
+}
+
 ul.chats {
   list-style: none;
 
@@ -188,14 +208,6 @@ ul.chats {
         margin-left: 65px;
         padding-left: 5px;
       }
-      @include chat-color(1, $greensea);
-      @include chat-color(2, $cyan);
-      @include chat-color(3, $amethyst);
-      @include chat-color(4, $green);
-      @include chat-color(5, $orange);
-      @include chat-color(6, $red);
-      @include chat-color(7, $dutch);
-      @include chat-color(8, $drank);
     }
 
     &.out {

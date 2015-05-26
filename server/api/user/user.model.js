@@ -9,11 +9,16 @@ var UserSchema = mongoose.Schema({
   authItems: [String],
   profile: {
     name: String,
-    rating: Number,
-    wins: Number,
-    losses: Number,
-    abandons: Number,
-    winStreak: Number
+    leagues: Object,
+    /* "leagueid:seasonid": {
+      rating: Number,
+      wins: Number,
+      losses: Number,
+      abandons: Number,
+      winStreak: Number,
+      lossStreak: Number
+    }
+   */
   },
   vouch: {
     _id: String,
@@ -51,6 +56,7 @@ var UserSchema = mongoose.Schema({
   },
   channels: [String],
   tsuniqueids: [String],
+  leagues: [String],
   tsonetimeid: String
 });
 

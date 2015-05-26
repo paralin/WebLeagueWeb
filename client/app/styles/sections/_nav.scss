@@ -35,7 +35,7 @@
 }
 
 #sidebar {
-  width: 250px;
+  width: $navwidth;
   padding: 0;
   background-color: $sidebar-bg;
   z-index: 21;
@@ -226,8 +226,8 @@
       background: $transparent-white-1;
       border-radius: 100%;
       transform: scale(0);
-      width: 250px!important;
-      height: 250px!important;
+      width: $navwidth !important;
+      height: $navwidth !important;
     }
 
     .ink.animate {
