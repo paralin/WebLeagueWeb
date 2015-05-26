@@ -2,11 +2,11 @@
 {
     .media-body.c#{$i}
     {
-      border-left: 3px solid $color;
+      border-left: 3px solid $color !important;
     }
     .name.c#{$i}, .membername.c#{$i}
     {
-      color: $color;
+      color: $color !important;
     }
 }
 .page-chat {
@@ -137,7 +137,7 @@
   // Spectator
   @include chat-color(-1, $green);
   // Normal
-  @include chat-color(0, $amethyst);
+  @include chat-color(0, $blue);
   // Moderator
   @include chat-color(1, $dutch);
   // Admin
