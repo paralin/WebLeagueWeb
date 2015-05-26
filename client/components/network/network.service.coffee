@@ -310,15 +310,15 @@ class NetworkService
           delete @chats[id]
         @scope.$broadcast 'chatChannelRm'
       #add or remove a chat member
-      chatmemberupd: (upd)->
+      chatmemberadd: (upd)->
         chat = @chatByID upd.id
         if !chat?
           console.log "WARN -> chat member(s) added to unknown chat"
           console.log upd
         else
           for memb in upd.members
-            chat.Members[memb.ID] = memb
-        @scope.$broadcast 'chatMembersUpd'
+            chat.Members.push memb unless memb in chat.Members
+        @scope.$broadcast 'chatMemberAdd'
       chatmemberrm: (upd)->
         chat = @chatByID upd.id
         if !chat?
@@ -326,8 +326,10 @@ class NetworkService
           console.log upd
         else
           for memb in upd.members
-            delete chat.Members[memb]
-        @scope.$broadcast 'chatMembersUpd'
+            idx = chat.Members.indexOf memb
+            continue if idx is -1
+            chat.Members.splice idx, 1
+        @scope.$broadcast 'chatMemberRm'
 
   connect: ->
     if !@disconnected || @connecting
