@@ -63,12 +63,8 @@ exports.setup = function (User, Vouch, config) {
             newUser._id = buf.toString('hex');
             newUser.steam = profile;
             newUser.profile.name = profile.personaname;
-            newUser.profile.rating = 1200;
-            newUser.profile.wins = 0;
-            newUser.profile.losses = 0;
-            newUser.profile.abandons = 0;
-            newUser.profile.winStreak = 0;
             newUser.authItems = ['chat', 'startGames', 'matches'];
+            newUser.leagues = []
             newUser.vouch = null;
             newUser.tsonetimeid = null;
 
