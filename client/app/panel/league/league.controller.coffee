@@ -16,6 +16,12 @@ angular.module 'webleagueApp'
   $scope.createGame = (gm)->
     Network.matches.do.creatematch({MatchType: 0, GameMode: gm, League: $scope.leagueid})
 
+  $scope.joinGame = (game, spec)->
+    Network.matches.do.joinmatch({Id: game.Id, Spec: spec})
+
+  $scope.canJoinGame = (game)->
+    !$scope.me(game)? and Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems and ("challengeOnly" not in Auth.currentUser.authItems or game.Info.MatchType == 1)
+
   $scope.gameStatus = (game)->
     switch game.Info.Status
       when 0

@@ -155,13 +155,13 @@
 
           <!-- tile body -->
           <div class="tile-body p-0">
-            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="!inGame(game)">
-              <a href="#" class="list-group-item bg-greensea hover">
+            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="canJoinGame(game)">
+              <a href="#" class="list-group-item bg-greensea hover" ng-click="joinGame(game, false)">
                 <i class="fa fa-gamepad text-muted mr-5"></i>
                 Join as player
               </a>
               <a href="#" class="list-group-item bg-orange hover">
-                <i class="fa fa-binoculars text-muted mr-5"></i>
+                <i class="fa fa-binoculars text-muted mr-5" ng-click="joinGame(game, true)"></i>
                 Join as spectator
               </a>
             </div>

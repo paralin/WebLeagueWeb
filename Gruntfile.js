@@ -92,6 +92,10 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
+      version: {
+        files: ['version.json'],
+        tasks: ['version']
+      },
       livereload: {
         files: [
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
