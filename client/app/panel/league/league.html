@@ -185,9 +185,9 @@
             </div>
 
             <accordion close-others="oneAtATime">
-              <accordion-group is-open="!game.PlayersClosed" class="panel-slategray">
+              <accordion-group is-open="game.PlayersOpen" class="panel-slategray">
                 <accordion-heading>
-                <span style="font-weight:bold;color:white" ng-class="{'text-default lt': game.PlayersClosed}"><i class="fa text-sm mr-5" ng-class="{'fa-minus': !game.PlayersClosed, 'fa-plus': game.PlayersClosed}"></i> Players</span><span class="badge pull-right bg-lightred">{{game.Players.length}}</span>
+                <span style="font-weight:bold;color:white" ng-class="{'text-default lt': game.PlayersOpen}"><i class="fa text-sm mr-5" ng-class="{'fa-minus': !game.PlayersOpen, 'fa-plus': game.PlayersOpen}"></i> Players</span><span class="badge pull-right bg-lightred">{{game.Players.length}}</span>
                 </accordion-heading>
                 <table class="table table-no-border m-0 bg-white" style="color: black">
                   <tbody>

@@ -232,6 +232,7 @@ class NetworkService
           if idx isnt -1
             @availableGames[idx] = match
           else
+            match.PlayersOpen = true
             @availableGames[@availableGames.length] = match
             @scope.$broadcast "newGameHosted", match
       availablegamerm: (upd)->
