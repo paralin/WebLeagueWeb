@@ -53,14 +53,14 @@ $scheme-light-color: $transparent-white-8;
 
 #header .branding.scheme-black,
 #sidebar.scheme-black,
-#sidebar.scheme-black #navigation,
+#sidebar.scheme-black .navigation,
 #sidebar.scheme-black #sidebar-wrap:before,
 #header.scheme-black li.toggle-right-sidebar > a,
 #minovate.scheme-black .page-breadcrumb > li:first-child {
   background-color: darken($scheme-black, 5%)!important;
 }
 
-#minovate.black-scheme-color #navigation > li.active > a,
+#minovate.black-scheme-color .navigation > li.active > a,
 #minovate.black-scheme-color #loading-bar .bar {
   background-color: $scheme-black!important;
 }
@@ -75,7 +75,7 @@ $scheme-light-color: $transparent-white-8;
 }
 
 #minovate.black-scheme-color  {
-  #navigation {
+  .navigation {
     .dropdown {
       >ul li {
         &:hover,
@@ -99,7 +99,7 @@ $scheme-light-color: $transparent-white-8;
 .sidebar-xs,
 .hz-menu {
   #sidebar.scheme-black {
-    #navigation {
+    .navigation {
       li {
         &.dropdown,
         &.submenu {
@@ -120,14 +120,14 @@ $scheme-light-color: $transparent-white-8;
 
 #header .branding.scheme-drank,
 #sidebar.scheme-drank,
-#sidebar.scheme-drank #navigation,
+#sidebar.scheme-drank .navigation,
 #sidebar.scheme-drank #sidebar-wrap:before,
 #header.scheme-drank li.toggle-right-sidebar > a,
 #minovate.scheme-drank .page-breadcrumb > li:first-child {
   background-color: $sidebar-default!important;
 }
 
-#minovate.drank-scheme-color #navigation > li.active > a,
+#minovate.drank-scheme-color .navigation > li.active > a,
 #minovate.drank-scheme-color #loading-bar .bar {
   background-color: $scheme-drank!important;
 }
@@ -142,7 +142,7 @@ $scheme-light-color: $transparent-white-8;
 }
 
 #minovate.drank-scheme-color  {
-  #navigation {
+  .navigation {
     .dropdown {
       >ul li {
         &:hover,
@@ -166,7 +166,7 @@ $scheme-light-color: $transparent-white-8;
 .sidebar-xs,
 .hz-menu {
   #sidebar.scheme-drank {
-    #navigation {
+    .navigation {
       li {
         &.dropdown,
         &.submenu {
@@ -187,14 +187,14 @@ $scheme-light-color: $transparent-white-8;
 
 #header .branding.scheme-greensea,
 #sidebar.scheme-greensea,
-#sidebar.scheme-greensea #navigation,
+#sidebar.scheme-greensea .navigation,
 #sidebar.scheme-greensea #sidebar-wrap:before,
 #header.scheme-greensea li.toggle-right-sidebar > a,
 #minovate.scheme-greensea .page-breadcrumb > li:first-child {
   background-color: darken($scheme-greensea, 5%)!important;
 }
 
-#minovate.greensea-scheme-color #navigation > li.active > a,
+#minovate.greensea-scheme-color .navigation > li.active > a,
 #minovate.greensea-scheme-color #loading-bar .bar {
   background-color: $active-default!important;
 }
@@ -209,7 +209,7 @@ $scheme-light-color: $transparent-white-8;
 }
 
 #minovate.greensea-scheme-color  {
-  #navigation {
+  .navigation {
     .dropdown {
       >ul li {
         &:hover,
@@ -233,7 +233,7 @@ $scheme-light-color: $transparent-white-8;
 .sidebar-xs,
 .hz-menu {
   #sidebar.scheme-greensea {
-    #navigation {
+    .navigation {
       li {
         &.dropdown,
         &.submenu {
@@ -254,14 +254,14 @@ $scheme-light-color: $transparent-white-8;
 
 #header .branding.scheme-cyan,
 #sidebar.scheme-cyan,
-#sidebar.scheme-cyan #navigation,
+#sidebar.scheme-cyan .navigation,
 #sidebar.scheme-cyan #sidebar-wrap:before,
 #header.scheme-cyan li.toggle-right-sidebar > a,
 #minovate.scheme-cyan .page-breadcrumb > li:first-child {
   background-color: darken($scheme-cyan, 5%)!important;
 }
 
-#minovate.cyan-scheme-color #navigation > li.active > a,
+#minovate.cyan-scheme-color .navigation > li.active > a,
 #minovate.cyan-scheme-color #loading-bar .bar {
   background-color: $scheme-cyan!important;
 }
@@ -276,7 +276,7 @@ $scheme-light-color: $transparent-white-8;
 }
 
 #minovate.cyan-scheme-color  {
-  #navigation {
+  .navigation {
     .dropdown {
       >ul li {
         &:hover,
@@ -300,7 +300,7 @@ $scheme-light-color: $transparent-white-8;
 .sidebar-xs,
 .hz-menu {
   #sidebar.scheme-cyan {
-    #navigation {
+    .navigation {
       li {
         &.dropdown,
         &.submenu {
@@ -321,14 +321,14 @@ $scheme-light-color: $transparent-white-8;
 
 #header .branding.scheme-lightred,
 #sidebar.scheme-lightred,
-#sidebar.scheme-lightred #navigation,
+#sidebar.scheme-lightred .navigation,
 #sidebar.scheme-lightred #sidebar-wrap:before,
 #header.scheme-lightred li.toggle-right-sidebar > a,
 #minovate.scheme-lightred .page-breadcrumb > li:first-child {
   background-color: darken($scheme-lightred, 5%)!important;
 }
 
-#minovate.lightred-scheme-color #navigation > li.active > a,
+#minovate.lightred-scheme-color .navigation > li.active > a,
 #minovate.lightred-scheme-color #loading-bar .bar {
   background-color: $scheme-lightred!important;
 }
@@ -343,7 +343,7 @@ $scheme-light-color: $transparent-white-8;
 }
 
 #minovate.lightred-scheme-color  {
-  #navigation {
+  .navigation {
     .dropdown {
       >ul li {
         &:hover,
@@ -367,7 +367,7 @@ $scheme-light-color: $transparent-white-8;
 .sidebar-xs,
 .hz-menu {
   #sidebar.scheme-lightred {
-    #navigation {
+    .navigation {
       li {
         &.dropdown,
         &.submenu {
@@ -388,7 +388,7 @@ $scheme-light-color: $transparent-white-8;
 
 #header .branding.scheme-light,
 #sidebar.scheme-light,
-#sidebar.scheme-light #navigation,
+#sidebar.scheme-light .navigation,
 #sidebar.scheme-light #sidebar-wrap:before,
 #header.scheme-light li.toggle-right-sidebar > a {
   background-color: $scheme-light!important;
@@ -503,7 +503,7 @@ $scheme-light-color: $transparent-white-8;
   }
 }
 
-#sidebar.scheme-light #navigation {
+#sidebar.scheme-light .navigation {
 
   >li {
     &.open,
@@ -560,7 +560,7 @@ $scheme-light-color: $transparent-white-8;
   }
 }
 
-#minovate.light-scheme-color #navigation > li.active > a {
+#minovate.light-scheme-color .navigation > li.active > a {
   background-color: $transparent-white-1;
 }
 
@@ -578,7 +578,7 @@ $scheme-light-color: $transparent-white-8;
 }
 
 #minovate.light-scheme-color  {
-  #navigation .dropdown>ul li {
+  .navigation .dropdown>ul li {
     &:hover,
     &.active {
       a {
@@ -596,7 +596,7 @@ $scheme-light-color: $transparent-white-8;
 .hz-menu {
   #sidebar.scheme-light {
     border-right: 0;
-    #navigation {
+    .navigation {
       border-right: 1px solid rgba(0, 0, 0, 0.15);
 
       li {

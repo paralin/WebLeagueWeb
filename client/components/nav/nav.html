@@ -1,7 +1,7 @@
 <div id="sidebar-wrap" ng-controller="NavCtrl">
   <accordion close-others="oneAtTime" slimscroll="{height: '100%'}">
 
-    <accordion-group is-open="status.isSecondOpen" class="charts" ng-class="{'open': status.isSecondOpen, 'closed': !status.isSecondOpen}">
+   <!-- <accordion-group is-open="status.isSecondOpen" class="charts" ng-class="{'open': status.isSecondOpen, 'closed': !status.isSecondOpen}">
       <accordion-heading>
         Quick Profile <i class="fa" ng-class="{'fa-angle-up': status.isSecondOpen, 'fa-angle-down': !status.isSecondOpen}"></i>
       </accordion-heading>
@@ -24,20 +24,15 @@
 
       </div>
 
-    </accordion-group>
+      </accordion-group>-->
 
-    <accordion-group is-open="status.isFirstOpen" ng-class="{'open': status.isFirstOpen, 'closed': !status.isFirstOpen}">
+    <accordion-group is-open="status.isNavOpen" ng-class="{'open': status.isFirstOpen, 'closed': !status.isFirstOpen}">
       <accordion-heading>
         Navigation <i class="fa" ng-class="{'fa-angle-up': status.isFirstOpen, 'fa-angle-down': !status.isFirstOpen}"></i>
       </accordion-heading>
-      <ul id="navigation" nav-collapse ripple>
+      <ul class="navigation" nav-collapse ripple>
         <li ui-sref-active="active"><a ui-sref="panel.dashboard"><fa name="dashboard"></fa> <span>Dashboard</span></a></li>
-        <li ui-sref-active="active" ng-class="{'open':$state.includes('panel.league')}">
-          <a href="#"><fa name="soccer-ball-o"></fa> <span>Your Leagues</span></a>
-          <ul>
-            <li ng-repeat="league in leagues(leagueStore.leagues)" ui-sref-active="active"><a ui-sref="panel.league({id: league._id})"><fa name="caret-right"></fa> {{league.Name}}</a></li>
-          </ul>
-        </li>
+        <li ng-repeat="league in leagues(leagueStore.leagues)" ui-sref-active="active"><a ui-sref="panel.league({id: league._id})"><fa name="soccer-ball-o"></fa> <span>{{league.Name}}</span></a></li>
       </ul>
     </accordion-group>
   </accordion>

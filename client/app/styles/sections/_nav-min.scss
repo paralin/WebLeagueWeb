@@ -51,7 +51,7 @@
       }
     }
 
-    #navigation {
+    .navigation {
       margin: 0 -10px;
       height: 100%;
 
@@ -177,7 +177,7 @@
 
 .sidebar-sm {
   #sidebar,
-  #navigation {
+  .navigation {
     width: 80px;
   }
   #content {
@@ -201,10 +201,10 @@
   }
 
   #sidebar,
-  #navigation {
+  .navigation {
     width: 40px;
   }
-  #sidebar #navigation {
+  #sidebar .navigation {
     >li {
       >a {
         padding: 10px 5px;
@@ -295,7 +295,7 @@
             top: 0;
             z-index: 99;
 
-            #navigation {
+            .navigation {
               >li>a {
                 height: 45px;
                 line-height: 26px;

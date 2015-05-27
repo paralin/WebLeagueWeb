@@ -2,8 +2,7 @@
 angular.module('webleagueApp').controller 'NavCtrl', ($scope, Auth, LeagueStore) ->
   $scope.oneAtATime = false
   $scope.status =
-    isFirstOpen: true
-    isSecondOpen: true
+    isNavOpen: true
   $scope.leagueStore = LeagueStore
   $scope.leagues = (leagues)->
     res = []
@@ -12,5 +11,9 @@ angular.module('webleagueApp').controller 'NavCtrl', ($scope, Auth, LeagueStore)
       league = leagues[lid]
       res.push league if league?
     res
+
+  LeagueStore.getLeagues (leagues)->
+    for league in leagues
+      $scope.status[league+"Open"] = false
 
   return

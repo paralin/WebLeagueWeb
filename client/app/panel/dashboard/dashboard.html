@@ -1,32 +1,76 @@
 <div class="page page-dashboard">
 
-  <div class="pageheader">
+<div class="pageheader">
 
-    <h2>{{page.title}} <span>// {{page.subtitle}}</span></h2>
+  <h2>{{page.title}} <span>// {{page.subtitle}}</span></h2>
 
-    <div class="page-bar">
+  <div class="page-bar">
 
-      <ul class="page-breadcrumb">
-        <li>
-          <a ui-sref="app.dashboard"><i class="fa fa-home"></i> {{main.title}}</a>
-        </li>
-        <li>
-          <a ui-sref="app.dashboard">{{page.title}}</a>
-        </li>
-      </ul>
+    <ul class="page-breadcrumb">
+      <li>
+        <a ui-sref="app.dashboard"><i class="fa fa-home"></i> {{main.title}}</a>
+      </li>
+      <li>
+        <a ui-sref="app.dashboard">{{page.title}}</a>
+      </li>
+    </ul>
 
-      <div class="page-toolbar">
-        <a href="javascript:;" class="btn btn-orange no-border">
-          <i class="fa fa-cogs"></i>&nbsp;&nbsp;<span>Options</span>&nbsp;&nbsp;<i class="fa fa-angle-down"></i>
-        </a>
-      </div>
-
+    <div class="page-toolbar">
+      <a href="javascript:;" class="btn btn-orange no-border">
+        <i class="fa fa-cogs"></i>&nbsp;&nbsp;<span>Options</span>&nbsp;&nbsp;<i class="fa fa-angle-down"></i>
+      </a>
     </div>
 
   </div>
 
-  <!-- cards row -->
-  <div class="row">
+</div>
 
+<!-- cards row -->
+<div class="row">
+  <div class="col-md-4 center-block" ng-if="auth.currentUser.leagues.length==0">
+    <section class="tile tile-simple bg-dutch">
+      <!-- tile body -->
+      <div class="tile-body" style="font-size:40px">
+        <p>You are not in any leagues.</p>
+      </div>
+      <!-- /tile body -->
+
+    </section>
   </div>
+  <div class="card-container col-lg-3" ng-repeat="league in auth.currentUser.leagues">
+    <div class="card">
+      <div class="front bg-slategray">
+
+        <!-- row -->
+        <div class="row">
+          <!-- col -->
+          <div class="col-xs-4">
+            <i class="fa fa-eye fa-4x"></i>
+          </div>
+          <!-- /col -->
+          <!-- col -->
+          <div class="col-xs-8">
+            <p class="text-elg text-strong mb-0">{{getRecord(league)}}</p>
+            <span style="font-size: 20px">FPL: North America</span>
+          </div>
+          <!-- /col -->
+        </div>
+        <!-- /row -->
+
+      </div>
+      <div class="back bg-slategray">
+
+        <!-- row -->
+        <div class="row">
+          <div class="col-xs-12">
+            <a ui-sref="panel.league({id: league})"><i class="fa fa-cog fa-2x"></i> Open</a>
+          </div>
+        </div>
+        <!-- /row -->
+
+      </div>
+    </div>
+  </div>
+
+</div>
 </div>

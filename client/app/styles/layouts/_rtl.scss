@@ -154,7 +154,7 @@
     float: right;
   }
 
-  #navigation {
+  .navigation {
     >li{
       >a{
         >i {
@@ -315,18 +315,18 @@
 
   &.sidebar-sm,
   &.sidebar-xs{
-     #sidebar #navigation > li.dropdown > ul {
+     #sidebar .navigation > li.dropdown > ul {
        left: auto;
        right: 100%;
      }
-    #sidebar #navigation > li li.submenu > ul {
+    #sidebar .navigation > li li.submenu > ul {
       left: auto;
       right: 100%;
     }
   }
 
   &.sidebar-xs {
-    #sidebar #navigation > li > a .badge {
+    #sidebar .navigation > li > a .badge {
       left: auto;
       right: 5px;
     }
