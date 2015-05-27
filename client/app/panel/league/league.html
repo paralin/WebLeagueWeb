@@ -160,8 +160,8 @@
                 <i class="fa fa-gamepad text-muted mr-5"></i>
                 Join as player
               </a>
-              <a href="#" class="list-group-item bg-orange hover">
-                <i class="fa fa-binoculars text-muted mr-5" ng-click="joinGame(game, true)"></i>
+              <a href="#" class="list-group-item bg-orange hover" ng-click="joinGame(game, true)">
+                <i class="fa fa-binoculars text-muted mr-5"></i>
                 Join as spectator
               </a>
             </div>
@@ -191,7 +191,7 @@
                 </accordion-heading>
                 <table class="table table-no-border m-0 bg-white" style="color: black">
                   <tbody>
-                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-purple': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'Team'">
+                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-amethyst': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'Team'">
                       <td>
                         <span ng-if="plyr.Team<2&&game.Info.Status==2">
                           <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
@@ -200,7 +200,7 @@
                       </td>
                       <td ng-class="{bold: plyr.IsCaptain}">{{plyr.Name}}</td>
                       <td><span ng-if="plyr.Hero">{{plyr.Hero.fullName}}</span></td>
-                      <td>{{plyr.Rating}}</td>
+                      <td>{{plyr.Rating==0?"":plyr.Rating}}</td>
                     </tr>
                   </tbody>
                 </table>
