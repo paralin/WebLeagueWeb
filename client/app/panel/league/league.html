@@ -185,13 +185,13 @@
             </div>
 
             <accordion close-others="oneAtATime">
-              <accordion-group is-open="game.PlayersOpen" class="panel-slategray">
+              <accordion-group is-open="!game.PlayersClosed" class="panel-slategray">
                 <accordion-heading>
-                <span style="font-weight:bold;color:white" ng-class="{'text-default lt': !status.tab1.open}"><i class="fa text-sm mr-5" ng-class="{'fa-minus': status.tab1.open, 'fa-plus': !status.tab1.open}"></i> Players</span><span class="badge pull-right bg-lightred">{{game.Players.length}}</span>
+                <span style="font-weight:bold;color:white" ng-class="{'text-default lt': game.PlayersClosed}"><i class="fa text-sm mr-5" ng-class="{'fa-minus': !game.PlayersClosed, 'fa-plus': game.PlayersClosed}"></i> Players</span><span class="badge pull-right bg-lightred">{{game.Players.length}}</span>
                 </accordion-heading>
                 <table class="table table-no-border m-0 bg-white" style="color: black">
                   <tbody>
-                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-purple': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy('Team')">
+                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-purple': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'Team'">
                       <td>
                         <span ng-if="plyr.Team<2&&game.Info.Status==2">
                           <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
