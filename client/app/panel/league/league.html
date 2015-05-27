@@ -177,6 +177,13 @@
               </a>
             </div>
 
+            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="inGame(game)&&!me(game).IsCaptain">
+              <a href="#" class="list-group-item bg-orange hover" ng-click="network.matches.do.leavematch()" ng-if="canCancel(game)">
+                <i class="fa fa-ban text-muted mr-5"></i>
+                Leave Game
+              </a>
+            </div>
+
             <accordion close-others="oneAtATime">
               <accordion-group is-open="game.PlayersOpen" class="panel-slategray">
                 <accordion-heading>
@@ -184,7 +191,7 @@
                 </accordion-heading>
                 <table class="table table-no-border m-0 bg-white" style="color: black">
                   <tbody>
-                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1}" ng-repeat="plyr in game.Players">
+                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-purple': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy('Team')">
                       <td>
                         <span ng-if="plyr.Team<2&&game.Info.Status==2">
                           <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
