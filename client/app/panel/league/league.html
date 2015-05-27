@@ -109,7 +109,7 @@
     <!-- /left side header -->
 
     <!-- left side body -->
-    <div class="p-15 hidden-sm hidden-xs" id="open-games">
+    <div class="p-15 hidden-sm hidden-xs" id="open-games" style="height: 95%;overflow-y:auto">
       <div class="col-lg-12" style="padding:0">
         <!-- tile -->
         <section ng-repeat="game in games(network.availableGames,leagueid)" class="tile bg-slategray" ng-class="{'bg-slategray': !inGame(game), 'bg-red': inGame(game)}" fullscreen="isFullscreen07" style="padding:0">
@@ -191,7 +191,7 @@
                 </accordion-heading>
                 <table class="table table-no-border m-0 bg-white" style="color: black">
                   <tbody>
-                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-drank': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'Team'">
+                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-drank': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'-Team'">
                       <td>
                         <span ng-if="plyr.Team<2&&game.Info.Status==2">
                           <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
