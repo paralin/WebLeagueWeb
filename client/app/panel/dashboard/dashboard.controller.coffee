@@ -2,6 +2,7 @@
 
 angular.module 'webleagueApp'
 .controller 'DashboardCtrl', ($scope, Network, $rootScope, $stateParams, $http, Auth, LeagueStore) ->
+  $scope.leagues = LeagueStore.leagues
   $scope.page =
     title: 'Dashboard',
     subtitle: 'Your home page'
