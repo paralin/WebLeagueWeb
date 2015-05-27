@@ -184,7 +184,7 @@ class NetworkService
         @activeResult = null
         @doReconnect = false
         @hasChallenge = false
-        delete @chats[member] for member in @chats
+        @chats = {}
         @liveMatches.length = 0
         @availableGames.length = 0
         @adminMatches.length = 0
@@ -233,7 +233,7 @@ class NetworkService
             @availableGames[idx] = match
           else
             @availableGames[@availableGames.length] = match
-            @scope.$broadcast "newGameHosted"
+            @scope.$broadcast "newGameHosted", match
       availablegamerm: (upd)->
         for id in upd.ids
           idx = _.findIndex @availableGames, {Id: id}
@@ -293,7 +293,7 @@ class NetworkService
           chat.messages.push
             member: upd.Member
             msg: upd.Text
-            name: @members[upd.Member].Name
+            name: if upd.Member is "system" then "system" else @members[upd.Member].Name
             Auto: upd.Auto
       #add or remove a chat channel
       chatchannelupd: (upd)->
@@ -360,7 +360,7 @@ class NetworkService
           @disconnected = false
           @status = "Connected to the network."
           @attempts = 0
-          delete @chats[member] for member in @chats
+          @chats = {}
           @_activeMatch = null
           @activeResult = null
           @adminMatches.length = 0

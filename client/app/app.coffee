@@ -144,7 +144,7 @@ angular.module 'webleagueApp', [ 'ngAnimate',
   $rootScope.GameModeN =
     0: "None"
     1: "All Pick"
-    2: "Captains Mode"
+    2: "Captain's Mode"
     3: "Ranked Draft"
     4: "Single Draft"
     5: "All Random"

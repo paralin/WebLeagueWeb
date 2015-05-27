@@ -244,3 +244,11 @@ ul.chats {
   overflow: hidden;
   clear: both;
 }
+
+.bg-greensea.hover:hover {
+  background-color: $darken-greensea !important;
+}
+
+.bg-orange.hover:hover {
+  background-color: $darken-orange !important;
+}

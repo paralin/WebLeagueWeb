@@ -33,6 +33,22 @@
   }
 }
 
+#connectStatus
+{
+  position: fixed;
+  top: 52%;
+  width: 100%;
+  text-align: center;
+  color: black;
+  font-size: 20px;
+  visibility: visible;
+}
+
+#connectStatus.hide
+{
+  visibility: hidden;
+}
+
 
 @-webkit-keyframes loaderrotate { 100% { -webkit-transform: rotate(360deg) }}
 @keyframes loaderrotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}

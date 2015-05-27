@@ -21,6 +21,10 @@
       <link rel="stylesheet" href="bower_components/simple-line-icons/css/simple-line-icons.css" />
       <link rel="stylesheet" href="bower_components/angular-bootstrap-nav-tree/dist/abn_tree.css" />
       <link rel="stylesheet" href="bower_components/animate-css/animate.css" />
+      <link rel="stylesheet" href="bower_components/pnotify/pnotify.core.css" />
+      <link rel="stylesheet" href="bower_components/pnotify/pnotify.buttons.css" />
+      <link rel="stylesheet" href="bower_components/pnotify/pnotify.history.css" />
+      <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -35,8 +39,6 @@
     <![endif]-->
 
     <div id="wrap" ui-view="" autoscroll="false"></div>
-
-    <div id="pageloader" page-loader></div>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -78,6 +80,15 @@
       <script src="bower_components/jquery.sparkline/index.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/buzz/dist/buzz.js"></script>
+      <script src="bower_components/pnotify/pnotify.core.js"></script>
+      <script src="bower_components/pnotify/pnotify.buttons.js"></script>
+      <script src="bower_components/pnotify/pnotify.callbacks.js"></script>
+      <script src="bower_components/pnotify/pnotify.confirm.js"></script>
+      <script src="bower_components/pnotify/pnotify.desktop.js"></script>
+      <script src="bower_components/pnotify/pnotify.history.js"></script>
+      <script src="bower_components/pnotify/pnotify.nonblock.js"></script>
+      <script src="bower_components/time-elements/time-elements.js"></script>
+      <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -114,7 +125,6 @@
           <script src="components/directives/navcollapse.js"></script>
           <script src="components/directives/offcanvas-sidebar.js"></script>
           <script src="components/directives/onblurvalidation.js"></script>
-          <script src="components/directives/pageloader.js"></script>
           <script src="components/directives/prettyprint.js"></script>
           <script src="components/directives/ripple.js"></script>
           <script src="components/directives/setnganimate.js"></script>
