@@ -103,12 +103,13 @@
           <li><a href="#" ng-click="createGame(2)">Captain's Mode</a></li>
           <li><a href="#" ng-click="createGame(20)">All Random Deathmatch</a></li>
         </ul>
+        <button class="btn btn-sm btn-default pull-right visible-sm visible-xs ml-5" active-toggle target="#open-games"><i class="fa fa-bars"></i></button>
       </div>
     </div>
     <!-- /left side header -->
 
     <!-- left side body -->
-    <div class="p-15 hidden-sm hidden-xs" id="open-chats">
+    <div class="p-15 hidden-sm hidden-xs" id="open-games">
       <div class="col-lg-12" style="padding:0">
         <!-- tile -->
         <section ng-repeat="game in games(network.availableGames,leagueid)" class="tile bg-slategray" ng-class="{'bg-slategray': !inGame(game), 'bg-red': inGame(game)}" fullscreen="isFullscreen07" style="padding:0">
