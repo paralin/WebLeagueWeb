@@ -149,7 +149,14 @@
   @include chat-color(8, $drank);
 
   .membername {
-    font-size: 18px;
+    font-size: 15px;
+  }
+
+  .chatMember {
+    padding-right: 5px !important;
+    padding-left:10px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
   }
 }
 
