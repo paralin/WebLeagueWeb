@@ -36,10 +36,10 @@ angular.module 'webleagueApp'
       prof.ID = member.ID
       prof.Avatar = member.Avatar
       res.push prof
-    _.sortBy res, (member)-> member.rating
+    _.sortBy res, (member)-> -member.rating
     #res
 
-  $scope.dtOptions = 
+  $scope.dtOptions =
     autoWidth: true
     paging: false
     searching: false
