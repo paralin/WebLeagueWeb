@@ -3,74 +3,80 @@
 <div class="pageheader">
 
   <h2>{{page.title}} <span>// {{page.subtitle}}</span></h2>
-
-  <div class="page-bar">
-
-    <ul class="page-breadcrumb">
-      <li>
-        <a ui-sref="app.dashboard"><i class="fa fa-home"></i> {{main.title}}</a>
-      </li>
-      <li>
-        <a ui-sref="app.dashboard">{{page.title}}</a>
-      </li>
-    </ul>
-
-    <div class="page-toolbar">
-      <a href="javascript:;" class="btn btn-orange no-border">
-        <i class="fa fa-cogs"></i>&nbsp;&nbsp;<span>Options</span>&nbsp;&nbsp;<i class="fa fa-angle-down"></i>
-      </a>
-    </div>
-
-  </div>
-
 </div>
 
 <!-- cards row -->
 <div class="row">
-  <div class="col-md-4 center-block" ng-if="auth.currentUser.leagues.length==0">
-    <section class="tile tile-simple bg-dutch">
+  <div class="col-md-6 col-sm-12" ng-repeat="(id, league) in leagues">
+    <!-- tile -->
+    <section class="tile" fullscreen="isFullscreen06">
+
+      <!-- tile header -->
+      <div class="tile-header dvd dvd-btm">
+        <h1 class="custom-font"><strong>{{league.Name}}</strong></h1>
+        <ul class="controls">
+          <li style="min-width:150px;padding:3px">
+            <ui-select ng-model="league.DashSelectedSeason">
+              <ui-select-match placeholder="Select a season">{{$select.selected.Name}}</ui-select-match>
+              <ui-select-choices repeat="season in addIndexes(league, league.Seasons) track by $index">
+                {{season.Name}}
+              </ui-select-choices>
+            </ui-select>
+          </li>
+
+          <li class="dropdown" dropdown on-toggle="toggled(open)">
+
+            <a href dropdown-toggle class="dropdown-toggle settings"><i class="fa fa-cog"></i></a>
+
+            <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
+              <li>
+                <a href tile-control-toggle>
+                  <span class="minimize"><fa name="angle-down"></fa>&nbsp;&nbsp;&nbsp;Minimize</span>
+                  <span class="expand"><fa name="angle-up"></fa>&nbsp;&nbsp;&nbsp;Expand</span>
+                </a>
+              </li>
+              <li>
+                <a href tile-control-fullscreen ng-click="isFullscreen06 = !isFullscreen06">
+                  <fa name="expand"></fa> Fullscreen
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- /tile header -->
+
       <!-- tile body -->
-      <div class="tile-body" style="font-size:40px">
-        <p>You are not in any leagues.</p>
+      <div class="tile-body table-custom" ng-controller="LeaderboardCtrl">
+
+        <div class="table-responsive">
+          <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-custom">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="member in leagueMembers(league)">
+                <td>{{ $index+1 }}</td>
+                <td>{{ member.Name }}</td>
+                <td>{{ member.wins }}</td>
+                <td>{{ member.losses }}</td>
+                <td>{{ member.rating }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
       <!-- /tile body -->
 
     </section>
+    <!-- /tile -->
   </div>
-  <div class="card-container col-lg-4 col-md-6 col-sm-6" ng-repeat="league in auth.currentUser.leagues">
-    <div class="card">
-      <div class="front bg-slategray">
-
-        <!-- row -->
-        <div class="row">
-          <!-- col -->
-          <div class="col-xs-4">
-            <i class="fa fa-eye fa-4x"></i>
-          </div>
-          <!-- /col -->
-          <!-- col -->
-          <div class="col-xs-8">
-            <p class="text-elg text-strong mb-0">{{getRecord(league)}}</p>
-            <span style="font-size: 20px">{{leagues[league].Name}}</span>
-          </div>
-          <!-- /col -->
-        </div>
-        <!-- /row -->
-
-      </div>
-      <div class="back bg-slategray">
-
-        <!-- row -->
-        <div class="row">
-          <div class="col-xs-12">
-            <a ui-sref="panel.league({id: league})"><i class="fa fa-cog fa-2x"></i> Open</a>
-          </div>
-        </div>
-        <!-- /row -->
-
-      </div>
-    </div>
-  </div>
-
 </div>
 </div>

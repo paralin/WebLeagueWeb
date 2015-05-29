@@ -16,7 +16,7 @@ angular.module('webleagueApp').factory 'LeagueStore', (League, $q, $rootScope) -
       @currentPromise = deferred.promise
       data = League.list =>
         delete @leagues[member] for member in @leagues
-        @leagues[l._id] = l for l in data
+        @leagues[l._id] = JSON.parse(angular.toJson(l)) for l in data
         console.log "Leagues refreshed, #{data.length} leagues."
         @currentPromise = null
         $rootScope.$broadcast('leaguesUpdate', @leagues)
