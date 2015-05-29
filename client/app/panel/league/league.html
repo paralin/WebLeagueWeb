@@ -192,6 +192,9 @@
                       <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
                       <fa ng-if="plyr.Ready" name="check"></fa>
                     </span>
+                    <span ng-if="plyr.Hero">
+                      <i class="d2mh hero-{{plyr.Hero.Id}}"></i>
+                    </span>
                   </td>
                   <td ng-class="{bold: plyr.IsCaptain}">{{plyr.Name}}</td>
                   <td><span ng-if="plyr.Hero">{{plyr.Hero.fullName}}</span></td>
