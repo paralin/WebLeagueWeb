@@ -115,7 +115,7 @@
         <section ng-repeat="game in games(network.availableGames,leagueid)" class="tile bg-slategray" ng-class="{'bg-slategray': !inGame(game), 'bg-red': inGame(game)}" fullscreen="isFullscreen07" style="padding:0">
 
           <!-- tile header -->
-          <div class="tile-header dvd dvd-btm">
+          <div class="tile-header dvd dvd-btm" style="cursor:pointer" tile-control-toggle>
             <h1 class="custom-font"><strong style="padding-right:3px">{{GameModeN[game.Info.GameMode]}}</strong> <span ng-if="game.Info.Status==3"> <time is="time-ago" datetime="{{game.Setup.Details.GameStartTime}}"></time></span></h1>
             <ul class="controls">
               <li class="dropdown" dropdown on-toggle="toggled(open)">
@@ -184,31 +184,23 @@
               </a>
             </div>
 
-            <accordion close-others="oneAtATime">
-              <accordion-group is-open="game.PlayersOpen" class="panel-slategray">
-                <accordion-heading>
-                <span style="font-weight:bold;color:white" ng-class="{'text-default lt': game.PlayersOpen}"><i class="fa text-sm mr-5" ng-class="{'fa-minus': !game.PlayersOpen, 'fa-plus': game.PlayersOpen}"></i> Players</span><span class="badge pull-right bg-lightred">{{game.Players.length}}</span>
-                </accordion-heading>
-                <table class="table table-no-border m-0 bg-white" style="color: black">
-                  <tbody>
-                    <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-drank': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'-Team'">
-                      <td>
-                        <span ng-if="plyr.Team<2&&game.Info.Status==2">
-                          <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
-                          <fa ng-if="plyr.Ready" name="check"></fa>
-                        </span>
-                      </td>
-                      <td ng-class="{bold: plyr.IsCaptain}">{{plyr.Name}}</td>
-                      <td><span ng-if="plyr.Hero">{{plyr.Hero.fullName}}</span></td>
-                      <td>{{plyr.Rating==0?"":plyr.Rating}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </accordion-group>
-            </accordion>
+            <table class="table table-no-border m-0 bg-white" style="color: black">
+              <tbody>
+                <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-drank': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'-Team'">
+                  <td>
+                    <span ng-if="plyr.Team<2&&game.Info.Status==2">
+                      <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
+                      <fa ng-if="plyr.Ready" name="check"></fa>
+                    </span>
+                  </td>
+                  <td ng-class="{bold: plyr.IsCaptain}">{{plyr.Name}}</td>
+                  <td><span ng-if="plyr.Hero">{{plyr.Hero.fullName}}</span></td>
+                  <td>{{plyr.Rating==0?"":plyr.Rating}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <!-- /tile body -->
-
         </section>
         <!-- /tile -->
       </div>
