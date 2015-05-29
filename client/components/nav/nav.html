@@ -5,7 +5,7 @@
         Navigation <i class="fa" ng-class="{'fa-angle-up': status.isFirstOpen, 'fa-angle-down': !status.isFirstOpen}"></i>
       </accordion-heading>
       <ul class="navigation" nav-collapse ripple>
-        <li ui-sref-active="active"><a ui-sref="panel.dashboard"><fa name="list-ol"></fa> <span>Leaderboards</span></a></li>
+        <li ui-sref-active="active"><a ui-sref="panel.leaderboards"><fa name="list-ol"></fa> <span>Leaderboards</span></a></li>
         <li ng-repeat="league in leagues(leagueStore.leagues)" ui-sref-active="active"><a ui-sref="panel.league({id: league._id})"><fa name="soccer-ball-o"></fa> <span>{{league.Name}}</span></a></li>
       </ul>
     </accordion-group>

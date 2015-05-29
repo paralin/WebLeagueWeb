@@ -2,7 +2,7 @@
 
 angular.module 'webleagueApp'
 .config ($stateProvider, $urlRouterProvider) ->
-  $urlRouterProvider.when '/panel', '/panel/dashboard'
+  $urlRouterProvider.when '/panel', '/panel/leaderboards'
   $stateProvider.state 'panel',
     authenticate: true
     url: '/panel'

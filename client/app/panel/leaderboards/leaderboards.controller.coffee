@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'DashboardCtrl', ($scope, Network, $rootScope, $stateParams, $http, Auth, LeagueStore) ->
+.controller 'LeaderboardsCtrl', ($scope, Network, $rootScope, $stateParams, $http, Auth, LeagueStore) ->
   $scope.leagues = LeagueStore.leagues
   $scope.page =
     title: 'Leaderboards',
@@ -29,12 +29,13 @@ angular.module 'webleagueApp'
     id = league._id+":"+season.idx
     res = []
     for mid, member of Network.members
+      continue if !member.LeagueProfiles?
       prof = member.LeagueProfiles[id]
-      if prof?
-        prof.Name = member.Name
-        prof.ID = member.ID
-        prof.Avatar = member.Avatar
-        res.push prof
+      continue if !prof?
+      prof.Name = member.Name
+      prof.ID = member.ID
+      prof.Avatar = member.Avatar
+      res.push prof
     _.sortBy res, (member)-> member.rating
     #res
 
