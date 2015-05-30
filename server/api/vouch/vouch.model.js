@@ -6,9 +6,7 @@ var mongoose = require('mongoose'),
 var VouchSchema = new Schema({
     _id: String,
     name: String,
-    avatar: String,
-    teamname: String,
-    teamavatar: String
+    avatar: String
 });
 
 module.exports = mongoose.model('vouch', VouchSchema);

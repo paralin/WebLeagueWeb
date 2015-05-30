@@ -1,0 +1,108 @@
+<div class="page page-dashboard page-vouch">
+
+<div class="pageheader">
+
+  <h2>Vouch Panel <span>// Control league vouches</span></h2>
+</div>
+
+<!-- cards row -->
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <!-- tile -->
+    <section class="tile" fullscreen="isFullscreen02">
+
+      <!-- tile header -->
+      <div class="tile-header dvd dvd-btm">
+        <h1 class="custom-font"><strong>Edit</strong> Vouch</h1>
+      </div>
+
+      <div class="tile-body">
+        <form role="form">
+          <div class="form-group" ng-class="{'has-success': steamIdValid, 'has-error': !steamIdValid}">
+            <label for="steamIdInput">Steam ID</label>
+            <input type="text" class="form-control" id="steamIdInput" placeholder="SteamID 64bit" ng-model="steamIDC"/>
+          </div>
+          <span ng-if="steamIdValid&&vouch">
+            <div class="form-group">
+              <label for="nameOverride">Name Override</label>
+              <input type="text" class="form-control" id="nameOverride" ng-model="vouch.name"/>
+            </div>
+            <div class="form-group">
+              <label for="avatarOverride">Avatar Override</label>
+              <input type="text" class="form-control" id="avatarOverride" ng-model="vouch.avatar"/>
+            </div>
+            <button ng-click="saveVouch()" class="btn btn-rounded btn-success btn-sm">Update Vouch</button>
+            <button ng-click="deleteVouch()" class="btn btn-rounded btn-danger btn-sm">Unvouch</button>
+          </span>
+          <span ng-if="steamIdValid&&!vouch">
+            <button ng-click="createVouch()" class="btn btn-rounded btn-success btn-sm">Vouch User</button>
+          </span>
+        </form>
+
+      </div>
+      <!-- /tile body -->
+
+    </section>
+    <!-- /tile -->
+  </div>
+
+  <div class="col-md-6 col-sm-12">
+    <section class="tile" fullscreen="isFullscreen01">
+      <div class="tile-header dvd dvd-btm">
+        <h1 class="custom-font"><strong>Vouched</strong> Users</h1>
+      </div>
+
+      <div class="tile-body table-custom" ng-controller="VouchedUsersCtrl">
+        <div class="table-responsive">
+          <table datatable="ng" dt-options="dtOptions" class="table table-custom">
+            <thead>
+              <tr>
+                <th>SteamID</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="profile in profiles">
+                <td>{{ profile.steam.steamid }}</td>
+                <td>{{ profile.profile.name }}</td>
+                <td><button class="btn" ng-click="loadVouch(profile.steam.steamid)">Edit</button>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="col-md-6 col-sm-12">
+    <section class="tile" fullscreen="isFullscreen01">
+      <div class="tile-header dvd dvd-btm">
+        <h1 class="custom-font"><strong>Pending</strong> Vouches</h1>
+      </div>
+
+      <!-- controller here is just for table options -->
+      <div class="tile-body table-custom" ng-controller="VouchedUsersCtrl">
+        <div class="table-responsive">
+          <table datatable="ng" dt-options="dtOptions" class="table table-custom">
+            <thead>
+              <tr>
+                <th>SteamID</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="vouch in vouches">
+                <td>{{ vouch._id }}</td>
+                <td>{{ vouch.name }}</td>
+                <td><button class="btn" ng-click="loadVouch(vouch._id)">Edit</button>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</div>

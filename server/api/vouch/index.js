@@ -10,7 +10,7 @@ function isAuthenticated(req, res, next){
   if(req.user && req.user.authItems && _.contains(req.user.authItems, "vouch")){
     next();
   }else{
-    res.status(401);
+    res.json(401, {error: "not authorized"});
   }
 }
 

@@ -3,6 +3,10 @@ angular.module('webleagueApp').controller 'NavCtrl', ($scope, Auth, LeagueStore)
   $scope.oneAtATime = false
   $scope.status =
     isNavOpen: true
+
+  $scope.canVouch = ->
+    Auth.currentUser? and Auth.currentUser.authItems? and "vouch" in Auth.currentUser.authItems
+
   $scope.leagueStore = LeagueStore
   $scope.leagues = (leagues)->
     res = []

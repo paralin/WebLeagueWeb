@@ -16,8 +16,15 @@ exports.update = function(req, res) {
               }else{
                   vouch = _.extend(vouch, req.body.data);
                   vouch._id = req.params.id;
-                  vouch.save(function(err){
-                      if(err) { return handleError(res, err); }
+                  for(var key in vouch)
+                  {
+                    if(vouch[key] && vouch[key].length == 0) vouch[key] = null;
+                  }
+                  Vouch.update({_id: vouch._id}, vouch.toObject(), function(err){
+                      if(err) {
+                        console.log(err);
+                        return handleError(res, err);
+                      }
                       return res.send(200);
                   });
               }
@@ -29,6 +36,10 @@ exports.update = function(req, res) {
             user.profile.name = user.vouch.name;
           }else{
               user.profile.name = user.steam.personaname;
+          }
+          for(var key in user.vouch)
+          {
+            if(user.vouch[key] && user.vouch[key].length == 0) user.vouch[key] = null;
           }
           user.save(function(err){
               if(err) { return handleError(res, err); }

@@ -163,7 +163,7 @@ angular.module 'webleagueApp', [ 'ngAnimate',
     18: "Ability Draft"
     19: "TI4 Event"
     20: "Deathmatch"
-    21: "Solo Mid"
+    21: "1v1 Mid"
     22: "All Draft"
   $rootScope.GameModeNK = _.invert $rootScope.MatchTypeN
   $rootScope.MatchType =

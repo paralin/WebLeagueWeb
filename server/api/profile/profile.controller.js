@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var User = require('../user/user.model');
 
-var selection = {'profile': 1, 'steam.avatarfull': 1, 'steam.steamid': 1, 'steam.profileurl': 1, 'vouch': 1};
+var selection = {'profile': 1, 'steam.avatarfull': 1, 'steam.steamid': 1, 'steam.profileurl': 1, 'vouch': 1, 'leagues': 1};
 
 // Get list of profiles
 exports.index = function(req, res) {
