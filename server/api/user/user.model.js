@@ -23,7 +23,8 @@ var UserSchema = mongoose.Schema({
   vouch: {
     _id: String,
     name: String,
-    avatar: String
+    avatar: String,
+    leagues: [String]
   },
   steam: {
     steamid: String,
@@ -54,7 +55,6 @@ var UserSchema = mongoose.Schema({
   },
   channels: [String],
   tsuniqueids: [String],
-  leagues: [String],
   tsonetimeid: String
 });
 

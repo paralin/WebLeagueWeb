@@ -32,7 +32,7 @@ exports.status = function(req, res){
       vouch: req.user.vouch,
       settings: req.user.settings,
       tstoken: req.user.tsonetimeid,
-      leagues: req.user.leagues
+      leagues: req.user.vouch.leagues
     };
     var profile = {
       _id: req.user._id,

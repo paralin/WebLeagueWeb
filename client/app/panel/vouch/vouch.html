@@ -31,6 +31,15 @@
               <label for="avatarOverride">Avatar Override</label>
               <input type="text" class="form-control" id="avatarOverride" ng-model="vouch.avatar"/>
             </div>
+            <div class="form-group">
+              <label for="leagueSel">League</label>
+              <ui-select multiple ng-model="vouch.leagues" id="leagueSel">
+                <ui-select-match placeholder="Select leagues...">{{$item}}</ui-select-match>
+                <ui-select-choices repeat="league in availableLeagues()">
+                  {{league}}
+                </ui-select-choices>
+              </ui-select>
+            </div>
             <button ng-click="saveVouch()" class="btn btn-rounded btn-success btn-sm">Update Vouch</button>
             <button ng-click="deleteVouch()" class="btn btn-rounded btn-danger btn-sm">Unvouch</button>
           </span>
@@ -59,13 +68,15 @@
               <tr>
                 <th>SteamID</th>
                 <th>Name</th>
+                <th>Leagues</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="profile in profiles">
+              <tr ng-repeat="profile in vouched(profiles)">
                 <td>{{ profile.steam.steamid }}</td>
                 <td>{{ profile.profile.name }}</td>
+                <td>{{ profile.vouch.leagues }}</td>
                 <td><button class="btn" ng-click="loadVouch(profile.steam.steamid)">Edit</button>
               </tr>
             </tbody>
@@ -96,6 +107,7 @@
               <tr ng-repeat="vouch in vouches">
                 <td>{{ vouch._id }}</td>
                 <td>{{ vouch.name }}</td>
+                <td>{{ vouch.leagues }}</td>
                 <td><button class="btn" ng-click="loadVouch(vouch._id)">Edit</button>
               </tr>
             </tbody>

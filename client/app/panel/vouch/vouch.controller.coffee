@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'VouchCtrl', ($scope, $rootScope, Profile, $state, $http, $filter, SteamID, Vouch) ->
+.controller 'VouchCtrl', ($scope, $rootScope, Profile, $state, $http, $filter, SteamID, Vouch, LeagueStore) ->
   clr = []
   $scope.profiles = []
   $scope.vouches = []
@@ -16,6 +16,14 @@ angular.module 'webleagueApp'
       $scope.loadingVouches = false
   loadVouches()
   loadProfiles()
+
+  $scope.availableLeagues = ->
+    _.keys LeagueStore.leagues
+
+  $scope.vouched = (profiles)->
+    _.filter profiles, (profile)->
+      profile.vouch?
+
   $scope.steamIdValid = false
   currentId = ""
   $scope.loadVouch = (id)->
