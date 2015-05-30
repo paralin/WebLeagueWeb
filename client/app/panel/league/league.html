@@ -185,7 +185,7 @@
 
             <table class="table table-no-border m-0 bg-white" style="color: black">
               <tbody>
-                <tr ng-class="{'bg-greensea': plyr.Team==0, 'bg-red': plyr.Team==1, 'bg-drank': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'-Team'">
+                <tr class="teamMember" ng-class="{'radiant': plyr.Team==0, 'dire': plyr.Team==1, 'observer': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'-Team'">
                   <td>
                     <span ng-if="plyr.Team<2&&game.Info.Status==2">
                       <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>

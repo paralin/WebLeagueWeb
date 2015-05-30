@@ -266,3 +266,27 @@ ul.chats {
   top: 1px;
   -moz-transform: scale(0.5) !important;
 }
+
+tr.teamMember
+{
+  border-width: 2px;
+}
+tr.teamMember.radiant
+{
+  border-style: solid;
+  border-color:$green;
+  border-top-style: none;
+}
+tr.teamMember.dire
+{
+  border-style: solid;
+  border-color:$red;
+  border-top-style: none;
+}
+tr.teamMember.observer
+{
+  border-style: solid;
+  background-color: rgb(252, 226, 255);
+  border-color: $drank;
+  border-top-style: none;
+}
