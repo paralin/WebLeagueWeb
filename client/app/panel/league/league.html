@@ -191,6 +191,12 @@
                       <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
                       <fa ng-if="plyr.Ready" name="check"></fa>
                     </span>
+                    <span ng-if="!plyr.IsCaptain&&game.Info.Status==0&&me(game).IsCaptain">
+                      <fa name="ban" ng-click="kickPlayer(plyr)"></fa>
+                    </span>
+                    <span ng-if="plyr.Team==3&&game.Info.Status==1&&me(game).IsCaptain&&game.Info.CaptainStatus!=me(game).Team" style="cursor:pointer">
+                      <fa name="check-circle-o" ng-click="pickPlayer(plyr)"></fa>
+                    </span>
                     <span ng-if="plyr.Hero">
                       <i class="d2mh hero-{{plyr.Hero.Id}} d2mhsmall"></i>
                     </span>

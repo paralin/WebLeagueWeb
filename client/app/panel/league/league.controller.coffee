@@ -19,6 +19,12 @@ angular.module 'webleagueApp'
   $scope.joinGame = (game, spec)->
     Network.matches.do.joinmatch({Id: game.Id, Spec: spec})
 
+  $scope.kickPlayer = (plyr)->
+    Network.matches.do.kickPlayer(plyr.SID)
+
+  $scope.pickPlayer = (plyr)->
+    Network.matches.do.pickPlayer(plyr.SID)
+
   $scope.canJoinGame = (game)->
     !$scope.me()? and Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems and ("challengeOnly" not in Auth.currentUser.authItems or game.Info.MatchType == 1)
 
