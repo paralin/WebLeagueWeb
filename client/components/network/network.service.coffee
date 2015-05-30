@@ -121,9 +121,9 @@ class NetworkService
             text: err
             type: "error"
           return
-      startchallenge: (tsid, gid, typ)->
+      startchallenge: (tsid, lid, typ)->
         typ = typ || 1
-        @invoke("startchallenge", {ChallengedSID: tsid, GameMode: gid, MatchType: typ}).then (err)->
+        @invoke("startchallenge", {ChallengedSID: tsid, League: lid, MatchType: typ}).then (err)->
           return if !err?
           new PNotify
             title: "Challenge Error"

@@ -1,2 +1,2 @@
-var version = '2.0.27';
+var version = '2.0.28';
 module.exports = version;
