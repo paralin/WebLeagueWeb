@@ -20,7 +20,7 @@ angular.module 'webleagueApp'
     Network.matches.do.joinmatch({Id: game.Id, Spec: spec})
 
   $scope.canJoinGame = (game)->
-    !$scope.me(game)? and Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems and ("challengeOnly" not in Auth.currentUser.authItems or game.Info.MatchType == 1)
+    !$scope.me()? and Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems and ("challengeOnly" not in Auth.currentUser.authItems or game.Info.MatchType == 1)
 
   $scope.gameStatus = (game)->
     switch game.Info.Status
@@ -71,8 +71,16 @@ angular.module 'webleagueApp'
     num = $scope.playerCount(game)/$scope.maxPlayers(game)
     num*100
 
-  $scope.me = (game)->
+  meWithGame = (game)->
     _.findWhere game.Players, {SID: Auth.currentUser.steam.steamid}
+
+  $scope.me = (game)->
+    if !game?
+      for game in Network.availableGames
+        me = meWithGame(game)
+        return me if me?
+    else
+      return meWithGame(game)
 
   $scope.inGame = (game)->
     $scope.me(game)?

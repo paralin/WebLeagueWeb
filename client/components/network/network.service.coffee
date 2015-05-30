@@ -277,15 +277,11 @@ class NetworkService
         delete @members[memb] for memb in @members
         for memb in upd.members
           @members[memb.SteamID] = memb
-        console.log upd
       globalmemberupdate: (upd)->
         memb = @members[upd.id]
         if memb?
           memb[upd.key] = upd.value
-        console.log upd
-        console.log memb
       globalmemberrm: (upd)->
-        console.log upd
       onchatmessage: (upd)->
         chat = @chatByID upd.Id
         if !chat?
@@ -346,7 +342,6 @@ class NetworkService
       if !@conn?
         if !_.contains(@user.authItems, "admin")
           conts = _.without conts, "admin"
-        console.log conts
         @conn = new XSockets.WebSocket @server, conts, {token:@token}
       safeApply = @safeApply
       scope = @scope
