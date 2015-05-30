@@ -192,11 +192,12 @@
                       <fa ng-if="plyr.Ready" name="check"></fa>
                     </span>
                     <span ng-if="plyr.Hero">
-                      <i class="d2mh hero-{{plyr.Hero.Id}}"></i>
+                      <i class="d2mh hero-{{plyr.Hero.Id}} d2mhsmall"></i>
                     </span>
                   </td>
                   <td ng-class="{bold: plyr.IsCaptain}">{{plyr.Name}}</td>
-                  <td><span ng-if="plyr.Hero">{{plyr.Hero.fullName}}</span></td>
+                  <!--<td><span ng-if="plyr.Hero">{{plyr.Hero.fullName}}</span></td>-->
+                  <td></td>
                   <td>{{plyr.Rating==0?"":plyr.Rating}}</td>
                 </tr>
               </tbody>

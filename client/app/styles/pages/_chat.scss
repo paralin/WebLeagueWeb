@@ -259,3 +259,10 @@ ul.chats {
 .bg-orange.hover:hover {
   background-color: $darken-orange !important;
 }
+
+.d2mhsmall {
+  zoom: 0.5 !important;
+  position: relative;
+  top: 1px;
+  -moz-transform: scale(0.5) !important;
+}
