@@ -20,9 +20,12 @@ angular.module 'webleagueApp'
     Network.matches.do.joinmatch({Id: game.Id, Spec: spec})
 
   $scope.kickPlayer = (plyr)->
+    # Play kicked sound for effect
+    $rootScope.playSound "kicked"
     Network.matches.do.kickPlayer(plyr.SID)
 
   $scope.pickPlayer = (plyr)->
+    $rootScope.playSound "buttonPress"
     Network.matches.do.pickPlayer(plyr.SID)
 
   $scope.canJoinGame = (game)->
