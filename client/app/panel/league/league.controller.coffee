@@ -128,7 +128,11 @@ angular.module 'webleagueApp'
         scrollChatToBottom()
 
   jqbind = []
+  $scope.hasLoadedOnce = false
   $scope.$on "$viewContentLoaded", ->
+    return if $scope.hasLoadedOnce
+    $scope.hasLoadedOnce = true
+
     jqbind.push $(window).resize ->
       adjustInputLocation()
 
