@@ -287,6 +287,7 @@ class NetworkService
         if !chat?
           console.log "Message for unknown chat #{upd.Id}"
         else
+          @scope.$broadcast "chatMessage", upd, chat
           chat.messages.push
             member: upd.Member
             msg: upd.Text

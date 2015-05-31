@@ -111,6 +111,22 @@ angular.module 'webleagueApp'
     th = $(".chatBox").width()
     $(".newMessage").css("width", "#{th-30}px")
 
+  chatContainer = -> $(".chatMessageCont")
+
+  scrollChatToBottom = ->
+    $timeout ->
+      ele = chatContainer()[0]
+      ele.scrollTop = ele.scrollHeight+ele.offsetHeight+50
+    , 10, false
+
+  $scope.$on "chatMessage", (eve, upd, chat)->
+    if chat.Name is $scope.leagueid
+      ele = chatContainer()
+      return if ele.length is 0
+      ele = ele[0]
+      if ele.scrollTop > ele.scrollHeight-(ele.offsetHeight+30)
+        scrollChatToBottom()
+
   jqbind = []
   $scope.$on "$viewContentLoaded", ->
     jqbind.push $(window).resize ->
@@ -122,6 +138,7 @@ angular.module 'webleagueApp'
         return false
 
     adjustInputLocation()
+    scrollChatToBottom()
 
   sendMessage = ->
     safeApply $scope, ->
