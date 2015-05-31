@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'VouchCtrl', ($scope, $rootScope, Profile, $state, $http, $filter, SteamID, Vouch, LeagueStore) ->
+.controller 'VouchCtrl', ($scope, $rootScope, Profile, $state, $http, $filter, SteamID, Vouch, LeagueStore, DTColumnDefBuilder) ->
   clr = []
   $scope.profiles = []
   $scope.vouches = []
@@ -125,14 +125,21 @@ angular.module 'webleagueApp'
             title: "Server Error"
             text: "Problem fetching vouch information [#{stat}]."
             type: "error"
-  $scope.$on 'destroy', ->
-    for cl in clr
-      cl()
-    clr.length = 0
 
-.controller 'VouchedUsersCtrl', ($scope, LeagueStore, DTOptionsBuilder, DTColumnDefBuilder, Network)->
   $scope.dtOptions =
     autoWidth: true
     paging: false
     searching: false
     info: false
+
+  $scope.dtColumnDefs = [
+    DTColumnDefBuilder.newColumnDef(0)
+    DTColumnDefBuilder.newColumnDef(1)
+    DTColumnDefBuilder.newColumnDef(2).notSortable()
+    DTColumnDefBuilder.newColumnDef(3).notSortable()
+  ]
+
+  $scope.$on 'destroy', ->
+    for cl in clr
+      cl()
+    clr.length = 0

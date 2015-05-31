@@ -55,15 +55,17 @@
     <!-- /tile -->
   </div>
 
-  <div class="col-md-12 col-sm-12">
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
     <section class="tile" fullscreen="isFullscreen01">
       <div class="tile-header dvd dvd-btm">
         <h1 class="custom-font"><strong>Vouched</strong> Users</h1>
       </div>
 
-      <div class="tile-body table-custom" ng-controller="VouchedUsersCtrl">
+      <div class="tile-body table-custom">
         <div class="table-responsive">
-          <table datatable="ng" dt-options="dtOptions" class="table table-custom">
+          <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-custom">
             <thead>
               <tr>
                 <th>SteamID</th>
@@ -86,16 +88,16 @@
     </section>
   </div>
 
-  <div class="col-md-12 col-sm-12">
+  <div class="col-md-6 col-sm-12">
     <section class="tile" fullscreen="isFullscreen01">
       <div class="tile-header dvd dvd-btm">
         <h1 class="custom-font"><strong>Pending</strong> Vouches</h1>
       </div>
 
       <!-- controller here is just for table options -->
-      <div class="tile-body table-custom" ng-controller="VouchedUsersCtrl">
+      <div class="tile-body table-custom">
         <div class="table-responsive">
-          <table datatable="ng" dt-options="dtOptions" class="table table-custom">
+          <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-custom">
             <thead>
               <tr>
                 <th>SteamID</th>
