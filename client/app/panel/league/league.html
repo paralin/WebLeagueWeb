@@ -13,7 +13,7 @@
     <!-- /right side header -->
 
     <!-- right side body -->
-    <div class="p-15" style="max-height:calc(100% - 118px);overflow:auto;overflow-x:hidden;">
+    <div class="p-15" style="max-height:calc(100% - 50px);overflow:auto;overflow-x:hidden;">
 
       <!-- chats -->
       <ul class="chats p-0">
@@ -65,7 +65,7 @@
     <div class="p-15 hidden-sm hidden-xs" id="open-chats">
 
       <ul class="list-unstyled" id="inbox" style="margin-top: 0">
-        <li ng-repeat="member in chatMembers(chat(network.chats, leagueid))">
+          <li ng-repeat="member in chatMembers(chat(network.chats, leagueid)) | orderBy:'-MemberType'">
           <a href="#" class="active chatMember">
             <div class="media" style="height:23px">
 
@@ -111,10 +111,7 @@
     <!-- left side body -->
     <div class="p-15 hidden-sm hidden-xs" id="open-games" style="height: 95%;overflow-y:auto">
       <div class="col-lg-12" style="padding:0">
-        <!-- tile -->
-        <section ng-repeat="game in games(network.availableGames,leagueid)" class="tile bg-slategray" ng-class="{'bg-slategray': !inGame(game), 'bg-red': inGame(game)}" fullscreen="isFullscreen07" style="padding:0">
-
-          <!-- tile header -->
+        <section ng-repeat="game in games(network.availableGames,leagueid)" class="tile bg-slategray" fullscreen="isFullscreen07" style="padding:0">
           <div class="tile-header dvd dvd-btm" style="cursor:pointer" tile-control-toggle>
             <h1 class="custom-font"><strong style="padding-right:3px">{{GameModeN[game.Info.GameMode]}}</strong> <span ng-if="game.Info.Status==3"> <time is="time-ago" datetime="{{game.Setup.Details.GameStartTime}}"></time></span></h1>
             <!--<ul class="controls">
