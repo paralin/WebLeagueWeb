@@ -10,6 +10,7 @@ angular.module('webleagueApp').controller 'NavCtrl', ($scope, Auth, LeagueStore)
   $scope.leagueStore = LeagueStore
   $scope.leagues = (leagues)->
     res = []
+    return res unless Auth.currentUser? and Auth.currentUser.leagues?
     lids = Auth.currentUser.leagues
     for lid in lids
       league = leagues[lid]
