@@ -26,11 +26,18 @@ angular.module 'webleagueApp'
 
   $scope.steamIdValid = false
   currentId = ""
+
   $scope.loadVouch = (id)->
     console.log id
     currentId = ""
     $scope.steamID = id
     $scope.steamIDC = id
+
+  $scope.formatLeagues = (leagues)->
+    return "none" if !leagues? or leagues.length is 0
+    return leagues[0] if leagues.length is 1
+    leagues[0]+"+"
+
   $scope.deleteVouch = ->
     id = currentId
     $scope.vouch = null

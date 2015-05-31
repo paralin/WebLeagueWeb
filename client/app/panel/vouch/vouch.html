@@ -78,7 +78,7 @@
               <tr ng-repeat="profile in vouched(profiles)">
                 <td>{{ profile.steam.steamid }}</td>
                 <td>{{ profile.profile.name }}</td>
-                <td>{{ profile.vouch.leagues }}</td>
+                <td>{{ formatLeagues(profile.vouch.leagues) }}</td>
                 <td style="padding:1px;padding-left:8px"><button class="btn" ng-click="loadVouch(profile.steam.steamid)">Edit</button>
               </tr>
             </tbody>
