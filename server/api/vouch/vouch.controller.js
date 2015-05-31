@@ -20,7 +20,11 @@ exports.update = function(req, res) {
                   {
                     if(vouch[key] && vouch[key].length == 0) vouch[key] = null;
                   }
-                  Vouch.update({_id: vouch._id}, vouch.toObject(), function(err){
+
+                  var upd = vouch.toObject();
+                  delete upd["_id"];
+
+                  Vouch.update({_id: vouch._id}, upd, function(err){
                       if(err) {
                         console.log(err);
                         return handleError(res, err);
