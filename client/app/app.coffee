@@ -27,6 +27,7 @@ angular.module 'webleagueApp', [ 'ngAnimate',
   'ui.grid.resizeColumns',
   'ui.grid.edit',
   'ui.grid.moveColumns',
+  'luegg.directives'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $tooltipProvider) ->
   $urlRouterProvider.otherwise '/panel'
