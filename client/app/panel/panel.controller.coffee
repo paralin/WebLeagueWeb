@@ -25,8 +25,11 @@ angular.module 'webleagueApp'
   clr.push $rootScope.$on "gameCanceled", (event, game)->
     if game.Info.Status is 0
       $rootScope.playSound "gameCanceled"
-  clr.push $rootScope.$on "newGameHosted", ->
+  playNewGame = _.debounce ->
     $rootScope.playSound "gameHosted"
+  , 1000, {leading: true, trailing: false}
+  clr.push $rootScope.$on "newGameHosted", (eve, match)->
+    playNewGame() if match.Info.League in Auth.currentUser.vouch.leagues
   clr.push $rootScope.$on "lobbyReady", ->
     $rootScope.playSound "lobbyReady"
   clr.push $rootScope.$on "kickedFromSG", ->
