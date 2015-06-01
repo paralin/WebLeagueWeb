@@ -1,6 +1,7 @@
 {
   "name": "webleague",
   "dependencies": {
+    "document-register-element": "~0.4.1",
     "angular": "~1.3.*",
     "json3": "~3.3.1",
     "es5-shim": "~4.1.4",
@@ -35,8 +36,7 @@
     "buzz": "~1.1.10",
     "pnotify": "~2.0.1",
     "time-elements": "~0.4.0",
-    "sweetalert": "~1.0.1",
-    "document-register-element": "~0.4.1"
+    "sweetalert": "~1.0.1"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
