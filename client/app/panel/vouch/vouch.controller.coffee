@@ -136,7 +136,7 @@ angular.module 'webleagueApp'
   $scope.dtOptions =
     autoWidth: true
     paging: false
-    searching: false
+    searching: true
     info: false
 
   $scope.dtColumnDefs = [
