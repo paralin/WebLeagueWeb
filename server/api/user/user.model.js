@@ -55,7 +55,8 @@ var UserSchema = mongoose.Schema({
   },
   channels: [String],
   tsuniqueids: [String],
-  tsonetimeid: String
+  tsonetimeid: String,
+  tsonline: Boolean
 });
 
 /**
