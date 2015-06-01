@@ -55,7 +55,6 @@
     "grunt-open": "~0.2.3",
     "grunt-rev": "~0.1.0",
     "grunt-svgmin": "~0.4.0",
-    "grunt-text-replace": "^0.4.0",
     "grunt-usemin": "~2.1.1",
     "grunt-version": "^1.0.0",
     "grunt-wiredep": "~1.8.0",

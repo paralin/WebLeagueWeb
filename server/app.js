@@ -20,7 +20,7 @@ if(config.seedDB) { require('./config/seed'); }
 // Setup server
 var app = express();
 
-var version = '2.1.3';
+var version = '2.1.5';
 app.locals.build_id = version;
 
 var server = require('http').createServer(app);

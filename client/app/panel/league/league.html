@@ -22,7 +22,7 @@
         <li ng-repeat="message in chat(network.chats, leagueid).messages" class="in">
           <div class="media">
             <div class="media-body c{{member(message.member).MemberType}}" style="margin-left:0;font-size:14px !important">
-              <span class="body"><span class="name c{{member(message.member).MemberType}}">{{message.name}}:</span> <span class="chatMessageText" ng-bind-html="message.msg | linky:'_blank' | twitchy"></span></span>
+              <span class="body"><span class="name c{{member(message.member).MemberType}}">{{message.name}}:</span> <span class="chatMessageText" style="position:relative" ng-bind-html="message.msg | linky:'_blank' | twitchy"></span></span>
             </div>
           </div>
         </li>

@@ -24,7 +24,6 @@
     "angular-ui-select": "~0.12.0",
     "angular-ui-grid": "~3.0.0-RC.18",
     "angular-datatables": "~0.4.0",
-    "angular-twitchy": "~0.0.1",
     "simple-line-icons": "~1.0.0",
     "html.sortable": "~0.2.8",
     "angular-bootstrap-nav-tree": "*",
