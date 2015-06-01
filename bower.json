@@ -35,7 +35,8 @@
     "buzz": "~1.1.10",
     "pnotify": "~2.0.1",
     "time-elements": "~0.4.0",
-    "sweetalert": "~1.0.1"
+    "sweetalert": "~1.0.1",
+    "document-register-element": "~0.4.1"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
