@@ -17,7 +17,8 @@ module.exports = function (grunt) {
     cdnify: 'grunt-google-cdn',
     injector: 'grunt-asset-injector',
     buildcontrol: 'grunt-build-control',
-    version: 'grunt-version'
+    version: 'grunt-version',
+    replace: 'grunt-text-replace'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -455,6 +456,19 @@ module.exports = function (grunt) {
       }
     },
 
+    replace: {
+      dist: {
+        src: [
+          '.tmp/concat/app/vendor.css'
+        ],
+        overwrite: true,
+        replacements: [{
+          from: "../images",
+          to: "/assets/images"
+        }]
+      }
+    },
+
     // Compiles Sass to CSS
     sass: {
       server: {
@@ -582,6 +596,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'ngtemplates',
     'concat',
+    'replace:dist',
     'ngAnnotate',
     'copy:dist',
     'cdnify',
