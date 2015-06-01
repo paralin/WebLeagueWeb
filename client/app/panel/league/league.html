@@ -65,7 +65,7 @@
     <div class="p-15 hidden-sm hidden-xs" id="open-chats">
 
       <ul class="list-unstyled" id="inbox" style="margin-top: 0">
-          <li ng-repeat="member in chatMembers(chat(network.chats, leagueid)) | orderBy:'-MemberType'">
+          <li ng-repeat="member in chatMembers(chat(network.chats, leagueid)) | orderBy:'-MemberType' track by $index">
           <a href="#" class="active chatMember">
             <div class="media" style="height:23px">
 
