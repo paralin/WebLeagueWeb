@@ -10,6 +10,7 @@ var LeagueSchema = mongoose.Schema({
   IsActive: Boolean,
   Archived: Boolean,
   CurrentSeason: Number,
+  Region: Number,
   Seasons: [{
     Name: String,
     Prizepool: Number,
