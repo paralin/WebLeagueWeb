@@ -50,7 +50,7 @@ angular.module 'webleagueApp', [ 'ngAnimate',
       $location.path '/login'
     $q.reject response
 
-.run ($rootScope, $location, Auth, $state, $stateParams, $timeout) ->
+.run ($rootScope, $location, Auth, $state, $stateParams, $timeout, Network) ->
   window.rootScope = $rootScope
   window.main = $rootScope.main =
     title: "FACEIT Pro"
@@ -65,6 +65,10 @@ angular.module 'webleagueApp', [ 'ngAnimate',
 
   $rootScope.$state = $state
   $rootScope.$stateParams = $stateParams
+
+  $rootScope.myMember = ->
+    return if !Auth.currentUser? or Network.disconnected
+    Network.members[Auth.currentUser.steam.steamid] || {}
 
   $rootScope.$on "$stateChangeSuccess", (event, toState)->
     event.targetScope.$watch "$viewContentLoaded", ->
