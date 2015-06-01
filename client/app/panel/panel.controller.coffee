@@ -3,12 +3,29 @@
 angular.module 'webleagueApp'
 .controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state) ->
   clr = []
+
+  meWithGame = (game)->
+    _.findWhere game.Players, {SID: Auth.currentUser.steam.steamid}
+  $scope.me = (game)->
+    if !game?
+      for game in Network.availableGames
+        me = meWithGame(game)
+        return me if me?
+    else
+      return meWithGame(game)
+  $scope.inGame = (game)->
+    $scope.me(game)?
+
   $scope.auth = Auth
   $scope.network = Network
   $scope.state = state = $state
   $scope.chats = Network.chats
   $scope.liveMatches = Network.liveMatches
   $scope.games = Network.availableGames
+  $scope.inAnyGame = ->
+    for game in $scope.games
+      return true if $scope.inGame(game)
+    false
   $scope.notMe = (member)->
     member.SteamID isnt Auth.currentUser.steam.steamid
   $scope.pickPlayer = (event)->
@@ -22,14 +39,11 @@ angular.module 'webleagueApp'
   $scope.toggleSoundMuted = (mute)->
     Auth.currentUser.settings.soundMuted = mute
     Auth.saveSettings()
-  clr.push $rootScope.$on "gameCanceled", (event, game)->
-    if game.Info.Status is 0
-      $rootScope.playSound "gameCanceled"
   playNewGame = _.debounce ->
     $rootScope.playSound "gameHosted"
   , 1000, {leading: true, trailing: false}
   clr.push $rootScope.$on "newGameHosted", (eve, match)->
-    playNewGame() if match.Info.League in Auth.currentUser.vouch.leagues
+    playNewGame() if match.Info.League in Auth.currentUser.vouch.leagues and !$scope.inAnyGame()
   clr.push $rootScope.$on "lobbyReady", ->
     $rootScope.playSound "lobbyReady"
   clr.push $rootScope.$on "kickedFromSG", ->

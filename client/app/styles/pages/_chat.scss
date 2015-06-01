@@ -1,8 +1,20 @@
 .emoteContainer {
   position: relative;
   width: 25px;
-  margin-right: 28px;
 }
+
+.chatInputBox
+{
+  text-align: left;
+  padding: 5px;
+  margin-left: 0;
+  font-size: 14px !important;
+  background-color: white;
+  border: rgb(201, 201, 201);
+  border-width: 1px;
+  border-style: solid;
+}
+
 .chatMessageText .twitch {
   position:absolute;
   top:-6px;
@@ -19,14 +31,14 @@
 
 @mixin chat-color($i, $color)
 {
-    .media-body.c#{$i}
-    {
-      border-left: 3px solid $color !important;
-    }
-    .name.c#{$i}, .membername.c#{$i}
-    {
-      color: $color !important;
-    }
+  .media-body.c#{$i}
+  {
+    border-left: 3px solid $color !important;
+  }
+  .name.c#{$i}, .membername.c#{$i}
+  {
+    color: $color !important;
+  }
 }
 .page-chat {
   #inbox {
@@ -154,7 +166,7 @@
 
 .chatContainer {
   // Spectator
-  @include chat-color(-1, $green);
+  @include chat-color(-1, #399428);
   // Normal
   @include chat-color(0, $blue);
   // Moderator
@@ -281,9 +293,12 @@ ul.chats {
 
 .d2mhsmall {
   zoom: 0.5 !important;
+  -ms-zoom: 0.5 !important;
+  -webkit-zoom: 0.5 !important;
   position: relative;
   top: 1px;
-  -moz-transform: scale(0.5) !important;
+  -moz-transform: scale(0.5, 0.5) !important;
+  -moz-transform-origin: left center;
 }
 
 tr.teamMember

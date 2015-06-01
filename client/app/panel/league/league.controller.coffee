@@ -83,19 +83,6 @@ angular.module 'webleagueApp'
     num = $scope.playerCount(game)/$scope.maxPlayers(game)
     num*100
 
-  meWithGame = (game)->
-    _.findWhere game.Players, {SID: Auth.currentUser.steam.steamid}
-
-  $scope.me = (game)->
-    if !game?
-      for game in Network.availableGames
-        me = meWithGame(game)
-        return me if me?
-    else
-      return meWithGame(game)
-
-  $scope.inGame = (game)->
-    $scope.me(game)?
 
   $scope.chat = (chats, leagueid)->
     _.findWhere _.values(chats), {Name: leagueid}
@@ -111,8 +98,8 @@ angular.module 'webleagueApp'
     Network.members[sid]
 
   adjustInputLocation = ->
-    th = $(".chatBox").width()
-    $(".newMessage").css("width", "#{th-30}px")
+    vh = $(window).height()-180
+    chatContainer().css("height": vh)
 
   chatContainer = -> $(".chatMessageCont")
 
