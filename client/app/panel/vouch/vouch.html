@@ -102,6 +102,7 @@
               <tr>
                 <th>SteamID</th>
                 <th>Name</th>
+                <th>Leagues</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -109,8 +110,10 @@
               <tr ng-repeat="vouch in vouches">
                 <td>{{ vouch._id }}</td>
                 <td>{{ vouch.name }}</td>
-                <td>{{ vouch.leagues }}</td>
-                <td><button class="btn" ng-click="loadVouch(vouch._id)">Edit</button>
+                <td>{{ formatLeagues(vouch.leagues) }}</td>
+                <td style="padding:1px;padding-left:8px">
+                  <button class="btn" ng-click="loadVouch(vouch._id)">Edit</button>
+                </td>
               </tr>
             </tbody>
           </table>
