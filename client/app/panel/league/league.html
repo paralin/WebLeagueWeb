@@ -65,7 +65,7 @@
     <div class="p-15 hidden-sm hidden-xs" id="open-chats">
 
       <ul class="list-unstyled" id="inbox" style="margin-top: 0">
-          <li ng-repeat="member in chatMembers(chat(network.chats, leagueid)) | orderBy:'-MemberType' track by $index">
+          <li ng-repeat="member in chatMembers(chat(network.chats, leagueid)) | orderBy:['-MemberType','Name'] track by $index">
           <a href="#" class="active chatMember">
             <div class="media" style="height:23px">
 
@@ -182,7 +182,7 @@
 
             <table class="table table-no-border m-0 bg-white" style="color: black">
               <tbody>
-                <tr class="teamMember" ng-class="{'radiant': plyr.Team==0, 'dire': plyr.Team==1, 'observer': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:'Team'">
+                <tr class="teamMember" ng-class="{'radiant': plyr.Team==0, 'dire': plyr.Team==1, 'observer': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:['Team','-Rating']">
                   <td>
                     <span ng-if="plyr.Team<2&&game.Info.Status==2">
                       <fa ng-if="!plyr.Ready" name="cog" spin=""></fa>
