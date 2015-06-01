@@ -34,7 +34,10 @@ angular.module 'webleagueApp'
   $scope.gameStatus = (game)->
     switch game.Info.Status
       when 0
-        "Waiting for players..."
+        if game.Setup? and game.Setup.Details?
+          $rootScope.SetupStatusN[game.Setup.Details.Status]
+        else
+          "Waiting for players..."
       when 1
         "Team selection..."
       when 2
