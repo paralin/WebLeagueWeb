@@ -19,7 +19,7 @@ exports.status = function(req, res){
     req.user.profile.winStreak = req.user.profile.winStreak || 0;
     if(!req.user.tsonetimeid)
     {
-      req.user.tsonetimeid = (new chance()).string();
+      req.user.tsonetimeid = (new chance()).word({syllables: 5});
       req.user.save(function(err){
         if(err) console.log("Can't save tsonetimeid, "+err);
       });
