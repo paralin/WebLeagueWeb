@@ -28,9 +28,6 @@ angular.module 'webleagueApp'
     $rootScope.playSound "buttonPress"
     Network.matches.do.pickPlayer(plyr.SID)
 
-  $scope.canJoinGame = (game)->
-    game.Info.Status<3 and !$scope.me()? and Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems and ("challengeOnly" not in Auth.currentUser.authItems or game.Info.MatchType == 1)
-
   $scope.gameStatus = (game)->
     switch game.Info.Status
       when 0

@@ -156,8 +156,8 @@
 
           <!-- tile body -->
           <div class="tile-body p-0">
-            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="canJoinGame(game)">
-              <a href="#" class="list-group-item bg-greensea hover" ng-click="joinGame(game, false)" ng-if="game.Info.Status==0">
+            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="canJoinGame(game)||canObsGame(game)">
+              <a href="#" class="list-group-item bg-greensea hover" ng-click="joinGame(game, false)" ng-if="canObsGame(game)">
                 <i class="fa fa-gamepad text-muted mr-5"></i>
                 Join as player
               </a>
