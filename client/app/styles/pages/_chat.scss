@@ -1,3 +1,8 @@
+.chatMessageText .twitch {
+  position:relative;
+  top:5px;
+}
+
 @mixin chat-color($i, $color)
 {
     .media-body.c#{$i}
