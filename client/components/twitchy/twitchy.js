@@ -39,7 +39,7 @@
 
       prov.emotes.forEach(function(emot){
         var reg = new RegExp(emot, 'g');
-        text = text.replace(reg, "<span style=\"width:25px;position:relative\"><i class=\"twitch "+emot+"\"/></span>");
+        text = text.replace(reg, "<span class='emoteContainer'><i class=\"twitch "+emot+"\"/></span>");
       });
 
       return text;
