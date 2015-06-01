@@ -21,14 +21,14 @@
         <!--<li class="conversation-divider"><span>26.03.2014</span></li>-->
         <li ng-repeat="message in chat(network.chats, leagueid).messages" class="in">
           <div class="media">
-            <div class="media-body c{{member(message.member).MemberType}}" style="margin-left:0">
+            <div class="media-body c{{member(message.member).MemberType}}" style="margin-left:0;font-size:14px !important">
               <span class="body"><span class="name c{{member(message.member).MemberType}}">{{message.name}}:</span> {{message.msg}}</span>
             </div>
           </div>
         </li>
         <li class="in newMessage" style="position:absolute;bottom:10px;padding-right:15px">
           <div class="media">
-            <div class="media-body c2" style="text-align:left;padding:5px;margin-left:0">
+            <div class="media-body c2" style="text-align:left;padding:5px;margin-left:0;font-size:14px !important">
               <div class="mb-40" ng-hide="post" style="margin-bottom:0 !important">
                 <textarea class="chatInput" ng-model="message"></textarea>
               </div>

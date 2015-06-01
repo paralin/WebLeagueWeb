@@ -1,4 +1,4 @@
 (function(){
-  var version = '2.1.0';
+  var version = '2.1.1';
   window.build_id = version;
 })();
