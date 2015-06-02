@@ -18,6 +18,13 @@
 
   <ul class="nav-right pull-right list-inline">
 
+    <li class="notifications" dropdown on-toggle="toggled(open)">
+      <a href="#" ng-click="toggleSoundMuted();$event.stopPropagation();$event.preventDefault();">
+        <fa name="volume-up" ng-if="!auth.currentUser.settings.soundMuted"></fa>
+        <fa name="volume-off" ng-if="auth.currentUser.settings.soundMuted"></fa>
+      </a>
+    </li>
+
     <li class="dropdown nav-profile" dropdown on-toggle="toggled(open)">
 
       <a href class="dropdown-toggle" dropdown-toggle>
@@ -31,9 +38,7 @@
             <fa name="sign-out"></fa>Logout
           </a>
         </li>
-
       </ul>
-
     </li>
 
     <li class="toggle-right-sidebar">

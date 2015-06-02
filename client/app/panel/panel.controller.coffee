@@ -43,8 +43,8 @@ angular.module 'webleagueApp'
   $scope.kickPlayer = (event)->
     Network.matches.do.kickPlayer event.detail.SID
     $rootScope.playSound "kicked"
-  $scope.toggleSoundMuted = (mute)->
-    Auth.currentUser.settings.soundMuted = mute
+  $scope.toggleSoundMuted = ->
+    Auth.currentUser.settings.soundMuted = !Auth.currentUser.settings.soundMuted
     Auth.saveSettings()
   playNewGame = _.debounce ->
     $rootScope.playSound "gameHosted"
