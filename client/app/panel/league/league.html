@@ -116,32 +116,48 @@
     <!-- left side body -->
     <div class="p-15 hidden-sm hidden-xs" id="open-games" style="height: 95%;overflow-y:auto">
       <div class="col-lg-12" style="padding:0">
+
+        <section ng-if="network.activeResult" class="tile bg-slateorange" fullscreen="isFullscreen10" style="padding:0">
+          <div class="tile-header dvd dvd-btm" style="cursor:pointer" tile-control-toggle>
+            <h1 class="custom-font"><strong style="padding-right:3px">Your Match Result</strong></h1>
+          </div>
+
+          <div class="tile-widget" style="padding-top: 0; padding-bottom:0; top: -10px">
+            <div class="title text-lg" style="line-height: 30px">{{resultDesc(network.activeResult)}}</div>
+          </div>
+          <!-- /tile widget -->
+
+          <!-- tile body -->
+          <div class="tile-body p-0">
+            <div class="list-group no-radius no-border" style="margin-bottom:0">
+              <a href="#" class="list-group-item bg-greensea hover" ng-click="dismissResult()">
+                <i class="fa fa-ban text-muted mr-5"></i>
+                Dismiss result
+              </a>
+            </div>
+
+            <table class="table table-no-border m-0 bg-white" style="color: black">
+              <tbody>
+                <tr class="teamMember" ng-class="{'radiant': plyr.Team==0, 'dire': plyr.Team==1}" ng-repeat="plyr in network.activeResult.Players | orderBy:['Team','Name']">
+                  <td>
+                    <span ng-if="plyr.HeroId">
+                      <i class="d2mh hero-{{plyr.HeroId}} d2mhsmall"></i>
+                    </span>
+                  </td>
+                  <td ng-class="{bold: plyr.IsCaptain}">{{plyr.Name}}</td>
+                  <td></td>
+                  <td>{{ratingDelta(network.activeResult, plyr)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /tile body -->
+        </section>
+
         <section ng-repeat="game in games(network.availableGames,leagueid) | orderBy:'Info.Status'" class="tile bg-slategray" fullscreen="isFullscreen07" style="padding:0">
           <div class="tile-header dvd dvd-btm" style="cursor:pointer" tile-control-toggle>
-            <h1 class="custom-font"><strong style="padding-right:3px">{{GameModeN[game.Info.GameMode]}}</strong> <span ng-if="game.Info.Status==3"> <time is="time-ago" datetime="{{game.Setup.Details.GameStartTime}}"></time></span></h1>
-            <!--<ul class="controls">
-              <li class="dropdown" dropdown on-toggle="toggled(open)">
-
-              <a href dropdown-toggle class="dropdown-toggle settings"><i class="fa fa-cog"></i></a>
-
-              <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
-              <li>
-              <a href tile-control-toggle>
-              <span class="minimize"><fa name="angle-down"></fa>&nbsp;&nbsp;&nbsp;Minimize</span>
-              <span class="expand"><fa name="angle-up"></fa>&nbsp;&nbsp;&nbsp;Expand</span>
-              </a>
-              </li>
-              <li>
-              <a href tile-control-fullscreen ng-click="isFullscreen07 = !isFullscreen07">
-              <fa name="expand"></fa> Fullscreen
-              </a>
-              </li>
-
-              </ul>
-              </li>
-              </ul>-->
+            <h1 class="custom-font"><strong style="padding-right:3px">{{GameModeN[game.Info.GameMode]}}</strong> <span ng-if="game.Info.Status==3&&game.Setup&&game.Setup.Details.State>1"> <time is="time-ago" datetime="{{game.Setup.Details.GameStartTime}}"></time></span></h1>
           </div>
-          <!-- /tile header -->
 
           <!-- tile widget -->
           <div class="progress-list" ng-if="game.Info.Status==0">

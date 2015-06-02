@@ -26,6 +26,13 @@ angular.module 'webleagueApp'
     for game in $scope.games
       return true if $scope.inGame(game)
     false
+  $scope.dismissResult = ->
+    Network.matches.do.dismissResult()
+  $scope.ratingDelta = (res, plyr)->
+    return if !res.MatchCounted
+    return res.RatingRadiant if plyr.Team == 0
+    return res.RatingDire if plyr.Team == 1
+    return 0
   $scope.notMe = (member)->
     member.SteamID isnt Auth.currentUser.steam.steamid
   $scope.pickPlayer = (event)->
@@ -79,16 +86,6 @@ angular.module 'webleagueApp'
     else if window.aswal?
       window.aswal()
       window.aswal = null
-  $scope.sortedGameModes = ->
-    _.keys($rootScope.GameModeN).map(Number)
-  $scope.createStartgame = (mod)->
-    Network.matches.do.creatematch
-      GameMode: mod
-  $scope.showRightCont = ->
-    Network.liveMatches.length>0||$scope.games.length>0||$scope.canStartGames()||$scope.isAdminOfGame()||Network.activeResult?||Network.activeMatch?||Network.activeChallenge?
-  $scope.isAdminOfGame = ->
-    return false if !Auth.currentUser? or !Network.activeMatch?
-    Network.activeMatch.Info.Owner is Auth.currentUser.steam.steamid
   $scope.canStartGames = ->
     if Auth.currentUser? && !Network.activeMatch? && Auth.currentUser.authItems?
       'startGames' in Auth.currentUser.authItems and 'spectateOnly' not in Auth.currentUser.authItems and "challengeOnly" not in Auth.currentUser.authItems

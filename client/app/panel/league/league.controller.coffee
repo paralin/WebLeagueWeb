@@ -9,6 +9,16 @@ angular.module 'webleagueApp'
 
   $scope.network = Network
 
+  $scope.resultDesc = (res)->
+    if res.MatchCounted
+      switch res.Result
+        when 0 then "Result unknown!"
+        when 1 then "Radiant victory!"
+        when 2 then "Dire victory!"
+        else "Unknown result."
+    else
+      "Match not counted."
+
   $scope.games = (avail, league)->
     _.filter avail, (g)->
       g.Info.League is league
@@ -49,7 +59,10 @@ angular.module 'webleagueApp'
         if game.Setup?
           stat = game.Setup.Details.Status
           if stat is 4
-            $rootScope.MatchStateN[game.Setup.Details.State]
+            if game.Setup.Details.SpectatorCount > 0
+              game.Setup.Details.SpectatorCount+" spectators."
+            else
+              $rootScope.MatchStateN[game.Setup.Details.State]
           else
             $rootScope.SetupStatusN[stat]
         else
