@@ -1,11 +1,20 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'LeagueCtrl', ($rootScope, $scope, Network, $stateParams, $timeout, LeagueStore, safeApply, Auth) ->
+.controller 'LeagueCtrl', ($rootScope, $scope, Network, $stateParams, $timeout, LeagueStore, safeApply, Auth, $state) ->
   $scope.message = ""
 
   $scope.leagues = LeagueStore.leagues
   $scope.leagueid = $stateParams.id
+
+
+  LeagueStore.getLeagues (leagues)->
+    if !leagues[$scope.leagueid]? or !Auth.currentUser? or !Auth.currentUser.vouch? or $scope.leagueid not in Auth.currentUser.vouch.leagues
+      swal
+        title: "Not Vouched"
+        text: "You are not vouched into \"#{$scope.leagueid}\" or it does not exist."
+        type: "error"
+      $state.go("panel")
 
   $scope.network = Network
 
