@@ -1,7 +1,7 @@
 angular.module('webleagueApp')
 .controller 'RightBarCtrl', ($scope, Network, Auth, $state, $stateParams, LeagueStore)->
   $scope.network = Network
-  $scope.hasLeagues = -> Auth.currentUser.vouch.leagues.length > 0
+  $scope.hasLeagues = -> Auth.currentUser? and Auth.currentUser.vouch? and Auth.currentUser.vouch.leagues? and Auth.currentUser.vouch.leagues.length > 0
 
   $scope.getMembers = (membs, notOffline)->
     res = []

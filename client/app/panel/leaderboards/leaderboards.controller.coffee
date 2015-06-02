@@ -24,6 +24,8 @@ angular.module 'webleagueApp'
 
 .controller 'LeaderboardCtrl', ($scope, LeagueStore, DTOptionsBuilder, DTColumnDefBuilder, Network)->
   $scope.leagueMembers = (league, isntdash)->
+    return [] if !league?
+
     # Get season
     season = null
     seasonidx = null
