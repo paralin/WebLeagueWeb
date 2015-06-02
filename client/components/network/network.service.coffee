@@ -61,8 +61,8 @@ class NetworkService
   methods:
     admin:
       killmatch: (mid)->
-        console.log "kill match #{mid}"
-        @invoke("killmatch", {Id: mid})
+        console.log "kill match #{mid.Id}"
+        @invoke("killmatch", {Id: mid.Id})
     matches:
       ping: ->
         @invoke("ping").then (err)->

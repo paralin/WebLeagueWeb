@@ -18,6 +18,12 @@ angular.module 'webleagueApp'
 
   $scope.network = Network
 
+  $scope.showWatchGame = (game)->
+    swal
+      title: "Watch Game"
+      text: "Console command:<br/><code>watch_server \"#{game.Setup.Details.ServerSteamID}\"</code>"
+      html: true
+
   $scope.resultDesc = (res)->
     if res.MatchCounted
       switch res.Result

@@ -208,6 +208,13 @@
               </a>
             </div>
 
+            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="!inGame(game)&&game.Info.Status==3&&game.Setup&&game.Setup.Details.State>1">
+              <a href="#" class="list-group-item bg-greensea hover" ng-click="showWatchGame(game)">
+                <i class="fa fa-binoculars text-muted mr-5"></i>
+                Watch Game
+              </a>
+            </div>
+
             <table class="table table-no-border m-0 bg-white" style="color: black">
               <tbody>
                 <tr class="teamMember" ng-class="{'radiant': plyr.Team==0, 'dire': plyr.Team==1, 'observer': plyr.Team==2}" ng-repeat="plyr in game.Players | orderBy:['Team','-Rating']">
