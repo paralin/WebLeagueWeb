@@ -67,6 +67,9 @@
   @include box-shadow(0 2px 6px $transparent-black-1);
   border-radius: 0;
 
+  top: initial !important;
+  left: initial !important;
+
   &.with-arrow {
     &:before {
       content: "";

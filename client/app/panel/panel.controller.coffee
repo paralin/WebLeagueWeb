@@ -40,6 +40,8 @@ angular.module 'webleagueApp'
   $scope.pickPlayer = (event)->
     Network.matches.do.pickPlayer event.detail.SID
     $rootScope.playSound "buttonPress"
+  $scope.startChallenge = (member, typ, lid)->
+    Network.matches.do.startchallenge member.SteamID, lid, typ
   $scope.cancelChallenge = ->
     Network.matches.do.cancelChallenge()
   $scope.kickPlayer = (event)->
