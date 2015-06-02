@@ -16,6 +16,8 @@ angular.module 'webleagueApp'
   $scope.inGame = (game)->
     $scope.me(game)?
 
+  $scope.shortId = (game)-> game.Id.substring(0, 4)
+
   $scope.auth = Auth
   $scope.network = Network
   $scope.state = state = $state

@@ -8,13 +8,14 @@ angular.module 'webleagueApp'
   $scope.leagueid = $stateParams.id
 
 
-  LeagueStore.getLeagues (leagues)->
-    if !leagues[$scope.leagueid]? or !Auth.currentUser? or !Auth.currentUser.vouch? or $scope.leagueid not in Auth.currentUser.vouch.leagues
-      swal
-        title: "Not Vouched"
-        text: "You are not vouched into \"#{$scope.leagueid}\" or it does not exist."
-        type: "error"
-      $state.go("panel")
+  Auth.getLoginStatus ->
+    LeagueStore.getLeagues (leagues)->
+      if !leagues[$scope.leagueid]? or !Auth.currentUser? or !Auth.currentUser.vouch? or $scope.leagueid not in Auth.currentUser.vouch.leagues
+        swal
+          title: "Not Vouched"
+          text: "You are not vouched into \"#{$scope.leagueid}\" or it does not exist."
+          type: "error"
+        $state.go("panel")
 
   $scope.network = Network
 
