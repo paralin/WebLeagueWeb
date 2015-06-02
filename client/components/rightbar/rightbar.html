@@ -1,5 +1,23 @@
 <div ng-controller="RightBarCtrl" style="width:100%;height:100%">
-<tabset justified="true">
+<tabset justified="true" ng-if="hasLeagues()">
+  <tab>
+    <tab-heading>
+      <fa name="list-ol"></fa>
+    </tab-heading>
+
+    <h6><strong>{{league().Name}}</strong> Leaderboard</h6>
+      <table class="table table-no-border m-0" ng-controller="LeaderboardCtrl" style="color:white;">
+        <tbody>
+          <tr ng-repeat="member in leagueMembers(league(), true)">
+            <td>{{$index+1}}</td>
+            <td>{{member.Name}}</td>
+            <td>{{member.rating}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+  </tab>
+
   <tab id="users">
     <tab-heading>
       <fa name="users"></fa>
@@ -39,62 +57,8 @@
     </ul>
   </tab>
 
+
   <!--<tab>
-    <tab-heading>
-      <fa name="clock-o"></fa>
-    </tab-heading>
-
-    <h6><strong>Chat</strong> History</h6>
-
-    <ul>
-
-      <li class="online">
-        <div class="media">
-          <a class="pull-left thumb thumb-sm" href="javascript:;">
-            <img class="media-object img-circle" src="images/ici-avatar.jpg" alt>
-          </a>
-          <div class="media-body">
-            <span class="media-heading">Ing. Imrich <strong>Kamarel</strong></span>
-            <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</small>
-            <span class="badge badge-outline status"></span>
-          </div>
-        </div>
-      </li>
-
-      <li class="busy">
-        <div class="media">
-
-          <a class="pull-left thumb thumb-sm" href="javascript:;">
-            <img class="media-object img-circle" src="images/arnold-avatar.jpg" alt>
-          </a>
-          <span class="badge bg-lightred unread">3</span>
-
-          <div class="media-body">
-            <span class="media-heading">Arnold <strong>Karlsberg</strong></span>
-            <small>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</small>
-            <span class="badge badge-outline status"></span>
-          </div>
-
-        </div>
-      </li>
-
-      <li class="offline">
-        <div class="media">
-          <a class="pull-left thumb thumb-sm" href="javascript:;">
-            <img class="media-object img-circle" src="images/peter-avatar.jpg" alt>
-          </a>
-          <div class="media-body">
-            <span class="media-heading">Peter <strong>Kay</strong></span>
-            <small>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit </small>
-            <span class="badge badge-outline status"></span>
-          </div>
-        </div>
-      </li>
-
-    </ul>
-  </tab>
-
-  <tab>
     <tab-heading>
       <fa name="heart"></fa>
     </tab-heading>

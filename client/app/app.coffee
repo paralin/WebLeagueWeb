@@ -61,7 +61,7 @@ angular.module 'webleagueApp', [ 'ngAnimate',
       activeColor: 'scheme-black'
       headerFixed: true
       asideFixed: true
-      rightbarShow: false
+      rightbarShow: true
 
   $rootScope.$state = $state
   $rootScope.$stateParams = $stateParams

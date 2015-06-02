@@ -23,10 +23,18 @@ angular.module 'webleagueApp'
     seasons
 
 .controller 'LeaderboardCtrl', ($scope, LeagueStore, DTOptionsBuilder, DTColumnDefBuilder, Network)->
-  $scope.leagueMembers = (league)->
+  $scope.leagueMembers = (league, isntdash)->
     # Get season
-    season = league.DashSelectedSeason
-    id = league._id+":"+season.idx
+    season = null
+    seasonidx = null
+    if isntdash
+      season = league.Seasons[league.CurrentSeason]
+      seasonidx = league.CurrentSeason
+    else
+      season = league.DashSelectedSeason
+      seasonidx = season.idx
+
+    id = league._id+":"+seasonidx
     res = []
     for mid, member of Network.members
       continue if !member.LeagueProfiles?
