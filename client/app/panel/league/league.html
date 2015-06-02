@@ -172,6 +172,13 @@
 
           <!-- tile body -->
           <div class="tile-body p-0">
+            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="isAdmin()">
+              <a href="#" class="list-group-item bg-red hover" ng-click="deleteGame(game)">
+                <i class="fa fa-ban text-muted mr-5"></i>
+                ADMIN Purge Game
+              </a>
+            </div>
+
             <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="canJoinGame(game)||canObsGame(game)">
               <a href="#" class="list-group-item bg-greensea hover" ng-click="joinGame(game, false)" ng-if="canJoinGame(game)">
                 <i class="fa fa-gamepad text-muted mr-5"></i>

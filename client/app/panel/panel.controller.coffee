@@ -134,6 +134,19 @@ angular.module 'webleagueApp'
       player = (_.findWhere Network.activeMatch.Players, {SID: Auth.currentUser.steam.steamid})
       return false if !player?
       return (player.Team is 2 and Network.activeMatch.Info.Status <= 2) or (Network.activeMatch.Info.Status is 0)
+  $scope.deleteGame = (game)->
+    swal
+      title: "Are you sure?"
+      text: "You are about to close an in-progress game. This will shutdown any bots used and kick out all of the players. No results will be recorded."
+      type: "error"
+      timer: 5000
+      showCancelButton: true
+      confirmButtonColor: "#DD6B55"
+      confirmButtonText: "Close it"
+    , (conf)->
+      Network.admin.do.killmatch(game) if conf
+  $scope.isAdmin = ->
+    Auth.currentUser? and Auth.currentUser.authItems? and "admin" in Auth.currentUser.authItems
   $scope.showTsInfoModal = ->
     $(".tsInfo")[0].open()
   $scope.gameList = ->
