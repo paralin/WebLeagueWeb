@@ -156,7 +156,7 @@
 
         <section ng-repeat="game in games(network.availableGames,leagueid) | orderBy:'Info.Status'" class="tile bg-slategray" fullscreen="isFullscreen07" style="padding:0">
           <div class="tile-header dvd dvd-btm" style="cursor:pointer" tile-control-toggle>
-            <h1 class="custom-font"><strong style="padding-right:3px">{{GameModeN[game.Info.GameMode]}}</strong> <span ng-if="game.Info.Status==3&&game.Setup&&game.Setup.Details.State>1"> <time is="time-ago" datetime="{{game.Setup.Details.GameStartTime}}"></time></span></h1>
+            <h1 class="custom-font" style="width:100%"><strong style="padding-right:3px"><span ng-if="game.Info.Status<3">{{GameModeN[game.Info.GameMode]}}</span></strong> <span ng-if="game.Info.Status==0" style="display:block;float:right">{{playerCount(game)}}/{{maxPlayers(game)}}</span> <span ng-if="game.Info.Status==3&&game.Setup&&game.Setup.Details.State>1"> <time is="time-ago" datetime="{{game.Setup.Details.GameStartTime}}"></time></span></h1>
           </div>
 
           <!-- tile widget -->
