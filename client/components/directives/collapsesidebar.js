@@ -18,16 +18,10 @@ angular.module('webleagueApp')
 
           width = $window.width();
 
-          if (width < 992) {
-            app.addClass('sidebar-sm');
-          } else {
-            app.removeClass('sidebar-sm sidebar-xs');
-          }
+          app.addClass('sidebar-sm');
 
           if (width < 768) {
             app.removeClass('sidebar-sm').addClass('sidebar-xs');
-          } else if (width > 992){
-            app.removeClass('sidebar-sm sidebar-xs');
           } else {
             app.removeClass('sidebar-xs').addClass('sidebar-sm');
           }
@@ -58,7 +52,7 @@ angular.module('webleagueApp')
             app.removeClass('sidebar-sm').addClass('sidebar-xs');
           }
           else if (app.hasClass('sidebar-xs')) {
-            app.removeClass('sidebar-xs');
+            app.removeClass('sidebar-xs').addClass('sidebar-sm');
           }
           else {
             app.addClass('sidebar-sm');
