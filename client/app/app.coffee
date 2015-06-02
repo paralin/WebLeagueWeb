@@ -1,6 +1,5 @@
 'use strict'
 
-ignoreNext = true
 angular.module 'webleagueApp', [ 'ngAnimate',
   'ngCookies',
   'ngResource',
@@ -85,7 +84,6 @@ angular.module 'webleagueApp', [ 'ngAnimate',
   # Redirect to login if route requires auth and you're not logged in
   $rootScope.$on '$stateChangeStart', (event, next) ->
     console.log "Route -> #{next.name}"
-    ignoreNext = false if next.name is "panel"
     Auth.getLoginStatus (user, token) ->
       loggedIn = user?
       if next.authenticate
@@ -96,9 +94,6 @@ angular.module 'webleagueApp', [ 'ngAnimate',
         else if next.name is "login" || next.name is "novouch"
           $location.path "/panel"
           console.log "redirected, #{JSON.stringify user} #{JSON.stringify next}"
-        else if ignoreNext
-          event.preventDefault()
-          ignoreNext = false
 
   $rootScope.$on 'authStatusChange', ->
     Auth.getLoginStatus (user, token) ->
