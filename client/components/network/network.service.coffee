@@ -21,6 +21,7 @@ class NetworkService
   activeResult: null
   hasChallenge: false
   chats: {}
+  pingInterval: null
 
   members: {}
 
@@ -29,7 +30,11 @@ class NetworkService
 
   adminMatches: []
 
-  constructor: (@scope, @timeout, @safeApply, @leagueStore)->
+  constructor: (@scope, @timeout, @safeApply, @leagueStore, @interval)->
+    @pingInterval = @interval =>
+      @matches.do.ping() if !@disconnected && !@connecting
+    , 10000
+
   disconnect: ->
     @connecting = false
     if @conn?
@@ -47,7 +52,7 @@ class NetworkService
           @disconnected = true
           @status = "Reconnecting in 3 seconds, attempt ##{@attempts}..."
         @reconnTimeout = @timeout(=>
-          @reconnTimeout = null 
+          @reconnTimeout = null
           @connect()
         , 3000)
     else
@@ -59,6 +64,10 @@ class NetworkService
         console.log "kill match #{mid}"
         @invoke("killmatch", {Id: mid})
     matches:
+      ping: ->
+        @invoke("ping").then (err)->
+          return if !err?
+          console.log "Can't send ping, #{err}"
       finalizematch: ->
         @invoke("finalizematch").then (err)->
           return if !err?
@@ -402,8 +411,8 @@ class NetworkService
           for game in ms
             @availableGames[@availableGames.length] = game
 
-angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, LeagueStore, safeApply) ->
-  service = new NetworkService $rootScope, $timeout, safeApply, LeagueStore
+angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, LeagueStore, safeApply, $interval) ->
+  service = new NetworkService $rootScope, $timeout, safeApply, LeagueStore, $interval
   checkLogin = ->
     console.log "check login"
     Auth.getLoginStatus (currentUser, currentToken, currentServer)->
