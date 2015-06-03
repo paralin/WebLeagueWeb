@@ -29,8 +29,8 @@ angular.module 'webleagueApp'
     if res.MatchCounted
       switch res.Result
         when 0 then "Result unknown!"
-        when 1 then "Radiant victory!"
-        when 2 then "Dire victory!"
+        when 2 then "Radiant victory!"
+        when 3 then "Dire victory!"
         else "Unknown result."
     else
       "Match not counted."
