@@ -97,6 +97,9 @@ angular.module 'webleagueApp'
   $scope.canCancel = (game)->
     game.Info.Status < 3
 
+  $scope.canLeave = (game)->
+    game.Info.Status == 0
+
   $scope.allReady = (game)->
     for plyr in game.Players
       return false if plyr.Team < 2 and !plyr.Ready
