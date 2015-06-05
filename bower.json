@@ -18,7 +18,6 @@
     "angular-loading-bar": "~0.7.1",
     "angular-ui-router": "~0.2.11",
     "angular-ui-utils": "~0.2.3",
-    "angular-momentjs": "~0.1.8",
     "angular-fullscreen": "~1.0.0",
     "angular-ui-tree": "~2.4.0",
     "angular-ui-select": "~0.12.0",
@@ -35,7 +34,6 @@
     "lodash": "~3.9.3",
     "buzz": "~1.1.10",
     "pnotify": "~2.0.1",
-    "time-elements": "~0.4.0",
     "sweetalert": "~1.0.1"
   },
   "devDependencies": {

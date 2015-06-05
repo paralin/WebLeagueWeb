@@ -192,7 +192,7 @@
               </strong>
               <span ng-if="game.Info.Status==0" style="display:block;float:right">{{playerCount(game)}}/{{maxPlayers(game)}}</span>
               <span ng-if="game.Info.Status==3&&game.Setup&&game.Setup.Details.State>1" style="display:block;float:right">
-                <time is="time-ago" datetime="{{game.Setup.Details.GameStartTime}}"></time>
+                <mins-ago datetime="{{game.Setup.Details.GameStartTime}}"></mins-ago> mins
               </span>
             </h1>
           </div>
