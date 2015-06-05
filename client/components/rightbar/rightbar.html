@@ -8,7 +8,7 @@
     <h6><strong>{{league().Name}}</strong><br/> {{season.Name}}</h6>
     <table class="table table-no-border m-0" ng-controller="LeaderboardCtrl" style="color:white;">
       <tbody>
-        <tr ng-repeat="member in leagueMembers(league(), true, season.sidx)">
+        <tr ng-repeat="member in leagueMembers(league(), true, season.sidx)" tooltip="{{member.wins}}/{{member.losses}} +{{member.winStreak}}" tooltip-placement="left">
           <td>{{$index+1}}</td>
           <td>{{member.Name}}</td>
           <td>{{member.rating}}</td>
