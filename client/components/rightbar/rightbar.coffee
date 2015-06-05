@@ -11,6 +11,7 @@ angular.module('webleagueApp')
       else
         res.push memb if memb.State is 0
     res
+
   $scope.stateClass =
     0: "offline"
     1: "busy"
@@ -25,3 +26,19 @@ angular.module('webleagueApp')
     id = $scope.leagueid()
     return {} if !id?
     LeagueStore.leagues[id]
+
+  $scope.activeSeasons = (league)->
+    seas = [league.CurrentSeason]
+    if league.SecondaryCurrentSeason?
+      seas = _.union seas, league.SecondaryCurrentSeason
+    res = []
+    anySel = false
+    for s in seas
+      league.Seasons[s]
+      se = league.Seasons[s]
+      se.sidx = s
+      anySel = true if se.lbtabsel?
+      res.push se
+    unless anySel
+      res[0].lbtabsel = true
+    res

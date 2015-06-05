@@ -1,20 +1,20 @@
 <div ng-controller="RightBarCtrl" style="width:100%;height:100%">
 <tabset justified="true" ng-if="hasLeagues()">
-  <tab>
+  <tab ng-repeat="season in activeSeasons(league())" active="season.lbtabsel">
     <tab-heading>
       <fa name="list-ol"></fa>
     </tab-heading>
 
-    <h6><strong>{{league().Name}}</strong> Leaderboard</h6>
-      <table class="table table-no-border m-0" ng-controller="LeaderboardCtrl" style="color:white;">
-        <tbody>
-          <tr ng-repeat="member in leagueMembers(league(), true)">
-            <td>{{$index+1}}</td>
-            <td>{{member.Name}}</td>
-            <td>{{member.rating}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <h6><strong>{{league().Name}}</strong><br/> {{season.Name}}</h6>
+    <table class="table table-no-border m-0" ng-controller="LeaderboardCtrl" style="color:white;">
+      <tbody>
+        <tr ng-repeat="member in leagueMembers(league(), true, season.sidx)">
+          <td>{{$index+1}}</td>
+          <td>{{member.Name}}</td>
+          <td>{{member.rating}}</td>
+        </tr>
+      </tbody>
+    </table>
 
   </tab>
 
