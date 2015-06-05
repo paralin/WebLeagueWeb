@@ -20,7 +20,7 @@
         <ul class="chats p-0">
           <!--<li class="text-center"><a href="javascript:;">Load More...</a></li>-->
           <!--<li class="conversation-divider"><span>26.03.2014</span></li>-->
-          <li ng-repeat="message in chat(network.chats, leagueid).messages" class="in">
+          <li ng-repeat="message in chat(network.chats, leagueid).messages" class="in" tooltip="{{msgTime(msg.date)}}" tooltip-placement="left">
             <div class="media">
               <div class="media-body c{{member(message.member).MemberType}}" style="margin-left:0;font-size:14px !important">
                 <span class="body"><span class="name c{{member(message.member).MemberType}}" style="font-weight:bold">{{message.name}}:</span> <span class="chatMessageText" style="position:relative" ng-bind-html="message.msg | linky:'_blank' | twitchy"></span></span>
@@ -98,7 +98,7 @@
     <!-- /left side body -->
   </div>
 
-  <div class="tcol w-xl bg-tr-white lt b-r">
+  <div class="tcol w-280 bg-tr-white lt b-r">
     <!-- left side header-->
     <div class="p-15 bg-white">
 
@@ -118,7 +118,7 @@
     <!-- /left side header -->
 
     <!-- left side body -->
-    <div class="p-15 hidden-sm hidden-xs" id="open-games" style="height: 95%;overflow-y:auto">
+    <div class="hidden-sm hidden-xs" id="open-games" style="height: 95%;overflow-y:auto">
       <div class="col-lg-12" style="padding:0">
 
         <section ng-if="network.activeChallenge" class="tile bg-orange" fullscreen="isFullscreen14" style="padding:0">
@@ -192,7 +192,7 @@
               </strong>
               <span ng-if="game.Info.Status==0" style="display:block;float:right">{{playerCount(game)}}/{{maxPlayers(game)}}</span>
               <span ng-if="game.Info.Status==3&&game.Setup&&game.Setup.Details.State>1" style="display:block;float:right">
-                <mins-ago datetime="{{game.Setup.Details.GameStartTime}}"></mins-ago> mins
+                <mins-ago datetime="{{game.Setup.Details.GameStartTime}}" style="margin-right: 5px"></mins-ago> mins
               </span>
             </h1>
           </div>
@@ -274,7 +274,7 @@
                   <td ng-class="{bold: plyr.IsCaptain}">{{plyr.Name}}</td>
                   <!--<td><span ng-if="plyr.Hero">{{plyr.Hero.fullName}}</span></td>-->
                   <td></td>
-                  <td>{{plyr.Rating==0?"":(plyr.Rating | number)}}</td>
+                  <td>{{plyr.Rating==0?"":(plyr.Rating)}}</td>
                 </tr>
               </tbody>
             </table>

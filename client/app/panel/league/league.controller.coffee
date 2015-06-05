@@ -100,6 +100,9 @@ angular.module 'webleagueApp'
   $scope.canLeave = (game)->
     game.Info.Status == 0
 
+  $scope.msgTime = (date)->
+    moment(date).format "h:mm a"
+
   $scope.allReady = (game)->
     for plyr in game.Players
       return false if plyr.Team < 2 and !plyr.Ready

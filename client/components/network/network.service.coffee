@@ -292,15 +292,20 @@ class NetworkService
           memb[upd.key] = upd.value
       globalmemberrm: (upd)->
       onchatmessage: (upd)->
-        chat = @chatByID upd.Id
+        chat = null
+        if upd.ChatId
+          chat = @chatByID upd.ChatId
+        else
+          chat = @chatByName upd.Channel
         if !chat?
-          console.log "Message for unknown chat #{upd.Id}"
+          console.log "Message for unknown chat #{upd.ChatId || upd.Channel}"
         else
           @scope.$broadcast "chatMessage", upd, chat
           chat.messages.push
             member: upd.Member
             msg: upd.Text
             name: if upd.Member is "system" then "system" else @members[upd.Member].Name
+            date: upd.Date
             Auto: upd.Auto
       #add or remove a chat channel
       chatchannelupd: (upd)->
@@ -397,6 +402,9 @@ class NetworkService
 
   chatByID: (id)->
     @chats[id]
+  chatByName: (name)->
+    _.findWhere(_.values(@chats), {Name: name})
+
   fetchMatches: ->
     #return
     @matches.invoke('getpublicgamelist').then (ms)=>
