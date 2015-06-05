@@ -28,6 +28,7 @@ angular.module('webleagueApp')
     LeagueStore.leagues[id]
 
   $scope.activeSeasons = (league)->
+    return [] if !league?
     seas = [league.CurrentSeason]
     if league.SecondaryCurrentSeason?
       seas = _.union seas, league.SecondaryCurrentSeason
