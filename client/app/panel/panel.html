@@ -1,7 +1,8 @@
-<div id="pageloader" ng-class="{hide: !network.disconnected, animate: network.disconnected}">
+<div id="pageloader" ng-class="{hide: !network.disconnected, animate: network.disconnected}" style="z-index:99999">
   <div class="dot1"></div>
   <div class="dot2"></div>
 </div>
+
 <div id="connectStatus" ng-class="{hide: !network.disconnected}">{{network.status}}</div>
 
 <section ng-include="'components/header/header.html'" id="header" class="{{main.settings.navbarHeaderColor}}"></section>
