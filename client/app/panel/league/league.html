@@ -20,10 +20,10 @@
         <ul class="chats p-0">
           <!--<li class="text-center"><a href="javascript:;">Load More...</a></li>-->
           <!--<li class="conversation-divider"><span>26.03.2014</span></li>-->
-          <li ng-repeat="message in chat(network.chats, leagueid).messages" class="in" tooltip="{{msgTime(msg.date)}}" tooltip-placement="left">
+          <li ng-repeat="message in chat(network.chats, leagueid).messages" class="in">
             <div class="media">
               <div class="media-body c{{member(message.member).MemberType}}" style="margin-left:0;font-size:14px !important">
-                <span class="body"><span class="name c{{member(message.member).MemberType}}" style="font-weight:bold">{{message.name}}:</span> <span class="chatMessageText" style="position:relative" ng-bind-html="message.msg | linky:'_blank' | twitchy"></span></span>
+                <span class="body"><span class="name c{{member(message.member).MemberType}}" style="font-weight:bold" tooltip="{{msgTime(msg.date)}}" tooltip-placement="left">{{message.name}}:</span> <span class="chatMessageText" style="position:relative" ng-bind-html="message.msg | linky:'_blank' | twitchy"></span></span>
               </div>
             </div>
           </li>
