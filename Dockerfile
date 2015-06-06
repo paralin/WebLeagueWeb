@@ -12,6 +12,8 @@ ADD . /build/
 RUN grunt build && cp -r ./node_modules/ ./dist/node_modules/ && mkdir /srv/www/ && cp -r ./dist/* /srv/www/ && rm -rf /build/
 
 WORKDIR /srv/www/
+RUN cp ./node_modules/newrelic/newrelic.js ./newrelic.js && sed -i -e "s/'My Application'/process.env.APP_NAME/g" -e "s/'license key here'/process.env.NEWRELIC_KEY/g" ./newrelic.js
+
 ENV DOMAIN="http://localhost/" NODE_ENV="production" PORT=80
 EXPOSE 80
 CMD node ./server/app.js
