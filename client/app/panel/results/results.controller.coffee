@@ -16,9 +16,9 @@ angular.module 'webleagueApp'
 
   $scope.dtOptions =
     autoWidth: true
-    paging: false
+    paging: true
     searching: false
-    info: false
+    info: true
 
   $scope.leagueRes = (results, lid)->
     _.filter results, {League: lid}
