@@ -228,9 +228,10 @@ angular.module 'webleagueApp', [ 'ngAnimate',
     7: "Quest Complete"
     8: "Reincarnate"
   $rootScope.ResultsName =
-    0: "Unknown"
-    2: "Dire"
-    3: "Radiant"
+    0: "Don't Count"
+    1: "Unknown"
+    2: "Radiant"
+    3: "Dire"
   $rootScope.ResultsIds = [0,2,3]
   $rootScope.SoundsInstances = {}
   for id, url of $rootScope.SoundsURL
