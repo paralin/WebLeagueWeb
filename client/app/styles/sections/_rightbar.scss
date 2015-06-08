@@ -111,7 +111,9 @@
         margin: 0;
 
         >li {
-          margin-bottom: 15px;
+          margin-bottom: 0;
+          cursor: pointer;
+          -moz-cursor: pointer;
 
           &:last-child {
             margin-bottom: 30px;
