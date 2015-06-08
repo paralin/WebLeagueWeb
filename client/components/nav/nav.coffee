@@ -7,6 +7,9 @@ angular.module('webleagueApp').controller 'NavCtrl', ($scope, Auth, LeagueStore)
   $scope.canVouch = ->
     Auth.currentUser? and Auth.currentUser.authItems? and "vouch" in Auth.currentUser.authItems
 
+  $scope.canResult = ->
+    Auth.currentUser? and Auth.currentUser.authItems? and "admin" in Auth.currentUser.authItems
+
   $scope.leagueStore = LeagueStore
   $scope.leagues = (leagues)->
     res = []

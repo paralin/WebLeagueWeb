@@ -227,6 +227,11 @@ angular.module 'webleagueApp', [ 'ngAnimate',
     6: "Culling Blade"
     7: "Quest Complete"
     8: "Reincarnate"
+  $rootScope.ResultsName =
+    0: "Unknown"
+    2: "Dire"
+    3: "Radiant"
+  $rootScope.ResultsIds = [0,2,3]
   $rootScope.SoundsInstances = {}
   for id, url of $rootScope.SoundsURL
     $rootScope.SoundsInstances[id] = new buzz.sound url

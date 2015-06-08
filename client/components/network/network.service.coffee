@@ -63,6 +63,20 @@ class NetworkService
       killmatch: (mid)->
         console.log "kill match #{mid.Id}"
         @invoke("killmatch", {Id: mid.Id})
+      changematchresult: (mid, res, cb)->
+        console.log "Changing match result #{mid} #{res}"
+        @invoke("changeresult", {Id: mid, Result: res}).then (err)->
+          if err?
+            swal
+              title: "Error"
+              text: err
+              type: "error"
+          else
+            swal
+              title: "Changed"
+              text: "Match result updated!"
+              type: "success"
+          cb err
     matches:
       ping: ->
         @invoke("ping").then (err)->

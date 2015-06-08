@@ -1,0 +1,48 @@
+<div class="page page-dashboard page-vouch">
+
+<div class="pageheader">
+  <h2>Results <span>// Control results</span></h2>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-sm-12" ng-repeat="(id, league) in leagues">
+    <section class="tile" fullscreen="isFullscreen01">
+      <div class="tile-header dvd dvd-btm">
+        <h1 class="custom-font"><strong>{{league.Name}}</strong> Results</h1>
+      </div>
+
+      <div class="tile-body table-custom">
+        <div class="table-responsive">
+          <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-custom">
+            <thead>
+              <tr>
+                <th>MatchID</th>
+                <th>Rating Dire</th>
+                <th>Rating Radiant</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="result in leagueRes(results,id)">
+                <td>{{ result._id }}</td>
+                <td>{{ result.RatingDire }}</td>
+                <td>{{ result.RatingRadiant }}</td>
+                <td>
+                    <ui-select ng-model="result.Result" theme="bootstrap" style="width: 100px" ng-disabled="pendingResultChange||MatchType==2" on-select="updateResult(result)">
+                      <ui-select-match placeholder="Unknown">
+                        {{ResultsName[$select.selected]}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="id in ResultsIds">
+                        <div ng-bind-html="ResultsName[id]"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</div>
