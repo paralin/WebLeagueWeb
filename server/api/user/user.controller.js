@@ -11,6 +11,18 @@ var validationError = function(res, err) {
   return res.json(422, err);
 };
 
+exports.clearTsIds = function(req, res){
+  req.user.tsuniqueids = [];
+  req.user.save(function(err){
+    if(err) {
+      console.log("Can't clear TS ids: "+err);
+      res.json(500, {"error": err});
+    }
+    else
+      res.json(200, {});
+  });
+};
+
 exports.status = function(req, res){
   var resp = {};
   resp.isAuthed = req.user != null;

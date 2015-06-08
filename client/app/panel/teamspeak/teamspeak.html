@@ -23,7 +23,9 @@
             <h4 class="mt-40">Your Access Token</h4>
             <p>You will be immediately moved into a channel called <strong>Unknown</strong>. This means that you have not yet linked your FACEIT Pro account and your Teamspeak profile yet.</p>
             <p>Your token is <strong>{{auth.currentUser.tstoken}}</strong> - copy it.</p>
-            <img src="http://i.imgur.com/45fv4JU.png"/>
+            <img src="http://i.imgur.com/45fv4JU.png" style="margin-bottom: 10px"/>
+            <p>If you need to revoke all access to your account on Teamspeak, the following button will do so within 5 minutes:</p>
+            <p><button ng-click="revokeTokens()" class="btn btn-primary btn-border mb-10">Revoke All Access</button></p>
             <p>The server will message you in the text chat asking for your token. Paste it into the chat and press enter.</p>
             <p>If you cannot see the chats, click and drag the bottom line up to expand the text chats.</p>
           </div>

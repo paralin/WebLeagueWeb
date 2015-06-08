@@ -120,6 +120,10 @@
     <!-- left side body -->
     <div class="hidden-sm hidden-xs" id="open-games" style="height:calc(100% - 60px);overflow-y:auto">
       <div class="col-lg-12" style="padding:0">
+        <div class="alert alert-big alert-lightred" style="padding:10px" ng-if="!myMember().TeamspeakOnline">
+          <h4><strong>Please Join Teamspeak</strong></h4>
+          <p>Teamspeak is required for games.</p>
+        </div>
 
         <section ng-if="network.activeChallenge" class="tile bg-orange" fullscreen="isFullscreen14" style="padding:0">
           <div class="tile-header dvd dvd-btm" style="cursor:pointer" tile-control-toggle>
