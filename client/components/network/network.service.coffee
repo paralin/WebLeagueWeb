@@ -30,8 +30,8 @@ class NetworkService
 
   adminMatches: []
 
-  @receivedLastPing = true
-  @notReceivedCount = 0
+  receivedLastPing: true
+  notReceivedCount: 0
 
   constructor: (@scope, @timeout, @safeApply, @leagueStore, @interval)->
     @pingInterval = @interval =>
