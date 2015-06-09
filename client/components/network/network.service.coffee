@@ -30,13 +30,26 @@ class NetworkService
 
   adminMatches: []
 
+  @receivedLastPing = true
+  @notReceivedCount = 0
+
   constructor: (@scope, @timeout, @safeApply, @leagueStore, @interval)->
     @pingInterval = @interval =>
-      @matches.do.ping() if !@disconnected && !@connecting
+      return unless !@disconnected && !@connecting
+      unless @receivedLastPing
+        @notReceivedCount += 1
+        if @notReceivedCount > 2
+          console.log "Not received ping in a while, reconnecting"
+          @disconnect()
+          @connect()
+          return
+      @matches.do.ping(@)
     , 10000
 
   disconnect: ->
     @connecting = false
+    @receivedLastPing = true
+    @notReceivedCount = 0
     if @conn?
       @conn.disconnect()
       @conn = null
@@ -78,8 +91,10 @@ class NetworkService
               type: "success"
           cb err
     matches:
-      ping: ->
+      ping: (self)->
         @invoke("ping").then (err)->
+          self.receivedLastPing = true
+          self.notReceivedCount = 0
           return if !err?
           console.log "Can't send ping, #{err}"
       finalizematch: ->
