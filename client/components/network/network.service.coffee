@@ -312,7 +312,6 @@ class NetworkService
               console.log "Authenticated with auth groups #{auths}"
               @fetchMatches()
       globalmembersnap: (upd)->
-        delete @members[memb] for memb in @members
         for memb in upd.members
           @members[memb.SteamID] = memb
       globalmemberupdate: (upd)->
@@ -320,6 +319,7 @@ class NetworkService
         if memb?
           memb[upd.key] = upd.value
       globalmemberrm: (upd)->
+        delete @members[upd.id]
       onchatmessage: (upd)->
         console.log upd
         chat = null
