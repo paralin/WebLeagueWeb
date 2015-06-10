@@ -41,8 +41,8 @@
       var i = 0;
       prov.emotes.forEach(function(emot){
         var emotx = emot.replace("_", "");
-        var reg = new RegExp(emotx, 'g');
-        text = text.replace(reg, "<span class='emoteContainer' style=margin-right:"+(prov.emotesWidths[i]+4)+"px !important'><i data-hint=\""+emotx+"\" class=\"twitch "+emot+" hint\"/></span>");
+        var reg = new RegExp("\\b"+emotx+"\\b", 'g');
+        text = text.replace(reg, " <span class='emoteContainer' style=margin-right:"+(prov.emotesWidths[i]+4)+"px !important'><i data-hint=\""+emotx+"\" class=\"twitch "+emot+" hint\"/></span> ");
         i++;
       });
 
