@@ -61,17 +61,28 @@
         display: table-cell;
         width: 1%;
 
+        .lbprzrt span {
+          display: none;
+        }
         .ratingh {
-          content: attr(data-rating);
+          .rating {
+            display: inline;
+          }
         }
 
         .prizehov {
-          content: attr(data-prize);
-          color: $green;
+          .prize {
+            display: inline;
+          }
         }
 
         .prizehov:hover {
-          content: attr(data-rating);
+          .prize {
+            display: none;
+          }
+          .rating {
+            display: inline;
+          }
         }
 
         >a {
