@@ -321,6 +321,7 @@ class NetworkService
           memb[upd.key] = upd.value
       globalmemberrm: (upd)->
       onchatmessage: (upd)->
+        console.log upd
         chat = null
         if upd.ChatId
           chat = @chatByID upd.ChatId
