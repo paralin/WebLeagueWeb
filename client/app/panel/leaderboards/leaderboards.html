@@ -68,7 +68,7 @@
                 <td>{{ member.wins }}</td>
                 <td>{{ member.losses }}</td>
                 <td>{{ member.rating }}</td>
-                <td class="prize">{{league.DashSelectedSeason.PrizepoolCurrency}}{{ (calcPrize(league.DashSelectedSeason, $index) == 0) ? "" : (calcPrize(league.DashSelectedSeason, $index) | number)}}</td>
+                <td class="prize">{{ (calcPrize(league.DashSelectedSeason, $index) == 0) ? "" : league.DashSelectedSeason.PrizepoolCurrency }}{{ (calcPrize(league.DashSelectedSeason, $index) == 0) ? "" : (calcPrize(league.DashSelectedSeason, $index) | number)}}</td>
               </tr>
             </tbody>
           </table>
