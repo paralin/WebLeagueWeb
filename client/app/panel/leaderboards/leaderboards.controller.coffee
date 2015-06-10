@@ -23,6 +23,17 @@ angular.module 'webleagueApp'
     seasons
 
 .controller 'LeaderboardCtrl', ($scope, LeagueStore, DTOptionsBuilder, DTColumnDefBuilder, Network)->
+  $scope.totalPrizepool = (dist)->
+    dist.reduce ((pv, cv) ->
+      pv + cv
+    ), 0
+  $scope.calcPrize = (season, idx)->
+    return 0 unless season.PrizepoolDist? and season.PrizepoolDist.length>idx
+    season.PrizepoolDist[idx]
+  $scope.orNum = (n1, n2)->
+    return n2 if n1 is 0
+    n1
+
   $scope.leagueMembers = (league, isntdash, idx)->
     return [] if !league?
 

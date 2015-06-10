@@ -8,13 +8,6 @@ angular.module('webleagueApp')
       pv + cv
     ), 0
 
-  $scope.calcPrize = (season, idx)->
-    return 0 unless season.PrizepoolDist? and season.PrizepoolDist.length>idx
-    season.PrizepoolDist[idx]
-  $scope.orNum = (n1, n2)->
-    return n2 if n1 is 0
-    n1
-
   $scope.getMembers = (membs, notOffline)->
     res = []
     for id, memb of membs
