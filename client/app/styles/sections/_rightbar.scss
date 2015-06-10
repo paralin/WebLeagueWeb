@@ -61,29 +61,6 @@
         display: table-cell;
         width: 1%;
 
-        .lbprzrt span {
-          display: none;
-        }
-        .ratingh {
-          .rating {
-            display: inline;
-          }
-        }
-
-        .prizehov {
-          .prize {
-            display: inline;
-          }
-        }
-
-        .prizehov:hover {
-          .prize {
-            display: none;
-          }
-          .rating {
-            display: inline;
-          }
-        }
 
         >a {
           border-radius: 0;
@@ -128,9 +105,6 @@
         border-bottom: 1px dotted ($transparent-white-15);
         padding-bottom: 10px;
 
-        .prize {
-          color: $green;
-        }
       }
 
       ul {
@@ -275,5 +249,31 @@
         right: -100%;
       }
     }
+  }
+}
+
+.prize {
+  color: $green;
+}
+
+.lbprzrt span {
+  display: none;
+}
+.ratingh {
+  .rating {
+    display: inline;
+  }
+}
+.prizehov {
+  .prize {
+    display: inline;
+  }
+}
+.prizehov:hover {
+  .prize {
+    display: none;
+  }
+  .rating {
+    display: inline;
   }
 }
