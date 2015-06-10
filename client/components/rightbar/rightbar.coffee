@@ -3,6 +3,13 @@ angular.module('webleagueApp')
   $scope.network = Network
   $scope.hasLeagues = -> Auth.currentUser? and Auth.currentUser.vouch? and Auth.currentUser.vouch.leagues? and Auth.currentUser.vouch.leagues.length > 0
 
+  $scope.calcPrize = (season, idx)->
+    return 0 unless season.PrizepoolDist? and season.PrizepoolDist.length>idx
+    season.PrizepoolDist[idx]*season.Prizepool
+  $scope.orNum = (n1, n2)->
+    return n2 if n1 is 0
+    n1
+
   $scope.getMembers = (membs, notOffline)->
     res = []
     for id, memb of membs

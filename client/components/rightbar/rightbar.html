@@ -5,13 +5,13 @@
       <fa name="list-ol"></fa>
     </tab-heading>
 
-    <h6><strong>{{league().Name}}</strong><br/> {{season.Name}}</h6>
+    <h6><strong>{{league().Name}}</strong><br/> {{season.Name}}<br/> <span class="prize">{{season.PrizepoolCurrency}}{{season.Prizepool | number}}</span></h6>
     <table class="table table-no-border m-0" ng-controller="LeaderboardCtrl" style="color:white;">
       <tbody>
         <tr ng-repeat="member in leagueMembers(league(), true, season.sidx)" tooltip="{{member.wins}}/{{member.losses}} +{{member.winStreak}}" tooltip-placement="left">
           <td>{{$index+1}}</td>
           <td>{{member.Name}}</td>
-          <td>{{member.rating}}</td>
+          <td class="{{calcPrize(season, $index)>0 ? 'prizehov' : 'ratingh'}}" data-rating="{{member.rating}}" data-prize="{{calcPrize(season, $index) | number}}"></td>
         </tr>
       </tbody>
     </table>

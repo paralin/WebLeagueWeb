@@ -61,6 +61,19 @@
         display: table-cell;
         width: 1%;
 
+        .ratingh {
+          content: attr(data-rating);
+        }
+
+        .prizehov {
+          content: attr(data-prize);
+          color: $green;
+        }
+
+        .prizehov:hover {
+          content: attr(data-rating);
+        }
+
         >a {
           border-radius: 0;
           border: 0;
@@ -103,6 +116,10 @@
         font-weight: $font-weight-light;
         border-bottom: 1px dotted ($transparent-white-15);
         padding-bottom: 10px;
+
+        .prize {
+          color: $green;
+        }
       }
 
       ul {

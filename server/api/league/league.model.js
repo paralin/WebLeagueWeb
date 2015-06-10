@@ -16,6 +16,7 @@ var LeagueSchema = mongoose.Schema({
     Name: String,
     Prizepool: Number,
     PrizepoolCurrency: String,
+    PrizepoolDist: [Number],
     Start: Date,
     End: Date,
     Ticket: Number
