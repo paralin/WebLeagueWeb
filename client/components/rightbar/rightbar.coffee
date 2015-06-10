@@ -36,7 +36,7 @@ angular.module('webleagueApp')
     return [] if !league?
     seas = [league.CurrentSeason]
     if league.SecondaryCurrentSeason?
-      seas = _.union seas, league.SecondaryCurrentSeason
+      seas = _.union league.SecondaryCurrentSeason, seas
     res = []
     anySel = false
     for s in seas
