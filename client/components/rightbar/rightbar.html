@@ -12,7 +12,7 @@
           <td>{{$index+1}}</td>
           <td>{{member.Name}}</td>
           <td class="lbprzrt {{calcPrize(season, $index)>0 ? 'prizehov' : 'ratingh'}}">
-            <span class="prize">{{calcPrize(season, $index)}}</span>
+            <span class="prize">{{season.PrizepoolCurrency}}{{calcPrize(season, $index) | number:0}}</span>
             <span class="rating">{{member.rating}}</span>
           </td>
         </tr>
