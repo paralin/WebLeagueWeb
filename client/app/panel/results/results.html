@@ -5,7 +5,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6 col-sm-12" ng-repeat="(id, league) in leagues">
+  <div class="col-md-6 col-sm-12" ng-repeat="(id, league) in leagues track by id">
     <section class="tile" fullscreen="isFullscreen01">
       <div class="tile-header dvd dvd-btm">
         <h1 class="custom-font"><strong>{{league.Name}}</strong> Results</h1>
@@ -23,7 +23,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="result in leagueRes(results,id)">
+              <tr ng-repeat="result in leagueRes(results,id) track by result._id">
                 <td>{{ result._id }}</td>
                 <td>{{ result.RatingDire }}</td>
                 <td>{{ result.RatingRadiant }}</td>

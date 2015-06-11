@@ -70,7 +70,7 @@
     <div class="p-15 hidden-sm hidden-xs" id="open-chats" style="max-height:calc(100% - 30px) !important;overflow-y:auto">
 
       <ul class="list-unstyled" id="inbox" style="margin-top: 0">
-        <li ng-repeat="member in chatMembers(chat(network.chats, leagueid)) | orderBy:['-MemberType','Name'] track by $index" dropdown is-open="member.dropOpen" auto-close="always">
+        <li ng-repeat="member in chatMembers(chat(network.chats, leagueid)) | orderBy:['-MemberType','Name'] track by member.ID" dropdown is-open="member.dropOpen" auto-close="always">
           <a href="#" class="active chatMember dropdown-toggle" dropdown-toggle dropdown-append-to-body>
             <div class="media" style="height:23px">
 
@@ -171,7 +171,7 @@
 
             <table class="table table-no-border m-0 bg-white" style="color: black">
               <tbody>
-                <tr class="teamMember" ng-class="{'radiant': plyr.Team==0, 'dire': plyr.Team==1}" ng-repeat="plyr in network.activeResult.Players | orderBy:['Team','Name']">
+                <tr class="teamMember" ng-class="{'radiant': plyr.Team==0, 'dire': plyr.Team==1}" ng-repeat="plyr in network.activeResult.Players | orderBy:['Team','Name'] track by plyr.SID">
                   <td>
                     <span ng-if="plyr.HeroId">
                       <i class="d2mh hero-{{plyr.HeroId}} d2mhsmall"></i>
