@@ -321,7 +321,7 @@ class NetworkService
       globalmemberrm: (upd)->
         delete @members[upd.id]
       onchatmessage: (upd)->
-        console.log upd
+        #console.log upd
         chat = null
         if upd.ChatId
           chat = @chatByID upd.ChatId
@@ -337,6 +337,8 @@ class NetworkService
             name: if upd.Member is "system" then "system" else @members[upd.Member].Name
             date: upd.Date
             Auto: upd.Auto
+          if chat.messages.length > 150
+            chat.messages.splice 0, 1
       #add or remove a chat channel
       chatchannelupd: (upd)->
         for chan in upd.channels
