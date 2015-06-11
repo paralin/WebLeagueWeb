@@ -75,7 +75,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="profile in vouched(profiles)">
+              <tr ng-repeat="profile in vouched(profiles) track by profile.steam.steamid">
                 <td>{{ profile.steam.steamid }}</td>
                 <td>{{ profile.profile.name }}</td>
                 <td>{{ formatLeagues(profile.vouch.leagues) }}</td>
@@ -107,7 +107,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="vouch in vouches">
+              <tr ng-repeat="vouch in vouches track by vouch._id">
                 <td>{{ vouch._id }}</td>
                 <td>{{ vouch.name }}</td>
                 <td>{{ formatLeagues(vouch.leagues) }}</td>
