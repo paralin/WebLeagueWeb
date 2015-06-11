@@ -10,7 +10,7 @@
       <tbody>
         <tr ng-repeat="member in leagueMembers(league(), true, season.sidx)" tooltip="{{member.wins}}/{{member.losses}} +{{member.winStreak}}" tooltip-placement="left">
           <td>{{$index+1}}</td>
-          <td>{{member.Name | limitTo:14}}</td>
+          <td style="overflow:hidden;max-width:100px">{{member.Name}}</td>
           <td class="lbprzrt {{calcPrize(season, $index)>0 ? 'prizehov' : 'ratingh'}}">
             <span class="prize">{{season.PrizepoolCurrency}}{{calcPrize(season, $index) | number:0}}</span>
             <span class="rating">{{member.rating}}</span>
