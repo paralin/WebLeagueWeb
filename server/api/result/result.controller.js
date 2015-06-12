@@ -5,7 +5,7 @@ var Result = require('../result/result.model');
 
 // Get list of results
 exports.index = function(req, res) {
-  Result.find({MatchType: {$ne: 2}}).sort('-_id').select('_id Result League LeagueSeason MatchCounted RatingDire RatingRadiant MatchType MatchCompleted').limit(100).exec(function (err, results) {
+  Result.find({MatchType: {$ne: 2}}).sort('-_id').select('_id Result League LeagueSeason LeagueSecondarySeasons MatchCounted RatingDire RatingRadiant MatchType MatchCompleted').limit(100).exec(function (err, results) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(results);
   });

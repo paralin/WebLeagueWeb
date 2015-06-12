@@ -22,7 +22,11 @@ var ResultSchema = mongoose.Schema({
   RatingRadiant: Number,
   RatingDelta: Number,
   Match: {},
-  MatchCounted: Boolean
+  MatchCounted: Boolean,
+  League: String,
+  LeagueSeason: Number,
+  LeagueSecondarySeasons: [Number],
+
 });
 
 module.exports = mongoose.model('results', ResultSchema, "matchResults");
