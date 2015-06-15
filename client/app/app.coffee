@@ -50,11 +50,13 @@ angular.module 'webleagueApp', [ 'ngAnimate',
     $q.reject response
 
 .run ($rootScope, $location, Auth, $state, $stateParams, $timeout, Network) ->
+  ###
   if navigator.userAgent.toLowerCase().indexOf('firefox') > -1
     swal
       title: "Firefox Unsupported"
       text: "Please use Google Chrome."
       type: "error"
+  ###
 
   $rootScope.main =
     title: "FACEIT Pro"
