@@ -34,12 +34,12 @@ angular.module('webleagueApp')
 
   $scope.activeSeasons = (league)->
     return [] if !league?
-    #seas = [league.CurrentSeason]
-    #if league.SecondaryCurrentSeason?
-    #  seas = _.union league.SecondaryCurrentSeason, seas
-    seas = league.SecondaryCurrentSeason || []
+    seas = [league.CurrentSeason]
     if league.SecondaryCurrentSeason?
-      seas.push league.CurrentSeason unless league.CurrentSeason in seas
+      seas = _.union league.SecondaryCurrentSeason, seas
+   # seas = league.SecondaryCurrentSeason || []
+   # if league.SecondaryCurrentSeason?
+   #   seas.push league.CurrentSeason unless league.CurrentSeason in seas
     res = []
     anySel = false
     for s in seas
