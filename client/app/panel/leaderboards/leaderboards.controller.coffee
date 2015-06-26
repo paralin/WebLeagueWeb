@@ -52,7 +52,7 @@ angular.module 'webleagueApp'
     for mid, member of Network.members
       continue if !member.LeagueProfiles?
       prof = member.LeagueProfiles[id]
-      continue if !prof?
+      continue if !prof? or (prof.wins+prof.losses) == 0
       prof.Name = member.Name
       prof.ID = member.ID
       prof.Avatar = member.Avatar
