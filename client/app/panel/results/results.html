@@ -17,16 +17,12 @@
             <thead>
               <tr>
                 <th>MatchID</th>
-                <th>Rating Dire</th>
-                <th>Rating Radiant</th>
                 <th>Result</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="result in leagueRes(results,id) track by result._id">
                 <td>{{ result._id }}</td>
-                <td>{{ result.RatingDire }}</td>
-                <td>{{ result.RatingRadiant }}</td>
                 <td>
                     <ui-select ng-model="result.Result" theme="bootstrap" style="width: 100px" ng-disabled="pendingResultChange||MatchType==2" on-select="updateResult(result)">
                       <ui-select-match placeholder="Unknown">
