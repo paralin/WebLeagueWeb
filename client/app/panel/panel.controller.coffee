@@ -149,6 +149,17 @@ angular.module 'webleagueApp'
       confirmButtonText: "Close it"
     , (conf)->
       Network.admin.do.killmatch(game) if conf
+  $scope.resultGame = (game, res)->
+    swal
+      title: "Are you sure?"
+      text: "You are about to result an in-progress game. The game will usually end and result itself."
+      type: "error"
+      timer: 5000
+      showCancelButton: true
+      confirmButtonColor: "#DD6B55"
+      confirmButtonText: "Result it"
+    , (conf)->
+      Network.admin.do.resultmatch(game, res) if conf
   $scope.isAdmin = ->
     Auth.currentUser? and Auth.currentUser.authItems? and "admin" in Auth.currentUser.authItems
   $scope.showTsInfoModal = ->

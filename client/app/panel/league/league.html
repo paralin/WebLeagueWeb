@@ -104,15 +104,10 @@
 
       <h3 class="custom-font m-0 mr-5 inline-block">games</h3></span>
 
-      <div class="btn-group pull-right" dropdown>
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" dropdown-toggle>
-          <fa name="plus"></fa> Start game <span class="caret"></span>
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" ng-click="createGame(2)">
+          <fa name="plus"></fa> Start game
         </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#" ng-click="createGame(2)">Captain's Mode</a></li>
-          <li><a href="#" ng-click="createGame(20)">All Random Deathmatch</a></li>
-        </ul>
-        <button class="btn btn-sm btn-default pull-right visible-sm visible-xs ml-5" active-toggle target="#open-games"><i class="fa fa-bars"></i></button>
       </div>
     </div>
     <!-- /left side header -->
@@ -218,6 +213,18 @@
               <a href="#" class="list-group-item bg-red hover" ng-click="deleteGame(game)">
                 <i class="fa fa-ban text-muted mr-5"></i>
                 ADMIN Purge Game
+              </a>
+            </div>
+            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="isAdmin()&&game.Setup!=null&&game.Setup.Details.State == 5">
+              <a href="#" class="list-group-item bg-orange hover" ng-click="resultGame(game, 2)">
+                <i class="fa fa-ban text-muted mr-5"></i>
+                ADMIN Result Radiant
+              </a>
+            </div>
+            <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="isAdmin()&&game.Setup!=null&&game.Setup.Details.State == 5">
+              <a href="#" class="list-group-item bg-orange hover" ng-click="resultGame(game, 3)">
+                <i class="fa fa-ban text-muted mr-5"></i>
+                ADMIN Result Dire
               </a>
             </div>
 
