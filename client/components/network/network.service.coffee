@@ -79,6 +79,9 @@ class NetworkService
       resultmatch: (mid, res)->
         console.log "result match #{mid.Id}"
         @invoke("resultmatch", {Id: mid.Id, Result: res})
+      recalculatematchresult: (mid, res, cb)->
+        @invoke("recalculateresult", {Id: mid}).then ->
+          cb()
       changematchresult: (mid, res, cb)->
         console.log "Changing match result #{mid} #{res}"
         @invoke("changeresult", {Id: mid, Result: res}).then (err)->

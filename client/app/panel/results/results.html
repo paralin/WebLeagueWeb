@@ -17,12 +17,14 @@
             <thead>
               <tr>
                 <th>MatchID</th>
+                <th>Season</th>
                 <th>Result</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="result in leagueRes(results,id) track by result._id">
                 <td>{{ result._id }}</td>
+                <td>{{ result.LeagueSeason }}</td>
                 <td>
                     <ui-select ng-model="result.Result" theme="bootstrap" style="width: 100px" ng-disabled="pendingResultChange||MatchType==2" on-select="updateResult(result)">
                       <ui-select-match placeholder="Unknown">
@@ -32,6 +34,9 @@
                         <div ng-bind-html="ResultsName[id]"></div>
                       </ui-select-choices>
                     </ui-select>
+                </td>
+                <td>
+                  <button ng-disabled="result.recalc" class="btn btn-warning" ng-click="result.recalc=true&&recalcResult(result)">Recalculate</button>
                 </td>
               </tr>
             </tbody>

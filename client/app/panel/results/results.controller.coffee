@@ -30,9 +30,14 @@ angular.module 'webleagueApp'
       if !err?
         loadResults()
 
+  $scope.recalcResult = (result)->
+    Network.admin.do.recalculatematchresult result._id, (err)->
+      console.log err
+
   $scope.dtColumnDefs = [
     DTColumnDefBuilder.newColumnDef(0)
     DTColumnDefBuilder.newColumnDef(1).notSortable()
+    DTColumnDefBuilder.newColumnDef(2).notSortable()
   ]
 
   $scope.$on 'destroy', ->
