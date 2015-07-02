@@ -31,8 +31,7 @@ angular.module 'webleagueApp'
         loadResults()
 
   $scope.recalcResult = (result)->
-    Network.admin.do.recalculatematchresult result._id, (err)->
-      console.log err
+    Network.admin.invoke("recalculatematch", {Id: result._id})
 
   $scope.dtColumnDefs = [
     DTColumnDefBuilder.newColumnDef(0)
