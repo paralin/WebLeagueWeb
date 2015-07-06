@@ -105,6 +105,22 @@ exports.list = function(req, res){
     });
 };
 
+exports.listhuman = function(req, res){
+  var vouches;
+  Vouch.find({}, function(err, vos){
+    if(err) { return handleError(res, err); }
+    vouches = vos;
+    User.find({vouch: {$ne: null}}, function(err, usrs)
+    {
+      if(err) { return handleError(res, err); }
+      usrs.forEach(function(usr){
+        vouches.push(usr.vouch);
+      });
+      res.json(vouches);
+    });
+  });
+};
+
 exports.create = function(req, res) {
     //See if the user exists
     User.findOne({'steam.steamid': req.params.id}, 'vouch', function(err, user){
