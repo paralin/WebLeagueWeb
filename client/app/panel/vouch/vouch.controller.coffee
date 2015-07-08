@@ -50,8 +50,6 @@ angular.module 'webleagueApp'
         $scope.loadingVouch = false
         $scope.steamID = ""
         $scope.steamIDC = ""
-        loadVouches()
-        loadProfiles()
       .error (err, stat)->
         swal
           title: "Can't Delete Vouch"
@@ -64,8 +62,6 @@ angular.module 'webleagueApp'
           title: "Vouch Updated"
           text: "Your changes will take effect when they refresh/sign in."
           type: "success"
-        loadProfiles()
-        loadVouches()
       .error (err, stat)->
         swal
           title: "Can't Update"
@@ -79,8 +75,6 @@ angular.module 'webleagueApp'
       .success (data)->
         $scope.loadingVouch = false
         $scope.vouch = data
-        loadVouches()
-        loadProfiles()
       .error (err, stat)->
         swal
           title: "Can't Create Vouch"
