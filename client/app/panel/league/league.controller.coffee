@@ -123,7 +123,8 @@ angular.module 'webleagueApp'
     return [] if !chat?
     res = []
     for member in chat.Members
-      res.push Network.members[member]
+      memb = Network.members[member]
+      res.push memb if memb?
     res
 
   $scope.member = (sid)->
