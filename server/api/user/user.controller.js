@@ -84,7 +84,7 @@ exports.list = function(req, res)
   // Validate login
   if(req.user && req.user.authItems.indexOf("admin") != -1)
   {
-    User.find({}, function(err, users){
+    User.find({}).select('steam.steamid profile.name').exec(function(err, users){
       if(err)
       {
         res.json(500, {error: 500, text: "internal server error"});
