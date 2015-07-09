@@ -4,18 +4,6 @@ angular.module 'webleagueApp'
 .controller 'PanelCtrl', ($rootScope, $scope, Auth, Network, safeApply, $state) ->
   clr = []
 
-  meWithGame = (game)->
-    _.findWhere game.Players, {SID: Auth.currentUser.steam.steamid}
-  $scope.me = (game)->
-    if !game?
-      for game in Network.availableGames
-        me = meWithGame(game)
-        return me if me?
-    else
-      return meWithGame(game)
-  $scope.inGame = (game)->
-    $scope.me(game)?
-
   $scope.shortId = (game)-> game.Id.substring(0, 4)
 
   $scope.auth = Auth
@@ -129,7 +117,7 @@ angular.module 'webleagueApp'
     return false if !Auth.currentUser? or !Network.activeMatch?
     (_.findIndex game.Players, {SID: Auth.currentUser.steam.steamid}) != -1
   $scope.canJoinGame = (game)->
-    !$scope.inAnyGame() and game.Info.Status is 0 and Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems and ("challengeOnly" not in Auth.currentUser.authItems or game.Info.MatchType == 1)
+    !$scope.inAnyGame() and (game.Info.Status in [0, 1]) and Auth.currentUser? and Auth.currentUser.authItems? and "spectateOnly" not in Auth.currentUser.authItems and ("challengeOnly" not in Auth.currentUser.authItems or game.Info.MatchType == 1)
   $scope.canObsGame = (game)->
     !$scope.inAnyGame() and game.Info.Status < 3
   $scope.canLeaveGame = ()->

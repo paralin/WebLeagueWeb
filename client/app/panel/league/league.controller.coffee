@@ -98,10 +98,24 @@ angular.module 'webleagueApp'
     game.Info.Status < 3
 
   $scope.canLeave = (game)->
-    game.Info.Status == 0
+    game.Info.Status == 0 || meWithGame(game).Team==2
 
   $scope.msgTime = (date)->
     moment(date).format "h:mm a"
+
+  meWithGame = (game)->
+    _.findWhere game.Players, {SID: Auth.currentUser.steam.steamid}
+
+  $scope.me = (game)->
+    if !game?
+      for game in Network.availableGames
+        me = meWithGame(game)
+        return me if me?
+    else
+      return meWithGame(game)
+
+  $scope.inGame = (game)->
+    $scope.me(game)?
 
   $scope.allReady = (game)->
     for plyr in game.Players
