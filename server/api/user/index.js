@@ -18,5 +18,6 @@ function isAuthenticated(req, res, next){
 router.get('/status', controller.status);
 router.post('/saveSettings', isAuthenticated, controller.saveSettings);
 router.post('/clearTsTokens', isAuthenticated, controller.clearTsIds);
+router.get('/list', isAuthenticated, controller.list);
 
 module.exports = router;

@@ -78,3 +78,23 @@ exports.saveSettings = function(req, res)
     res.json(430, {error: 430, text: "unauthorized"});
   }
 };
+
+exports.list = function(req, res)
+{
+  // Validate login
+  if(req.user && req.user.authItems.indexOf("admin") != -1)
+  {
+    User.find({}, function(err, users){
+      if(err)
+      {
+        res.json(500, {error: 500, text: "internal server error"});
+        return;
+      }
+      res.json(200, users);
+    });
+  }
+  else
+  {
+    res.json(430, {error: 430, text: "unauthorized"});
+  }
+}
