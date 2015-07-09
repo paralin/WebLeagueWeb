@@ -176,11 +176,6 @@
   // Admin
   @include chat-color(90, #FF0000);
 
-  @include chat-color(5, $orange);
-  @include chat-color(6, $red);
-  @include chat-color(7, $dutch);
-  @include chat-color(8, $drank);
-
   .membername {
     font-size: 15px;
   }
