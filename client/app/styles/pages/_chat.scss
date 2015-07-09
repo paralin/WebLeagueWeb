@@ -168,13 +168,13 @@
   // Spectator
   @include chat-color(-1, #399428);
   // Normal
-  @include chat-color(0, $blue);
+  @include chat-color(0, #0E69AD);
   // Donate
   @include chat-color(5, #7D41CA);
   // Moderator
   @include chat-color(80, $dutch);
   // Admin
-  @include chat-color(90, $red);
+  @include chat-color(90, #FF0000);
 
   @include chat-color(5, $orange);
   @include chat-color(6, $red);
