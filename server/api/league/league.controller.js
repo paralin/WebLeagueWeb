@@ -16,7 +16,7 @@ exports.show = function(req, res) {
   var id = req.params.id;
   League.findOne({_id: id}, function (err, result) {
     if(err) { console.log(err); return handleError(res, err); }
-    if(!profile) { return res.send(404); }
+    if(!result) { return res.send(404); }
     return res.json(result);
   });
 };
