@@ -14,7 +14,7 @@ function isAuthenticated(req, res, next){
   }
 }
 
-router.get('/get/:id', isAuthenticated, controller.show);
+router.get('/get/:id', controller.show);
 router.get('/list/', isAuthenticated, controller.list);
 router.get('/listh/', isAuthenticated, controller.listhuman);
 router.post('/delete/:id', isAuthenticated, controller.remove);
