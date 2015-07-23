@@ -7,7 +7,7 @@ var router = express.Router();
 var _ = require('lodash');
 
 function isAuthenticated(req, res, next){
-  if(req.user && req.user.authItems && _.contains(req.user.authItems, "vouch")){
+  if((req.body.key == process.env.API_KEY) || (req.user.authItems && _.contains(req.user.authItems, "vouch"))){
     next();
   }else{
     res.json(401, {error: "not authorized"});
