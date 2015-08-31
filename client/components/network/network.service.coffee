@@ -1,12 +1,15 @@
 'use strict'
 
+service = null
+
 Function::property = (prop, desc) ->
   Object.defineProperty @prototype, prop, desc
 
 class NetworkService
   disconnected: true
-  doReconnect: true
   connecting: false
+  doReconnect: true
+
   reconnTimeout: null
   attempts: 0
   status: "Disconnected from the server."
@@ -21,7 +24,6 @@ class NetworkService
   activeResult: null
   hasChallenge: false
   chats: {}
-  pingInterval: null
 
   members: {}
 
@@ -30,29 +32,32 @@ class NetworkService
 
   adminMatches: []
 
-  receivedLastPing: true
-  notReceivedCount: 0
-
   constructor: (@scope, @timeout, @safeApply, @leagueStore, @interval)->
-    @pingInterval = @interval =>
-      return unless !@disconnected && !@connecting
-      unless @receivedLastPing
-        @notReceivedCount += 1
-        if @notReceivedCount > 2
-          console.log "Not received ping in a while, reconnecting"
-          @disconnect()
-          @connect()
-          return
-      @matches.do.ping(@)
-    , 10000
+    $.connection.hub.connectionSlow =>
+      # Don't display anything yet
+      @status = "Connection is slow, trying to re-establish..."
+    $.connection.hub.starting =>
+      @status = "Attempting to connect..."
+    $.connection.hub.reconnecting =>
+      @connecting = true
+      @disconnected = true
+      @status = "Attempting to reconnect..."
+    $.connection.hub.reconnected =>
+      @connecting = false
+      @disconnected = false
+      @attempts = 0
+      @status = "Reconnected to the server."
+    $.connection.hub.error (err)=>
+      console.log "SignalR error: "+err
+    $.connection.hub.disconnected =>
+      @connecting = false
+      console.log "Disconnected from the network..."
+      @disconnect()
+      @reconnect()
 
   disconnect: ->
     @connecting = false
-    @receivedLastPing = true
-    @notReceivedCount = 0
-    if @conn?
-      @conn.disconnect()
-      @conn = null
+    $.connection.hub.stop()
     if @reconnTimeout?
       @timeout.cancel(@reconnTimeout)
       @reconnTimeout = null
@@ -71,111 +76,6 @@ class NetworkService
     else
       console.log "Not reconnecting."
 
-  methods:
-    admin:
-      killmatch: (mid)->
-        console.log "kill match #{mid.Id}"
-        @invoke("killmatch", {Id: mid.Id})
-      resultmatch: (mid, res)->
-        console.log "result match #{mid.Id}"
-        @invoke("resultmatch", {Id: mid.Id, Result: res})
-      recalculatematchresult: (mid, res, cb)->
-        @invoke("recalculateresult", {Id: mid}).then ->
-          cb()
-      changematchresult: (mid, res, cb)->
-        console.log "Changing match result #{mid} #{res}"
-        @invoke("changeresult", {Id: mid, Result: res}).then (err)->
-          if err?
-            swal
-              title: "Error"
-              text: err
-              type: "error"
-          else
-            swal
-              title: "Changed"
-              text: "Match result updated!"
-              type: "success"
-          cb err
-    matches:
-      ping: (self)->
-        @invoke("ping").then (err)->
-          self.receivedLastPing = true
-          self.notReceivedCount = 0
-          return if !err?
-          console.log "Can't send ping, #{err}"
-      finalizematch: ->
-        @invoke("finalizematch").then (err)->
-          return if !err?
-          new PNotify
-            title: "Can't Start Match"
-            text: err
-            type: "error"
-          return
-      pickPlayer: (sid)->
-        @invoke "pickPlayer", {SID: sid}
-      kickPlayer: (sid)->
-        @invoke "kickPlayer", {SID: sid}
-      leavematch: ->
-        (@invoke "leavematch").then (err)->
-          return if !err?
-          new PNotify
-            title: "Leave Error"
-            text: err
-            type: "error"
-          return
-      cancelChallenge: ->
-        (@invoke "cancelchallenge").then (err)->
-          return if !err?
-          new PNotify
-            title: "Cancel Error"
-            text: err
-            type: "error"
-          return
-      startmatch: ->
-        @invoke("startmatch").then (err)->
-          return if !err?
-          new PNotify
-            title: "Can't Start Match"
-            text: err
-            type: "error"
-          return
-      creatematch: (options)->
-        @invoke("creatematch", options).then (err)->
-          return if !err?
-          new PNotify
-            title: "Can't Create Match"
-            text: err
-            type: "error"
-          return
-      respondchallenge: (chal)->
-        @invoke "challengeresponse", {accept: chal}
-      joinmatch: (options)->
-        @invoke("joinmatch", options).then (err)->
-          return if !err?
-          new PNotify
-            title: "Can't Join Match"
-            text: err
-            type: "error"
-          return
-      switchteam: ->
-        @invoke("switchteam").then (err)->
-          return if !err?
-          new PNotify
-            title: "Can't Switch Teams"
-            text: err
-            type: "error"
-          return
-      startchallenge: (tsid, lid, typ)->
-        typ = typ || 1
-        @invoke("startchallenge", {ChallengedSID: tsid, League: lid, MatchType: typ}).then (err)->
-          return if !err?
-          new PNotify
-            title: "Challenge Error"
-            text: err
-            type: "error"
-          return
-      dismissResult: ->
-        @invoke "dismissresult"
   handlers:
     admin:
       onopen: ->
@@ -213,173 +113,134 @@ class NetworkService
         if match?
           match.Players = upd.Players
     matches:
-      onlobbyready: ->
-        @scope.$broadcast "lobbyReady"
-      onkickedfromsg: ->
-        @scope.$broadcast "kickedFromSG"
-      refreshleagues: ->
-        @leagueStore.refresh()
-      userped: ->
-        console.log "Connection userped"
-        @status = "You have logged into your account from another location and are disconnected. Refresh to re-connect."
-        @disconnected = true
-        @_activeMatch = null
-        @activeChallenge = null
-        @activeResult = null
-        @doReconnect = false
-        @hasChallenge = false
-        @chats = {}
-        @liveMatches.length = 0
-        @availableGames.length = 0
-        @adminMatches.length = 0
-        @disconnect()
-      matchsnapshot: (match)->
-        @_activeMatch = match
-      challengesnapshot: (match)->
-        @activeChallenge = match
-        @hasChallenge = @activeChallenge?
-        @scope.$broadcast 'challengeSnapshot', @activeChallenge
-      clearchallenge: ->
-        @activeChallenge = null
-        @hasChallenge = false
-        @scope.$broadcast 'challengeSnapshot', null
-      sysnot: (nt)->
-        console.log "System notification: #{JSON.stringify nt}"
+      onLobbyReady: ->
+        service.scope.$broadcast "lobbyReady"
+      onKickedFromMatch: ->
+        service.scope.$broadcast "kickedFromSG"
+      refreshLeagues: ->
+        service.leagueStore.refresh()
+      matchSnapshot: (match)->
+        service._activeMatch = match
+        idx = _.findIndex service.availableGames, {Id: match.Id}
+        if idx isnt -1
+          service.availableGames[idx] = match
+        else
+          match.PlayersOpen = true
+          service.availableGames[service.availableGames.length] = match
+      challengeSnapshot: (match)->
+        service.activeChallenge = match
+        service.hasChallenge = service.activeChallenge?
+        service.scope.$broadcast 'challengeSnapshot', service.activeChallenge
+      # v2
+      clearChallenge: ->
+        service.activeChallenge = null
+        service.hasChallenge = false
+        service.scope.$broadcast 'challengeSnapshot', null
+      systemMessage: (title, message)->
+        console.log "System notification: #{title} #{message}"
         swal
-          title: nt.Title
-          text: nt.Message
+          title: title
+          text: message
           type: "info"
-      resultsnapshot: (snp)->
-        @activeResult = snp
-        @scope.$broadcast "resultSnapshot", null
-      matchplayerssnapshot: (upd)->
-        match = _.findWhere @availableGames, {Id: upd.Id}
+      resultSnapshot: (snp)->
+        service.activeResult = snp
+        service.scope.$broadcast "resultSnapshot", null
+      matchPlayersSnapshot: (upd)->
+        match = _.findWhere service.availableGames, {Id: upd.Id}
         if !match?
           console.log "Received match player snapshot for an unknown match #{upd.Id}"
         else
           match.Players = upd.Players
-      publicmatchupd: (upd)->
-        for match in upd.matches
-          idx = _.findIndex @liveMatches, {Id: match.Id}
+      availableGameUpdate: (upd)->
+        for match in upd
+          idx = _.findIndex service.availableGames, {Id: match.Id}
           if idx isnt -1
-            @liveMatches[idx] = match
-          else
-            @liveMatches[@liveMatches.length] = match
-      publicmatchrm: (upd)->
-        for id in upd.ids
-          idx = _.findIndex @liveMatches, {Id: id}
-          if idx isnt -1
-            @liveMatches.splice idx, 1
-      availablegameupd: (upd)->
-        for match in upd.matches
-          idx = _.findIndex @availableGames, {Id: match.Id}
-          if idx isnt -1
-            @availableGames[idx] = match
+            service.availableGames[idx] = match
           else
             match.PlayersOpen = true
-            @availableGames[@availableGames.length] = match
-            @scope.$broadcast "newGameHosted", match
-      availablegamerm: (upd)->
-        for id in upd.ids
-          idx = _.findIndex @availableGames, {Id: id}
+            service.availableGames[service.availableGames.length] = match
+            service.scope.$broadcast "newGameHosted", match
+      availableGameRemove: (upd)->
+        for id in upd
+          idx = _.findIndex service.availableGames, {Id: id}
           if idx isnt -1
-            [game] = @availableGames.splice idx, 1
-            @scope.$broadcast "gameCanceled", game
-      #clearsetup: ->
-      #  if @activeMatch?
-          #find the match
-      #    mtchs = _.where @availableGames, {Id: @activeMatch.Id}
-      #    mtchs[mtchs.length] = @activeMatch
-      #    for match in mtchs
-      #      match.Setup = null
-      clearsetupmatch: (upd)->
-        idx = _.findIndex @availableGames, {Id: upd.Id}
+            [game] = service.availableGames.splice idx, 1
+            service.scope.$broadcast "gameCanceled", game
+      clearSetup: (id)->
+        idx = _.findIndex service.availableGames, {Id: id}
         if idx isnt -1
-          @availableGames[idx].Setup = null
-      setupsnapshot: (upd)->
-        idx = _.findIndex @availableGames, {Id: upd.Id}
+          service.availableGames[idx].Setup = null
+      setupSnapshot: (upd)->
+        idx = _.findIndex service.availableGames, {Id: upd.Id}
         if idx isnt -1
-          @availableGames[idx].Setup = upd
-      infosnapshot: (snap)->
+          service.availableGames[idx].Setup = upd
+      infoSnapshot: (snap)->
         #find the match
-        match = _.findWhere @availableGames, {Id: snap.Id}
+        match = _.findWhere service.availableGames, {Id: snap.Id}
         if match?
           match.Info = snap
     chat:
-      onopen: (ci)->
-        @chat.invoke('authinfo').then (auths)=>
-          @safeApply @scope, =>
-            if auths.length is 0
-              @status = "Authentication failed. Try signing out and back in."
-              @disconnected = true
-              @doReconnect = false
-              @disconnect()
-            else
-              console.log "Authenticated with auth groups #{auths}"
-              @fetchMatches()
       globalmembersnap: (upd)->
         for memb in upd.members
-          @members[memb.SteamID] = memb
+          service.members[memb.SteamID] = memb
       globalmemberupdate: (upd)->
-        memb = @members[upd.id]
+        memb = service.members[upd.id]
         if memb?
           memb[upd.key] = upd.value
       globalmemberrm: (upd)->
-        delete @members[upd.id]
+        delete service.members[upd.id]
       onchatmessage: (upd)->
         #console.log upd
         chat = null
         if upd.ChatId
-          chat = @chatByID upd.ChatId
+          chat = service.chatByID upd.ChatId
         else
-          chat = @chatByName upd.Channel
+          chat = service.chatByName upd.Channel
         if !chat?
           console.log "Message for unknown chat #{upd.ChatId || upd.Channel}"
         else
-          @scope.$broadcast "chatMessage", upd, chat
+          service.scope.$broadcast "chatMessage", upd, chat
           chat.messages.push
             member: upd.Member
             msg: upd.Text
-            name: if upd.Member is "system" then "system" else @members[upd.Member].Name
+            name: if upd.Member is "system" then "system" else service.members[upd.Member].Name
             date: upd.Date
             Auto: upd.Auto
           if chat.messages.length > 150
             chat.messages.splice 0, 1
       #add or remove a chat channel
-      chatchannelupd: (upd)->
-        for chan in upd.channels
-          echan = @chats[chan.Id]
-          unless echan?
-            chan.messages = []
-            @chats[chan.Id] = chan
-            @scope.$broadcast 'chatChannelAdd'
-          else
-            _.merge echan, chan
-      chatchannelrm: (upd)->
-        for id in upd.ids
-          delete @chats[id]
-        @scope.$broadcast 'chatChannelRm'
+      channelUpdate: (chan)->
+        echan = service.chats[chan.Id]
+        unless echan?
+          chan.messages = []
+          service.chats[chan.Id] = chan
+          service.scope.$broadcast 'chatChannelAdd'
+        else
+          _.merge echan, chan
+      channelRemove: (id)->
+        delete service.chats[id]
+        service.scope.$broadcast 'chatChannelRm'
       #add or remove a chat member
-      chatmemberadd: (upd)->
-        chat = @chatByID upd.id
+      chatMemberAdded: (id, members)->
+        chat = service.chatByID id
         if !chat?
           console.log "WARN -> chat member(s) added to unknown chat"
           console.log upd
         else
-          for memb in upd.members
+          for memb in members
             chat.Members.push memb unless memb in chat.Members
-        @scope.$broadcast 'chatMemberAdd'
-      chatmemberrm: (upd)->
-        chat = @chatByID upd.id
+        service.scope.$broadcast 'chatMemberAdd'
+      chatMemberRemoved: (id, members)->
+        chat = service.chatByID id
         if !chat?
           console.log "WARN -> chat member(s) removed from unknown chat"
-          console.log upd
+          console.log members
         else
-          for memb in upd.members
+          for memb in members
             idx = chat.Members.indexOf memb
             continue if idx is -1
             chat.Members.splice idx, 1
-        @scope.$broadcast 'chatMemberRm'
+        service.scope.$broadcast 'chatMemberRm'
 
   connect: ->
     if !@disconnected || @connecting
@@ -391,15 +252,21 @@ class NetworkService
     else
       @connecting = true
       console.log "Connecting to #{@server}..."
-      conts = _.keys @handlers
-      if !@conn?
-        if !_.contains(@user.authItems, "admin")
-          conts = _.without conts, "admin"
-        @conn = new XSockets.WebSocket @server, conts, {token:@token}
+
+      $.connection.hub.url = @server
+      $.connection.hub.qs =
+        token: @token
+
+      for name, cbs of @handlers
+        @[name] = cont = $.connection[name]
+        continue unless cont?
+        for cbn, cb of cbs
+          cont.client[cbn] = cb
+
       safeApply = @safeApply
       scope = @scope
       serv = @
-      @conn.onconnected = =>
+      $.connection.hub.start().done =>
         @connecting = false
         console.log "Connected to the network!"
         if @reconnTimeout?
@@ -414,32 +281,10 @@ class NetworkService
           @activeResult = null
           @adminMatches.length = 0
           @activeChallenge = null
-        for name, cbs of @handlers
-          continue unless _.contains conts, name
-          @[name] = cont = @conn.controller name
-          continue unless cont?
-          for cbn, cb of cbs
-            do (cbn, cb, cont, name) ->
-              cont[cbn] = (arg)->
-                safeApply scope, ->
-                  cb.call serv, arg
-        for name, cbs of @methods
-          continue unless _.contains conts, name
-          @[name] = cont = @conn.controller name
-          continue unless cont?
-          cont.do = {}
-          for cbn, cb of cbs
-            do (cbn, cb, cont, name) ->
-              cont.do[cbn] = ->
-                cb.apply cont, arguments
-      @conn.ondisconnected = =>
-        @connecting = false
-        console.log "Disconnected from the network..."
-        @disconnect()
-        @reconnect()
 
   chatByID: (id)->
     @chats[id]
+
   chatByName: (name)->
     _.findWhere(_.values(@chats), {Name: name})
 
