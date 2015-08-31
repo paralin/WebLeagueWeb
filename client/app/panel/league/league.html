@@ -99,7 +99,7 @@
     <!-- /left side body -->
   </div>
 
-  <div class="tcol w-280 bg-tr-white lt b-r">
+  <div class="tcol w-280 bg-tr-white lt b-r" style="width: 285px">
     <!-- left side header-->
     <div class="p-15 bg-white">
 
@@ -247,18 +247,18 @@
             </div>
 
             <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="inGame(game)&&me(game).IsCaptain">
-              <a href="#" class="list-group-item bg-greensea hover" ng-if="canStart(game)" ng-click="network.matches.do.startmatch()">
+              <a href="#" class="list-group-item bg-greensea hover" ng-if="canStart(game)" ng-click="network.matches.startMatch()">
                 <i class="fa fa-play text-muted mr-5"></i>
                 Start Game
               </a>
-              <a href="#" class="list-group-item bg-orange hover" ng-click="network.matches.do.leavematch()" ng-if="canCancel(game)">
+              <a href="#" class="list-group-item bg-orange hover" ng-click="network.matches.leaveMatch()" ng-if="canCancel(game)">
                 <i class="fa fa-ban text-muted mr-5"></i>
                 Cancel Game
               </a>
             </div>
 
             <div class="list-group no-radius no-border" style="margin-bottom:0" ng-if="inGame(game)&&!me(game).IsCaptain">
-              <a href="#" class="list-group-item bg-orange hover" ng-click="network.matches.do.leavematch()" ng-if="canLeave(game)">
+              <a href="#" class="list-group-item bg-orange hover" ng-click="network.matches.leaveMatch()" ng-if="canLeave(game)">
                 <i class="fa fa-ban text-muted mr-5"></i>
                 Leave Game
               </a>

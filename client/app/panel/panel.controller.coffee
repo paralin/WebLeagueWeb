@@ -29,7 +29,7 @@ angular.module 'webleagueApp'
       return true if $scope.inGame(game)
     false
   $scope.dismissResult = ->
-    Network.matches.do.dismissResult()
+    Network.activeResult = null
   $scope.ratingDelta = (res, plyr)->
     return if !res.MatchCounted
     return res.RatingRadiant if plyr.Team == 0
@@ -38,14 +38,17 @@ angular.module 'webleagueApp'
   $scope.notMe = (member)->
     member.SteamID isnt Auth.currentUser.steam.steamid
   $scope.pickPlayer = (event)->
-    Network.matches.do.pickPlayer event.detail.SID
+    Network.matches.pickPlayer event.detail.SID
     $rootScope.playSound "buttonPress"
   $scope.startChallenge = (member, typ, lid)->
-    Network.matches.do.startchallenge member.SteamID, lid, typ
+    Network.matches.startChallenge
+      ChallengedSID: member.SteamID
+      League: lid
+      MatchType: typ
   $scope.cancelChallenge = ->
-    Network.matches.do.cancelChallenge()
+    Network.matches.cancelChallenge()
   $scope.kickPlayer = (event)->
-    Network.matches.do.kickPlayer event.detail.SID
+    Network.matches.kickPlayer event.detail.SID
     $rootScope.playSound "kicked"
   $scope.toggleSoundMuted = ->
     Auth.currentUser.settings.soundMuted = !Auth.currentUser.settings.soundMuted
@@ -95,32 +98,6 @@ angular.module 'webleagueApp'
       'startGames' in Auth.currentUser.authItems and 'spectateOnly' not in Auth.currentUser.authItems and "challengeOnly" not in Auth.currentUser.authItems
     else
       false
-  $scope.showJoinDialog = ->
-    swal {
-      title: 'Open Chat'
-      text: 'Enter the chat name.'
-      type: 'input'
-      showCancelButton: true
-      animation: 'slide-from-top'
-      inputPlaceholder: 'Write a chat'
-    }, (inputValue) ->
-      if inputValue == false
-        return false
-      if inputValue == ''
-        swal.showInputError 'You need to write something!'
-        return false
-      $rootScope.playSound "buttonPress"
-      Network.chat.invoke("joinorcreate", {Name: inputValue}).then (err)->
-        if err?
-          new PNotify
-            title: "Join Error"
-            text: err
-            type: "error"
-            desktop:
-              desktop: true
-          return
-      return
-    return
   $scope.humanizeChatName = (name)->
     Humanize.titleCase name
   $scope.isInGame = (game)->
@@ -148,7 +125,7 @@ angular.module 'webleagueApp'
       confirmButtonColor: "#DD6B55"
       confirmButtonText: "Close it"
     , (conf)->
-      Network.admin.do.killmatch(game) if conf
+      Network.admin.do.killMatch(game.Id) if conf
   $scope.resultGame = (game, res)->
     swal
       title: "Are you sure?"
@@ -159,7 +136,7 @@ angular.module 'webleagueApp'
       confirmButtonColor: "#DD6B55"
       confirmButtonText: "Result it"
     , (conf)->
-      Network.admin.do.resultmatch(game, res) if conf
+      Network.admin.resultMatch(game.Id, res) if conf
   $scope.isAdmin = ->
     Auth.currentUser? and Auth.currentUser.authItems? and "admin" in Auth.currentUser.authItems
   $scope.showTsInfoModal = ->
@@ -173,14 +150,10 @@ angular.module 'webleagueApp'
     return true
   $scope.joinGame = (game)->
     $rootScope.playSound "gameJoin"
-    Network.matches.do.joinmatch
-      Id: game.Id
-      Spec: false
+    Network.matches.joinMatch game.Id, false
   $scope.joinGameSpec = (game)->
     $rootScope.playSound "gameJoin"
-    Network.matches.do.joinmatch
-      Id: game.Id
-      Spec: true
+    Network.matches.joinMatch game.Id, true
   $scope.gameFilter = (game)->
     true #game.Info.Status==0 || (Network.activeMatch? && Network.activeMatch.Id is game.Id)
   $scope.$on 'destroy', ->

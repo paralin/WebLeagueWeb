@@ -40,19 +40,19 @@ angular.module 'webleagueApp'
       g.Info.League is league
 
   $scope.createGame = (gm)->
-    Network.matches.do.creatematch({MatchType: 0, GameMode: gm, League: $scope.leagueid})
+    Network.matches.createMatch {MatchType: 0, GameMode: gm, League: $scope.leagueid}
 
   $scope.joinGame = (game, spec)->
-    Network.matches.do.joinmatch({Id: game.Id, Spec: spec})
+    Network.matches.joinMatch game.Id, spec
 
   $scope.kickPlayer = (plyr)->
     # Play kicked sound for effect
     $rootScope.playSound "kicked"
-    Network.matches.do.kickPlayer(plyr.SID)
+    Network.matches.kickPlayer plyr.SID
 
   $scope.pickPlayer = (plyr)->
     $rootScope.playSound "buttonPress"
-    Network.matches.do.pickPlayer(plyr.SID)
+    Network.matches.pickPlayer plyr.SID
 
   $scope.gameStatus = (game)->
     switch game.Info.Status
@@ -115,7 +115,6 @@ angular.module 'webleagueApp'
     num = $scope.playerCount(game)/$scope.maxPlayers(game)
     num*100
 
-
   $scope.chat = (chats, leagueid)->
     _.findWhere _.values(chats), {Name: leagueid}
 
@@ -142,13 +141,12 @@ angular.module 'webleagueApp'
       ele.scrollTop = ele.scrollHeight+ele.offsetHeight+50
     , 10, false
 
-  $scope.$on "chatMessage", (eve, upd, chat)->
-    if chat.Name is $scope.leagueid
+  $scope.$on "chatMessage", (eve, chatid, memberid, text, service, time, chatname)->
+    if chatname is $scope.leagueid
       ele = chatContainer()
       return if ele.length is 0
       ele = ele[0]
-      if ele.scrollTop > ele.scrollHeight-(ele.offsetHeight+30)
-        scrollChatToBottom()
+      scrollChatToBottom() if ele.scrollTop > ele.scrollHeight-(ele.offsetHeight+30)
 
   jqbind = []
   $scope.hasLoadedOnce = false
@@ -174,7 +172,7 @@ angular.module 'webleagueApp'
         msg = $scope.message
         chat = $scope.chat(Network.chats, $scope.leagueid)
         if chat?
-          Network.chat.invoke "SendMessage", {Channel: chat.Id, Text: msg}
+          Network.chat.sendMessage chat.Id, msg
         else
           console.log "Can't find chat to send message to"
         $scope.message = ""

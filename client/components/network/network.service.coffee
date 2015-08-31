@@ -1,6 +1,6 @@
 'use strict'
 
-service = null
+s = service = null
 
 Function::property = (prop, desc) ->
   Object.defineProperty @prototype, prop, desc
@@ -31,6 +31,10 @@ class NetworkService
   availableGames: []
 
   adminMatches: []
+
+  sa: (cb)->
+    @safeApply @scope, ->
+      cb()
 
   constructor: (@scope, @timeout, @safeApply, @leagueStore, @interval)->
     $.connection.hub.connectionSlow =>
@@ -77,49 +81,12 @@ class NetworkService
       console.log "Not reconnecting."
 
   handlers:
-    admin:
-      onopen: ->
-        @admin.invoke('getgamelist').then (ms)=>
-          @safeApply @scope, =>
-            @adminMatches.length = 0
-            for game in ms
-              @adminMatches[@adminMatches.length] = game
-      availablegameupd: (upd)->
-        for match in upd.matches
-          idx = _.findIndex @adminMatches, {Id: match.Id}
-          if idx isnt -1
-            @adminMatches[idx] = match
-          else
-            @adminMatches[@adminMatches.length] = match
-      availablegamerm: (upd)->
-        for id in upd.ids
-          idx = _.findIndex @adminMatches, {Id: id}
-          if idx isnt -1
-            @adminMatches.splice idx, 1
-      clearsetupmatch: (upd)->
-        idx = _.findIndex @adminMatches, {Id: upd.Id}
-        if idx isnt -1
-          @adminMatches[idx].Setup = null
-      setupsnapshot: (upd)->
-        idx = _.findIndex @adminMatches, {Id: upd.Id}
-        if idx isnt -1
-          @adminMatches[idx].Setup = upd
-      infosnapshot: (upd)->
-        idx = _.findIndex @adminMatches, {Id: upd.Id}
-        if idx isnt -1
-          @adminMatches[idx].Info = upd
-      matchplayerssnapshot: (upd)->
-        match = _.find @adminMatches, {Id: upd.Id}
-        if match?
-          match.Players = upd.Players
+    admin: {}
     matches:
-      onLobbyReady: ->
-        service.scope.$broadcast "lobbyReady"
-      onKickedFromMatch: ->
-        service.scope.$broadcast "kickedFromSG"
-      refreshLeagues: ->
-        service.leagueStore.refresh()
-      matchSnapshot: (match)->
+      onLobbyReady: -> s.sa -> s.scope.$broadcast "lobbyReady"
+      onKickedFromMatch: -> s.sa -> s.scope.$broadcast "kickedFromSG"
+      refreshLeagues: -> s.sa -> s.leagueStore.refresh()
+      matchSnapshot: (match)-> s.sa ->
         service._activeMatch = match
         idx = _.findIndex service.availableGames, {Id: match.Id}
         if idx isnt -1
@@ -127,31 +94,31 @@ class NetworkService
         else
           match.PlayersOpen = true
           service.availableGames[service.availableGames.length] = match
-      challengeSnapshot: (match)->
+      challengeSnapshot: (match)-> s.sa ->
         service.activeChallenge = match
         service.hasChallenge = service.activeChallenge?
         service.scope.$broadcast 'challengeSnapshot', service.activeChallenge
       # v2
-      clearChallenge: ->
+      clearChallenge: -> s.sa ->
         service.activeChallenge = null
         service.hasChallenge = false
         service.scope.$broadcast 'challengeSnapshot', null
-      systemMessage: (title, message)->
+      systemMessage: (title, message)-> s.sa ->
         console.log "System notification: #{title} #{message}"
         swal
           title: title
           text: message
           type: "info"
-      resultSnapshot: (snp)->
+      resultSnapshot: (snp)-> s.sa ->
         service.activeResult = snp
         service.scope.$broadcast "resultSnapshot", null
-      matchPlayersSnapshot: (upd)->
-        match = _.findWhere service.availableGames, {Id: upd.Id}
+      matchPlayersSnapshot: (id, players)-> s.sa ->
+        match = _.findWhere service.availableGames, {Id: id}
         if !match?
-          console.log "Received match player snapshot for an unknown match #{upd.Id}"
+          console.log "Received match player snapshot for an unknown match #{id}"
         else
-          match.Players = upd.Players
-      availableGameUpdate: (upd)->
+          match.Players = players
+      availableGameUpdate: (upd)-> s.sa ->
         for match in upd
           idx = _.findIndex service.availableGames, {Id: match.Id}
           if idx isnt -1
@@ -160,56 +127,50 @@ class NetworkService
             match.PlayersOpen = true
             service.availableGames[service.availableGames.length] = match
             service.scope.$broadcast "newGameHosted", match
-      availableGameRemove: (upd)->
+      availableGameRemove: (upd)-> s.sa ->
         for id in upd
           idx = _.findIndex service.availableGames, {Id: id}
           if idx isnt -1
             [game] = service.availableGames.splice idx, 1
             service.scope.$broadcast "gameCanceled", game
-      clearSetup: (id)->
+      clearSetup: (id)-> s.sa ->
         idx = _.findIndex service.availableGames, {Id: id}
         if idx isnt -1
           service.availableGames[idx].Setup = null
-      setupSnapshot: (upd)->
+      setupSnapshot: (upd)-> s.sa ->
         idx = _.findIndex service.availableGames, {Id: upd.Id}
         if idx isnt -1
           service.availableGames[idx].Setup = upd
-      infoSnapshot: (snap)->
+      infoSnapshot: (snap)-> s.sa ->
         #find the match
         match = _.findWhere service.availableGames, {Id: snap.Id}
         if match?
           match.Info = snap
     chat:
-      globalmembersnap: (upd)->
+      globalMemberSnapshot: (upd)-> s.sa ->
         for memb in upd.members
           service.members[memb.SteamID] = memb
-      globalmemberupdate: (upd)->
-        memb = service.members[upd.id]
+      globalMemberUpdate: (id, key, value)-> s.sa ->
+        memb = service.members[id]
         if memb?
-          memb[upd.key] = upd.value
-      globalmemberrm: (upd)->
-        delete service.members[upd.id]
-      onchatmessage: (upd)->
-        #console.log upd
-        chat = null
-        if upd.ChatId
-          chat = service.chatByID upd.ChatId
-        else
-          chat = service.chatByName upd.Channel
+          memb[key] = value
+      globalMemberRemove: (upd)-> s.sa -> delete service.members[upd.id]
+      onChatMessage: (chatid, memberid, text, service, time, chatname)-> s.sa ->
+        chat = service.chatByID chatid
         if !chat?
-          console.log "Message for unknown chat #{upd.ChatId || upd.Channel}"
+          console.log "Message for unknown chat #{chatid}"
         else
-          service.scope.$broadcast "chatMessage", upd, chat
+          service.scope.$broadcast "chatMessage", chatid, memberid, text, service, time, chatname
           chat.messages.push
-            member: upd.Member
-            msg: upd.Text
-            name: if upd.Member is "system" then "system" else service.members[upd.Member].Name
-            date: upd.Date
-            Auto: upd.Auto
+            member: memberid
+            msg: text
+            name: if memberid is "system" then "system" else service.members[memberid].Name
+            date: time
+            Auto: service
           if chat.messages.length > 150
             chat.messages.splice 0, 1
       #add or remove a chat channel
-      channelUpdate: (chan)->
+      channelUpdate: (chan)-> s.sa ->
         echan = service.chats[chan.Id]
         unless echan?
           chan.messages = []
@@ -217,11 +178,11 @@ class NetworkService
           service.scope.$broadcast 'chatChannelAdd'
         else
           _.merge echan, chan
-      channelRemove: (id)->
+      channelRemove: (id)-> s.sa ->
         delete service.chats[id]
         service.scope.$broadcast 'chatChannelRm'
       #add or remove a chat member
-      chatMemberAdded: (id, members)->
+      chatMemberAdded: (id, members)-> s.sa ->
         chat = service.chatByID id
         if !chat?
           console.log "WARN -> chat member(s) added to unknown chat"
@@ -230,7 +191,7 @@ class NetworkService
           for memb in members
             chat.Members.push memb unless memb in chat.Members
         service.scope.$broadcast 'chatMemberAdd'
-      chatMemberRemoved: (id, members)->
+      chatMemberRemoved: (id, members)-> s.sa ->
         chat = service.chatByID id
         if !chat?
           console.log "WARN -> chat member(s) removed from unknown chat"
@@ -258,7 +219,8 @@ class NetworkService
         token: @token
 
       for name, cbs of @handlers
-        @[name] = cont = $.connection[name]
+        cont = $.connection[name]
+        @[name] = cont.server
         continue unless cont?
         for cbn, cb of cbs
           cont.client[cbn] = cb
@@ -319,4 +281,4 @@ angular.module('webleagueApp').factory 'Network', ($rootScope, $timeout, Auth, L
   checkLogin()
   $(window).unload ->
     service.disconnect()
-  window.service = service
+  window.service = s = service

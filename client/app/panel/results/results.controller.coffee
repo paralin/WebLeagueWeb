@@ -25,13 +25,13 @@ angular.module 'webleagueApp'
 
   $scope.updateResult = (result)->
     $scope.pendingResultChange = true
-    Network.admin.do.changematchresult result._id, result.Result, (err)->
+    Network.admin.changeResult(result._id, result.Result).done (err)->
       $scope.pendingResultChange = false
       if !err?
         loadResults()
 
   $scope.recalcResult = (result)->
-    Network.admin.invoke("recalculatematch", {Id: result._id})
+    Network.admin.recalculateMatch result._id
 
   $scope.dtColumnDefs = [
     DTColumnDefBuilder.newColumnDef(0)

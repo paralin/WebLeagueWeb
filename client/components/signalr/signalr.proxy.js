@@ -78,7 +78,7 @@
             registerHubProxies(proxies, false);
         });
 
-        proxies['admin'] = this.createHubProxy('admin'); 
+        proxies['admin'] = this.createHubProxy('admin');
         proxies['admin'].client = { };
         proxies['admin'].server = {
             changeResult: function (id, result) {
