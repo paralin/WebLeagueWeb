@@ -41,9 +41,9 @@ class NetworkService
   constructor: (@scope, @timeout, @safeApply, @leagueStore, @interval)->
     $.connection.hub.logging = true
     $.connection.hub.connectionSlow => s.sa =>
-      @disconnected = true
-      @connecting = true
-      @status = "Connection is slow, trying to re-establish..."
+      #@disconnected = true
+      #@connecting = true
+      #@status = "Connection is slow, trying to re-establish..."
     $.connection.hub.starting => s.sa =>
       @disconnected = true
       @connecting = true
