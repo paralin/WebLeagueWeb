@@ -81,13 +81,9 @@ angular.module 'webleagueApp'
           confirmButtonText: "Accept"
           cancelButtonText: "Decline"
           cancelButtonColor: "#DD6B55"
-        , ->
+        , (conf)->
+          Network.matches.challengeResponse conf
           safeApply $scope, ->
-            Network.matches.challengeResponse true
-            $rootScope.playSound "buttonPress"
-        , ->
-          safeApply $scope, ->
-            Network.matches.challengeResponse false
             $rootScope.playSound "buttonPress"
         )
     else if window.aswal?
