@@ -180,7 +180,6 @@ class NetworkService
               chat.messages.splice 0, 1
       #add or remove a chat channel
       channelUpdate: (chan)-> s.sa ->
-        console.log chan
         echan = service.chats[chan.Id]
         unless echan?
           chan.messages = []
