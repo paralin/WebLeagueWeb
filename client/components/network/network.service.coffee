@@ -24,6 +24,7 @@ class NetworkService
   activeResult: null
   hasChallenge: false
   chats: {}
+  oldChats: null
 
   members: {}
 
@@ -37,23 +38,30 @@ class NetworkService
       cb()
 
   constructor: (@scope, @timeout, @safeApply, @leagueStore, @interval)->
-    $.connection.hub.connectionSlow =>
-      # Don't display anything yet
-      @status = "Connection is slow, trying to re-establish..."
-    $.connection.hub.starting =>
-      @status = "Attempting to connect..."
-    $.connection.hub.reconnecting =>
-      @connecting = true
+    # $.connection.hub.logging = true
+    $.connection.hub.connectionSlow => s.sa =>
       @disconnected = true
-      @status = "Attempting to reconnect..."
-    $.connection.hub.reconnected =>
+      @connecting = true
+      @status = "Connection is slow, trying to re-establish..."
+    $.connection.hub.starting => s.sa =>
+      @disconnected = true
+      @connecting = true
+      @status = "Attempting to connect..."
+    $.connection.hub.reconnecting => s.sa =>
+      # Causes problems.
+      #@connecting = true
+      #@disconnected = true
+      #@status = "Attempting to reconnect..."
+      @disconnect()
+      @reconnect()
+    $.connection.hub.reconnected => s.sa =>
       @connecting = false
       @disconnected = false
       @attempts = 0
       @status = "Reconnected to the server."
-    $.connection.hub.error (err)=>
+    $.connection.hub.error (err)=> s.sa =>
       console.log "SignalR error: "+err
-    $.connection.hub.disconnected =>
+    $.connection.hub.disconnected => s.sa =>
       @connecting = false
       console.log "Disconnected from the network..."
       @disconnect()
@@ -148,32 +156,46 @@ class NetworkService
           match.Info = snap
     chat:
       globalMemberSnapshot: (upd)-> s.sa ->
-        for memb in upd.members
+        for memb in upd
           service.members[memb.SteamID] = memb
       globalMemberUpdate: (id, key, value)-> s.sa ->
         memb = service.members[id]
         if memb?
           memb[key] = value
       globalMemberRemove: (upd)-> s.sa -> delete service.members[upd.id]
-      onChatMessage: (chatid, memberid, text, service, time, chatname)-> s.sa ->
-        chat = service.chatByID chatid
-        if !chat?
-          console.log "Message for unknown chat #{chatid}"
-        else
-          service.scope.$broadcast "chatMessage", chatid, memberid, text, service, time, chatname
-          chat.messages.push
-            member: memberid
-            msg: text
-            name: if memberid is "system" then "system" else service.members[memberid].Name
-            date: time
-            Auto: service
-          if chat.messages.length > 150
-            chat.messages.splice 0, 1
+      onChatMessage: (chatid, memberid, text, isservice, time, chatname)->
+        s.sa ->
+          chat = service.chatByID chatid
+          if !chat?
+            console.log "Message for unknown chat #{chatid}"
+          else
+            service.scope.$broadcast "chatMessage", chatid, memberid, text, isservice, time, chatname
+            chat.messages.push
+              member: memberid
+              msg: text
+              name: if memberid is "system" then "system" else service.members[memberid].Name
+              date: time
+              Auto: isservice
+            if chat.messages.length > 150
+              chat.messages.splice 0, 1
       #add or remove a chat channel
       channelUpdate: (chan)-> s.sa ->
+        console.log chan
         echan = service.chats[chan.Id]
         unless echan?
           chan.messages = []
+          if service.oldChats?
+            oldChat = _.findWhere(_.values(service.oldChats), {Name: chan.Name})
+            if oldChat?
+              chan.messages = _.filter oldChat.messages, (message)->
+                !message.Auto
+              if chan.messages.length > 0
+                chan.messages.push
+                  member: "system"
+                  msg: "-- reconnected --"
+                  name: "system"
+                  date: new Date()
+                  Auto: true
           service.chats[chan.Id] = chan
           service.scope.$broadcast 'chatChannelAdd'
         else
@@ -207,6 +229,15 @@ class NetworkService
     if !@disconnected || @connecting
       return
     @attempts += 1
+
+    if !@oldChats?
+      @oldChats = @chats
+    @chats = {}
+    @_activeMatch = null
+    @activeResult = null
+    @adminMatches.length = 0
+    @activeChallenge = null
+    @availableGames.length = 0
     if !@server?
       console.log "No server info yet."
       @status = "Waiting for server info..."
@@ -221,7 +252,9 @@ class NetworkService
       for name, cbs of @handlers
         cont = $.connection[name]
         @[name] = cont.server
-        continue unless cont?
+        console.log name
+        unless cont?
+          continue
         for cbn, cb of cbs
           cont.client[cbn] = cb
 
@@ -231,6 +264,7 @@ class NetworkService
       $.connection.hub.start().done =>
         @connecting = false
         console.log "Connected to the network!"
+        @oldChats = null
         if @reconnTimeout?
           @timeout.cancel(@reconnTimeout)
           @reconnTimeout = null
@@ -238,11 +272,6 @@ class NetworkService
           @disconnected = false
           @status = "Connected to the network."
           @attempts = 0
-          @chats = {}
-          @_activeMatch = null
-          @activeResult = null
-          @adminMatches.length = 0
-          @activeChallenge = null
 
   chatByID: (id)->
     @chats[id]

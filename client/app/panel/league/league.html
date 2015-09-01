@@ -88,8 +88,8 @@
             </div>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#" ng-click="startChallenge(member, 1, leagueid)">CM  Challenge</a></li>
-            <li><a href="#" ng-click="startChallenge(member, 2, leagueid)">1v1 Challenge</a></li>
+            <li ng-if="notMe(member)"><a href="#" ng-click="startChallenge(member, 1, leagueid)">CM  Challenge</a></li>
+            <li ng-if="notMe(member)"><a href="#" ng-click="startChallenge(member, 2, leagueid)">1v1 Challenge</a></li>
             <li><a href="http://steamcommunity.com/profiles/{{member.SteamID}}" target="_blank">View Profile</a></li>
           </ul>
         </li>

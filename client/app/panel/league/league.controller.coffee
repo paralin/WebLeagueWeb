@@ -115,6 +115,9 @@ angular.module 'webleagueApp'
     num = $scope.playerCount(game)/$scope.maxPlayers(game)
     num*100
 
+  $scope.notMe = (member)->
+    Auth.currentUser? and Auth.currentUser.steam.steamid isnt member.SteamID
+
   $scope.chat = (chats, leagueid)->
     _.findWhere _.values(chats), {Name: leagueid}
 
