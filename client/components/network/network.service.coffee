@@ -44,6 +44,7 @@ class NetworkService
       #@disconnected = true
       #@connecting = true
       #@status = "Connection is slow, trying to re-establish..."
+      console.log "Connection slow event."
     $.connection.hub.starting => s.sa =>
       @disconnected = true
       @connecting = true
@@ -252,17 +253,16 @@ class NetworkService
       safeApply = @safeApply
       scope = @scope
       serv = @
-      $.connection.hub.start().done =>
-        @connecting = false
+      $.connection.hub.start().done => s.sa =>
         console.log "Connected to the network!"
         @oldChats = null
         if @reconnTimeout?
           @timeout.cancel(@reconnTimeout)
-          @reconnTimeout = null
-        safeApply scope, =>
-          @disconnected = false
-          @status = "Connected to the network."
-          @attempts = 0
+        @reconnTimeout = null
+        @connecting = false
+        @disconnected = false
+        @status = "Connected to the network."
+        @attempts = 0
 
   chatByID: (id)->
     @chats[id]
