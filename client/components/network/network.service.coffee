@@ -69,7 +69,7 @@ class NetworkService
       @disconnect()
       @reconnect()
 
-  disconnect: ->
+  disconnect: -> s.sa ->
     @connecting = false
     $.connection.hub.stop()
     if @reconnTimeout?
@@ -77,7 +77,7 @@ class NetworkService
       @reconnTimeout = null
     @disconnected = true
 
-  reconnect: ->
+  reconnect: -> s.sa ->
     if @doReconnect
       if !@reconnTimeout?
         @safeApply @scope, =>
