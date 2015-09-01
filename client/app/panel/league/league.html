@@ -189,7 +189,7 @@
           <!-- /tile body -->
         </section>
 
-        <section ng-repeat="game in games(network.availableGames,leagueid) | orderBy:'Info.Status'" class="tile bg-slategray" fullscreen="isFullscreen07" style="padding:0">
+        <section ng-repeat="game in games(network.availableGames,leagueid) track by game.Id | orderBy:'Info.Status'" class="tile bg-slategray" fullscreen="isFullscreen07" style="padding:0">
           <div class="tile-header dvd dvd-btm" style="cursor:pointer" tile-control-toggle>
             <h1 class="custom-font" style="width:100%">
               <strong style="padding-right:3px">

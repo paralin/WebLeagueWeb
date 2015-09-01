@@ -83,11 +83,11 @@ angular.module 'webleagueApp'
           cancelButtonColor: "#DD6B55"
         , ->
           safeApply $scope, ->
-            Network.matches.do.respondchallenge true
+            Network.matches.challengeResponse true
             $rootScope.playSound "buttonPress"
         , ->
           safeApply $scope, ->
-            Network.matches.do.respondchallenge false
+            Network.matches.challengeResponse false
             $rootScope.playSound "buttonPress"
         )
     else if window.aswal?
@@ -125,7 +125,7 @@ angular.module 'webleagueApp'
       confirmButtonColor: "#DD6B55"
       confirmButtonText: "Close it"
     , (conf)->
-      Network.admin.do.killMatch(game.Id) if conf
+      Network.admin.killMatch(game.Id) if conf
   $scope.resultGame = (game, res)->
     swal
       title: "Are you sure?"

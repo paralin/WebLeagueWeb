@@ -14,11 +14,12 @@ class NetworkService
   attempts: 0
   status: "Disconnected from the server."
 
-  _activeMatch: null
   @property "activeMatch",
     get: ->
-      return null if !@_activeMatch?
-      _.findWhere @availableGames, {Id: @_activeMatch.Id}
+      _.find @availableGames, (game)->
+        for plyr in game.Players
+          return true if plyr.SID is service.user.steam.steamid
+        false
 
   activeChallenge: null
   activeResult: null
@@ -94,14 +95,6 @@ class NetworkService
       onLobbyReady: -> s.sa -> s.scope.$broadcast "lobbyReady"
       onKickedFromMatch: -> s.sa -> s.scope.$broadcast "kickedFromSG"
       refreshLeagues: -> s.sa -> s.leagueStore.refresh()
-      matchSnapshot: (match)-> s.sa ->
-        service._activeMatch = match
-        idx = _.findIndex service.availableGames, {Id: match.Id}
-        if idx isnt -1
-          service.availableGames[idx] = match
-        else
-          match.PlayersOpen = true
-          service.availableGames[service.availableGames.length] = match
       challengeSnapshot: (match)-> s.sa ->
         service.activeChallenge = match
         service.hasChallenge = service.activeChallenge?
@@ -232,7 +225,6 @@ class NetworkService
     if !@oldChats?
       @oldChats = @chats
     @chats = {}
-    @_activeMatch = null
     @activeResult = null
     @adminMatches.length = 0
     @activeChallenge = null
