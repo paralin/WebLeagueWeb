@@ -40,19 +40,38 @@ angular.module 'webleagueApp'
       g.Info.League is league
 
   $scope.createGame = (gm)->
-    Network.matches.createMatch {MatchType: 0, GameMode: gm, League: $scope.leagueid}
-
+    Network.matches.createMatch({MatchType: 0, GameMode: gm, League: $scope.leagueid}).done (err)->
+      if err?
+        new PNotify
+          title: "Can't Create Match"
+          text: err
+          type: "error"
   $scope.joinGame = (game, spec)->
-    Network.matches.joinMatch game.Id, spec
+    Network.matches.joinMatch(game.Id, spec).done (err)->
+      if err?
+        new PNotify
+          title: "Can't Join Match"
+          text: err
+          type: "error"
 
   $scope.kickPlayer = (plyr)->
     # Play kicked sound for effect
     $rootScope.playSound "kicked"
-    Network.matches.kickPlayer plyr.SID
+    Network.matches.kickPlayer(plyr.SID).done (err)->
+      if err?
+        new PNotify
+          title: "Can't Kick Player"
+          text: err
+          type: "error"
 
   $scope.pickPlayer = (plyr)->
     $rootScope.playSound "buttonPress"
-    Network.matches.pickPlayer plyr.SID
+    Network.matches.pickPlayer(plyr.SID).done (err)->
+      if err?
+        new PNotify
+          title: "Can't Pick Player"
+          text: err
+          type: "error"
 
   $scope.gameStatus = (game)->
     switch game.Info.Status
