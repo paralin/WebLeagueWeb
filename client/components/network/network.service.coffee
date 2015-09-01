@@ -38,7 +38,7 @@ class NetworkService
       cb()
 
   constructor: (@scope, @timeout, @safeApply, @leagueStore, @interval)->
-    # $.connection.hub.logging = true
+    $.connection.hub.logging = true
     $.connection.hub.connectionSlow => s.sa =>
       @disconnected = true
       @connecting = true
