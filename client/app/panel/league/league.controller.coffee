@@ -43,6 +43,17 @@ angular.module 'webleagueApp'
   $scope.showDecayAlert = ->
     Decay.info($stateParams.id)? and !Network.activeMatch?
 
+  $scope.timeSinceLastGame = ->
+    return false if Network.activeMatch?
+    me = Auth.currentUser
+    league = $scope.leagues[$scope.leagueid]
+    return false if !me? or !league?
+    return false if !league.IsActive or league.Archived or (new Date(league.Seasons[league.CurrentSeason].Start)).getTime() > (new Date()).getTime()
+    lid = $scope.leagueid+":"+league.CurrentSeason
+    leagueprof = me.profile.leagues[lid]
+    return false if !leagueprof? or !leagueprof.lastGame?
+    moment(leagueprof.lastGame).fromNow()
+
   $scope.decayAlertText = ->
     msg = ""
     info = Decay.info($stateParams.id)

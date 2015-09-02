@@ -16,7 +16,9 @@ var UserSchema = mongoose.Schema({
       losses: Number,
       abandons: Number,
       winStreak: Number,
-      lossStreak: Number
+      lossStreak: Number,
+      lastGame: Date,
+      decaySinceLast: Number
     }
    */
   },
