@@ -1,8 +1,8 @@
 <div id="sidebar-wrap" ng-controller="NavCtrl">
   <accordion close-others="oneAtTime" slimscroll="{height: '100%'}">
-    <accordion-group is-open="status.isNavOpen" ng-class="{'open': status.isFirstOpen, 'closed': !status.isFirstOpen}">
+    <accordion-group is-open="true" class="open">
       <accordion-heading>
-        Navigation <i class="fa" ng-class="{'fa-angle-up': status.isFirstOpen, 'fa-angle-down': !status.isFirstOpen}"></i>
+        Navigation <i class="fa" class="fa-angle-up"></i>
       </accordion-heading>
       <ul class="navigation" nav-collapse ripple>
         <li ui-sref-active="active"><a ui-sref="panel.leaderboards"><fa name="list-ol"></fa> <span>Leaderboards</span></a></li>
