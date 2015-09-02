@@ -1,12 +1,11 @@
 'use strict'
 
 angular.module 'webleagueApp'
-.controller 'LeagueCtrl', ($rootScope, $scope, Network, $stateParams, $timeout, LeagueStore, safeApply, Auth, $state) ->
+.controller 'LeagueCtrl', ($rootScope, $scope, Network, $stateParams, $timeout, LeagueStore, safeApply, Auth, $state, Decay) ->
   $scope.message = ""
 
   $scope.leagues = LeagueStore.leagues
   $scope.leagueid = $stateParams.id
-
 
   Auth.getLoginStatus ->
     LeagueStore.getLeagues (leagues)->
@@ -18,7 +17,6 @@ angular.module 'webleagueApp'
         $state.go("panel")
 
   $scope.network = Network
-
   $scope.showWatchGame = (game)->
     swal
       title: "Watch Game"
@@ -35,6 +33,27 @@ angular.module 'webleagueApp'
     else
       "Match not counted."
 
+  $scope.decayAlertClass = ->
+    info = Decay.info($stateParams.id)
+    cl = "alert"
+    if info? and info.decayStarted
+      cl += " alert-red"
+    cl
+
+  $scope.showDecayAlert = ->
+    Decay.info($stateParams.id)? and !Network.activeMatch?
+
+  $scope.decayAlertText = ->
+    msg = ""
+    info = Decay.info($stateParams.id)
+    if info?
+      if info.decayStarted
+        msg = "You have lost "+info.decayedPoints+" pts to decay."
+      else
+        decayStart = moment(info.decayStartTime)
+        msg = "Your rating will decay "+decayStart.fromNow()+"."
+    msg
+
   $scope.games = (avail, league)->
     _.filter avail, (g)->
       g.Info.League is league
@@ -46,6 +65,7 @@ angular.module 'webleagueApp'
           title: "Can't Create Match"
           text: err
           type: "error"
+
   $scope.joinGame = (game, spec)->
     Network.matches.joinMatch(game.Id, spec).done (err)->
       if err?

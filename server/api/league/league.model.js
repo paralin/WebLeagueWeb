@@ -21,7 +21,11 @@ var LeagueSchema = mongoose.Schema({
     End: Date,
     Ticket: Number
   }],
-  VouchPanel: Boolean
+  VouchPanel: Boolean,
+  Decay: {
+    DecayStart: Number,
+    DecayRate: Number
+  }
 });
 
 module.exports = mongoose.model('leagues', LeagueSchema, "leagues");

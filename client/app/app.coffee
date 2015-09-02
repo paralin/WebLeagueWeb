@@ -49,7 +49,7 @@ angular.module 'webleagueApp', [ 'ngAnimate',
       $location.path '/login'
     $q.reject response
 
-.run ($rootScope, $location, Auth, $state, $stateParams, $timeout, Network) ->
+.run ($rootScope, $location, Auth, $state, $stateParams, $timeout, Network, Decay) ->
   ###
   if navigator.userAgent.toLowerCase().indexOf('firefox') > -1
     swal
