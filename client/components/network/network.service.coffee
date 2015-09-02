@@ -253,7 +253,7 @@ class NetworkService
       safeApply = @safeApply
       scope = @scope
       serv = @
-      $.connection.hub.start().done => s.sa =>
+      $.connection.hub.start({transport: ["webSockets", "foreverFrame", "longPolling", "serverSentEvents"]}).done => s.sa =>
         console.log "Connected to the network!"
         @oldChats = null
         if @reconnTimeout?
