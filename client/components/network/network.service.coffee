@@ -77,7 +77,7 @@ class NetworkService
       @reconnTimeout = null
     @disconnected = true
 
-  reconnect: -> s.sa ->
+  reconnect: -> s.sa =>
     if @doReconnect
       if !@reconnTimeout?
         @safeApply @scope, =>
