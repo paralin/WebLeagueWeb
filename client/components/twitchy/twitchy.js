@@ -137,7 +137,9 @@
 
       // Iterate over words
       var words = text.split(' ');
+      var i=-1;
       for(var emoti in words) {
+        i++;
         var emot = words[emoti];
         var emotid = prov.emotes[emot];
         if(emotid != null){
@@ -165,12 +167,11 @@
               };
             }
           }
-          var reg = new RegExp("\\b"+emot+"\\b", 'g');
-          text = text.replace(reg, " <span class='emoteContainer' style='margin-right:"+(width+4)+"px !important'><i data-hint=\""+emot+"\" class=\"twitch hint\" style=\"width:"+width+"px;background:url("+imgurl+") no-repeat;\"/></span> ");
+          words[i] = "<span class='emoteContainer' style='margin-right:"+(width+4)+"px !important'><i data-hint=\""+emot+"\" class=\"twitch hint\" style=\"width:"+width+"px;background:url("+imgurl+") no-repeat;\"/></span>";
         }
       }
 
-      return $sce.trustAsHtml(text);
+      return $sce.trustAsHtml(words.join(' '));
     };
   }]);
 })(angular);
