@@ -32,7 +32,8 @@ angular.module('webleagueApp').factory 'Decay', ($location, $interval, LeagueSto
       return null if !leagueprof? or !leagueprof.lastGame?
 
       # If we're lower than the decay threshold then skip it
-      return null if league.Decay.LowerThreshold? and league.Decay.LowerThreshold isnt 0 and leagueprof.rating <= league.Decay.LowerThreshold
+      # Still show if we've lost anything though.
+      return null if (!leagueprof.decaySinceLast? or leagueprof.decaySinceLast is 0) and league.Decay.LowerThreshold? and league.Decay.LowerThreshold isnt 0 and leagueprof.rating <= league.Decay.LowerThreshold
 
       info.lastGame = leagueprof.lastGame
       lastGame = new Date(leagueprof.lastGame)
@@ -41,9 +42,11 @@ angular.module('webleagueApp').factory 'Decay', ($location, $interval, LeagueSto
       # If decay started
       if info.decayStarted = info.now > decayStartTime
         info.decayElapsed = info.now-decayStartTime
-        info.decayedPoints = (Math.floor(info.decayElapsed/3600000)+1)*info.DecaySettings.DecayRate
+        # info.decayedPoints = (Math.floor(info.decayElapsed/3600000)+1)*info.DecaySettings.DecayRate
       else
         info.timeToDecay = decayStartTime-info.now
+
+      info.decayedPoints = leagueprof.decaySinceLast
 
       cacheTill = new Date()
       cacheTill.setSeconds cacheTill.getSeconds()+10
