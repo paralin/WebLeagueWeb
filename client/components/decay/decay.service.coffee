@@ -31,6 +31,9 @@ angular.module('webleagueApp').factory 'Decay', ($location, $interval, LeagueSto
       leagueprof = Auth.currentUser.profile.leagues[leagueid+":"+league.CurrentSeason]
       return null if !leagueprof? or !leagueprof.lastGame?
 
+      # If we're lower than the decay threshold then skip it
+      return null if league.Decay.LowerThreshold? and league.Decay.LowerThreshold isnt 0 and leagueprof.rating <= league.Decay.LowerThreshold
+
       info.lastGame = leagueprof.lastGame
       lastGame = new Date(leagueprof.lastGame)
       info.decayStartTime = decayStartTime = lastGame.getTime()+(league.Decay.DecayStart*60000)

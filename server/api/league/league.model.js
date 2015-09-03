@@ -24,7 +24,8 @@ var LeagueSchema = mongoose.Schema({
   VouchPanel: Boolean,
   Decay: {
     DecayStart: Number,
-    DecayRate: Number
+    DecayRate: Number,
+    LowerThreshold: Number
   }
 });
 
