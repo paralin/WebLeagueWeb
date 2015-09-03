@@ -181,6 +181,7 @@ class NetworkService
           if service.oldChats?
             oldChat = _.findWhere(_.values(service.oldChats), {Name: chan.Name})
             if oldChat?
+              delete service.oldChats[oldChat.Id]
               chan.messages = _.filter oldChat.messages, (message)->
                 !message.Auto
               if chan.messages.length > 0
@@ -224,8 +225,14 @@ class NetworkService
       return
     @attempts += 1
 
-    if !@oldChats?
-      @oldChats = @chats
+    if @oldChats?
+      for id, chat of _.clone(@oldChats)
+        newChat = _.findWhere(_.values(@chats), {Name: chat.Name})
+        delete @oldChats[id] if newChat?
+    else
+      @oldChats = {}
+
+    @oldChats = _.extend @oldChats, @chats
     @chats = {}
     @activeResult = null
     @adminMatches.length = 0
@@ -256,7 +263,6 @@ class NetworkService
       serv = @
       $.connection.hub.start({transport: ["webSockets", "foreverFrame", "longPolling", "serverSentEvents"]}).done => s.sa =>
         console.log "Connected to the network!"
-        @oldChats = null
         if @reconnTimeout?
           @timeout.cancel(@reconnTimeout)
         @reconnTimeout = null
