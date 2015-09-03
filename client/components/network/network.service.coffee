@@ -128,7 +128,8 @@ class NetworkService
           else
             match.PlayersOpen = true
             service.availableGames[service.availableGames.length] = match
-            service.scope.$broadcast "newGameHosted", match
+            if !service.activeMatch? and match.Info.Status is 0
+              service.scope.$broadcast "newGameHosted", match
       availableGameRemove: (upd)-> s.sa ->
         for id in upd
           idx = _.findIndex service.availableGames, {Id: id}

@@ -57,7 +57,7 @@ angular.module 'webleagueApp'
     $rootScope.playSound "gameHosted"
   , 1000, {leading: true, trailing: false}
   clr.push $rootScope.$on "newGameHosted", (eve, match)->
-    playNewGame() if match.Info.League in Auth.currentUser.vouch.leagues and !$scope.inAnyGame()
+    playNewGame() if match.Info.League in Auth.currentUser.vouch.leagues
   clr.push $rootScope.$on "lobbyReady", ->
     $rootScope.playSound "lobbyReady"
   clr.push $rootScope.$on "kickedFromSG", ->
