@@ -47,7 +47,7 @@ angular.module 'webleagueApp'
     return false if Network.activeMatch?
     me = Auth.currentUser
     league = $scope.leagues[$scope.leagueid]
-    return false if !me? or !league?
+    return false if !me? or !league? or !me.profile.leagues?
     return false if !league.IsActive or league.Archived or (new Date(league.Seasons[league.CurrentSeason].Start)).getTime() > (new Date()).getTime()
     lid = $scope.leagueid+":"+league.CurrentSeason
     leagueprof = me.profile.leagues[lid]
