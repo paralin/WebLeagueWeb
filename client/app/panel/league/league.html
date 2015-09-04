@@ -60,7 +60,7 @@
     <!-- /left side header -->
 
     <!-- left side body -->
-    <div class="p-15 hidden-sm hidden-xs" id="open-chats" style="max-height:calc(100% - 30px) !important;overflow-y:auto">
+    <div class="p-15 hidden-sm hidden-xs" id="open-chats" style="height: 100%; max-height:calc(100% - 30px) !important;overflow-y:auto">
 
       <ul class="list-unstyled" id="inbox" style="margin-top: 0">
         <li ng-repeat="member in chatMembers(chat(network.chats, leagueid)) | orderBy:['-MemberType','Name'] track by member.ID" dropdown is-open="member.dropOpen" auto-close="always">
