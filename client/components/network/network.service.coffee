@@ -121,6 +121,7 @@ class NetworkService
         else
           match.Players = players
       availableGameUpdate: (upd)-> s.sa ->
+        console.log upd
         for match in upd
           idx = _.findIndex service.availableGames, {Id: match.Id}
           if idx isnt -1
