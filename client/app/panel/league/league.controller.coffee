@@ -116,7 +116,13 @@ angular.module 'webleagueApp'
       when 2
         if game.Setup?
           if game.Setup.Details.Status is 3
-            if $scope.inGame(game) then "Password: "+game.Setup.Details.Password else "Joining the lobby..."
+            if $scope.inGame(game)
+              if game.Info.Engine is 0
+                "Password: "+game.Setup.Details.Password
+              else
+                "Reborn lobby, invites sent."
+            else
+              "Joining the lobby..."
           else
             $rootScope.SetupStatusN[game.Setup.Details.Status]
         else
