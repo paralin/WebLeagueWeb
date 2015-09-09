@@ -9,6 +9,11 @@
     <section class="tile" fullscreen="isFullscreen01">
       <div class="tile-header dvd dvd-btm">
         <h1 class="custom-font"><strong>{{league.Name}}</strong> Results</h1>
+        <ul class="controls">
+          <li>
+            <a href="#" ng-click="submitNewResult($event, league._id)"><i class="fa fa-send"></i></a>
+          </li>
+        </ul>
       </div>
 
       <div class="tile-body table-custom">
