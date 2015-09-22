@@ -117,10 +117,7 @@ angular.module 'webleagueApp'
         if game.Setup?
           if game.Setup.Details.Status is 3
             if $scope.inGame(game)
-              if game.Info.Engine is 0
-                "Password: "+game.Setup.Details.Password
-              else
-                "Reborn lobby, invites sent."
+              "Password: "+game.Setup.Details.Password
             else
               "Joining the lobby..."
           else
